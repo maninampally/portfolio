@@ -3,12 +3,17 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Data Engineer & ML Enthusiast | AWS • Python • Airflow • Snowflake | Building scalable data solutions and ML models" />
-  <meta name="keywords" content="Data Engineer, Machine Learning, AWS, Python, Data Pipeline, Snowflake, Airflow" />
+  <meta name="description" content="AI Software Engineer / Data & Backend Engineer | Python • Django • AWS • ETL | Building production-ready AI and backend systems" />
+  <meta name="keywords" content="AI Engineer, Data Engineer, Backend Developer, AWS, Python, Django, ETL, Machine Learning, Data Pipeline" />
   <meta name="author" content="Manikanth Nampally" />
-  <meta property="og:title" content="Manikanth Nampally - Data Engineer & ML Enthusiast" />
-  <meta property="og:description" content="Transforming raw data into actionable insights with modern data engineering and ML" />
-  <title>Manikanth Nampally | Data Engineer & ML Specialist | Portfolio</title>
+  <meta property="og:title" content="Manikanth Nampally - AI Software Engineer / Data & Backend Engineer" />
+  <meta property="og:description" content="Turning data into production-ready AI and backend systems" />
+  <title>Manikanth Nampally | AI Software Engineer / Data & Backend Engineer | Portfolio</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -23,77 +28,57 @@
       </div>
 
       <nav class="nav">
-        <a href="#about">About</a>
-        <a href="#expertise">Expertise</a>
-        <a href="#projects">Projects</a>
-        <a href="#timeline">Timeline</a>
-        <a href="#contact">Contact</a>
+        <a href="#home" class="nav-link">Home</a>
+        <a href="#about" class="nav-link">About</a>
+        <a href="#skills" class="nav-link">Skills</a>
+        <a href="#projects" class="nav-link">Projects</a>
+        <a href="#experience" class="nav-link">Experience</a>
+        <a href="#certifications" class="nav-link">Certifications</a>
+        <a href="#contact" class="nav-link">Contact</a>
       </nav>
 
       <div class="header-actions">
         <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">
           🌙
         </button>
-        <a href="#contact" class="btn-resume">Get in Touch</a>
+        <a href="assets/resume.pdf" download class="btn-resume" aria-label="Download Resume">Download Resume</a>
       </div>
     </header>
 
     <!-- Hero Section -->
-    <section class="hero">
+    <section id="home" class="hero">
       <div class="hero-content">
-        <p class="hero-eyebrow">🚀 Data Engineer & ML Enthusiast</p>
-        <h1>Hi, I'm <span class="highlight">Manikanth Nampally</span></h1>
-        <p class="hero-subtitle">
-          I design and build end-to-end data solutions that scale. Transforming raw data into actionable insights using AWS, Python, and modern data platforms. Currently pursuing my Master's in ITM at FAU.
+        <h1 class="hero-name">Manikanth Nampally</h1>
+        <h2 class="hero-headline">AI Software Engineer / Data & Backend Engineer</h2>
+        <p class="hero-value-statement">
+          I turn data into production-ready AI and backend systems, building scalable data pipelines, intelligent backends, and ML-powered solutions that drive business impact.
         </p>
 
-        <div class="hero-stats">
-          <div class="stat">
-            <span class="stat-number">2+</span>
-            <span class="stat-label">Data Projects</span>
+        <div class="hero-highlights">
+          <div class="highlight-item">
+            <span class="highlight-icon">⚡</span>
+            <span class="highlight-text">2+ years building data & backend systems</span>
           </div>
-          <div class="stat">
-            <span class="stat-number">AWS</span>
-            <span class="stat-label">Certified Track</span>
+          <div class="highlight-item">
+            <span class="highlight-icon">🔧</span>
+            <span class="highlight-text">Python • Django • AWS • ETL/ELT • ML</span>
           </div>
-          <div class="stat">
-            <span class="stat-number">5+</span>
-            <span class="stat-label">Tech Stack</span>
+          <div class="highlight-item">
+            <span class="highlight-icon">🏥</span>
+            <span class="highlight-text">Built multi-tenant HMS backend powering healthcare operations</span>
           </div>
         </div>
 
         <div class="hero-actions">
-          <a href="#projects" class="btn primary">View My Work</a>
-          <a href="#contact" class="btn outline">Connect Now</a>
-        </div>
-
-        <div class="hero-meta">
-          <span>📍 Florida, USA</span>
-          <span>🎓 Masters in ITM (STEM)</span>
-          <span>⚡ Open to Data Engineering Roles</span>
+          <a href="#projects" class="btn primary">View Projects</a>
+          <a href="assets/resume.pdf" download class="btn outline">Download Resume</a>
         </div>
       </div>
       <div class="hero-profile">
         <div class="profile-wrapper">
-          <img src="assets/images/profile.png" alt="Manikanth Nampally" class="profile-pic">
-          <div class="profile-badge">Available for Opportunities</div>
+          <img src="assets/images/profile.png" alt="Manikanth Nampally - AI Software Engineer" class="profile-pic">
+          <div class="profile-badge">Open to Opportunities</div>
         </div>
-      </div>
-    </section>
-
-    <!-- Quick Stats Section -->
-    <section class="quick-stats">
-      <div class="stat-card">
-        <h3>🎯 Specialization</h3>
-        <p>Data Engineering, ETL/ELT Pipelines, Cloud Architecture</p>
-      </div>
-      <div class="stat-card">
-        <h3>⚙️ Tech Stack</h3>
-        <p>AWS, Python, SQL, Airflow, Snowflake, Iceberg, Power BI</p>
-      </div>
-      <div class="stat-card">
-        <h3>📈 Focus Area</h3>
-        <p>Scalable Data Solutions & ML Model Development</p>
       </div>
     </section>
 
@@ -101,104 +86,150 @@
     <section id="about" class="section">
       <div class="section-header">
         <h2>About Me</h2>
-        <p>My journey in data engineering</p>
+        <p>My journey from data engineering to AI & backend development</p>
       </div>
 
       <div class="about-grid">
-        <div>
+        <div class="about-story">
           <p>
-            I'm a <strong>graduate student in Information Technology Management</strong> at Florida Atlantic University, with a passion for <strong>Data Engineering</strong> and <strong>Machine Learning</strong>. My expertise lies in designing and implementing <strong>scalable data architectures</strong> that transform raw data into business intelligence.
+            I'm a <strong>graduate student in Information Technology Management</strong> at Florida Atlantic University, specializing in <strong>Data Engineering, Backend Development, and AI/ML systems</strong>. My journey began with a deep fascination for how data can be transformed into intelligent, scalable systems that solve real-world problems.
           </p>
           <p>
-            I specialize in the <strong>full data lifecycle</strong>: ingesting data from multiple sources, orchestrating ETL/ELT pipelines, building data warehouses, and creating analytics-ready datasets. My recent work includes architecting an <strong>AWS-based Store Operations Analytics Platform</strong> using industry best practices and modern tools.
+            What started as building <strong>ETL pipelines and data warehouses</strong> evolved into developing <strong>production-grade backend systems</strong> and <strong>ML-powered applications</strong>. I've had the privilege of working on a <strong>multi-tenant Hospital Management System</strong> where I built REST APIs, implemented CI/CD pipelines, and ensured 99.9% uptime through robust testing and monitoring.
           </p>
           <p>
-            I'm passionate about clean code, system design, and documentation. I believe in building solutions that are not just functional but also maintainable, scalable, and cost-efficient.
+            Beyond engineering, I'm passionate about <strong>financial markets and trading systems</strong>—I love exploring how data-driven insights can be applied to algorithmic trading and market analysis. I'm a continuous learner, always exploring new technologies, whether it's <strong>LLMs and prompt engineering</strong> or <strong>cloud-native architectures</strong>.
+          </p>
+          <p>
+            My goal is to build systems that not only work but are <strong>maintainable, scalable, and impactful</strong>—turning complex problems into elegant technical solutions.
           </p>
         </div>
 
-        <div class="about-card">
-          <h3>Key Achievements</h3>
-          <ul>
-            <li>Built end-to-end data pipeline with Apache Airflow orchestration</li>
-            <li>Designed Lakehouse architecture using S3 and Apache Iceberg</li>
-            <li>Integrated Snowflake with Power BI for real-time analytics</li>
-            <li>Exploring ML models with TensorFlow and Scikit-learn</li>
-            <li>AWS Certified Cloud Practitioner in progress (CLF-C02)</li>
+        <div class="quick-facts-card">
+          <h3>Quick Facts</h3>
+          <ul class="facts-list">
+            <li>
+              <span class="fact-icon">📍</span>
+              <span class="fact-content">
+                <strong>Location:</strong> Florida, USA
+              </span>
+            </li>
+            <li>
+              <span class="fact-icon">💼</span>
+              <span class="fact-content">
+                <strong>Experience:</strong> 2+ years in Data & Backend Engineering
+              </span>
+            </li>
+            <li>
+              <span class="fact-icon">🔧</span>
+              <span class="fact-content">
+                <strong>Main Technologies:</strong> Python, Django, AWS, PostgreSQL, Docker, Airflow
+              </span>
+            </li>
+            <li>
+              <span class="fact-icon">🎓</span>
+              <span class="fact-content">
+                <strong>Education:</strong> Master's in ITM (STEM), Florida Atlantic University
+              </span>
+            </li>
+            <li>
+              <span class="fact-icon">📜</span>
+              <span class="fact-content">
+                <strong>Current Certifications:</strong> AWS Certified Cloud Practitioner (in progress)
+              </span>
+            </li>
+            <li>
+              <span class="fact-icon">📚</span>
+              <span class="fact-content">
+                <strong>Currently Learning:</strong> LLM Engineering, Advanced AWS Services, System Design
+              </span>
+            </li>
+            <li>
+              <span class="fact-icon">💡</span>
+              <span class="fact-content">
+                <strong>Interests:</strong> Financial Markets, Algorithmic Trading, AI/ML Applications
+              </span>
+            </li>
           </ul>
         </div>
       </div>
     </section>
 
-    <!-- Expertise Section -->
-    <section id="expertise" class="section">
+    <!-- Skills Section -->
+    <section id="skills" class="section">
       <div class="section-header">
-        <h2>Expertise & Skills</h2>
-        <p>Technologies and tools I work with</p>
+        <h2>Skills & Technologies</h2>
+        <p>My technical toolkit for building scalable systems</p>
       </div>
 
       <div class="skills-grid">
         <div class="skill-group">
-          <h3>🐍 Languages</h3>
+          <h3>💻 Programming & Data</h3>
           <div class="skill-chips">
             <span>Python</span>
             <span>SQL</span>
-            <span>JavaScript (Basics)</span>
+            <span>Java</span>
             <span>Bash/Shell</span>
           </div>
         </div>
 
         <div class="skill-group">
-          <h3>☁️ Cloud & Infrastructure</h3>
+          <h3>🤖 Data & AI</h3>
           <div class="skill-chips">
-            <span>AWS S3</span>
-            <span>AWS Lambda</span>
-            <span>AWS EC2</span>
-            <span>AWS IAM</span>
-            <span>Docker (Basics)</span>
-          </div>
-        </div>
-
-        <div class="skill-group">
-          <h3>🔄 Data Engineering</h3>
-          <div class="skill-chips">
+            <span>ETL/ELT Pipelines</span>
             <span>Apache Airflow</span>
-            <span>Apache Iceberg</span>
-            <span>Snowflake</span>
-            <span>ETL/ELT</span>
-            <span>Data Modeling</span>
-          </div>
-        </div>
-
-        <div class="skill-group">
-          <h3>🤖 Data & ML</h3>
-          <div class="skill-chips">
+            <span>PySpark</span>
+            <span>ML Basics</span>
+            <span>LLM/Prompt Engineering</span>
+            <span>TensorFlow</span>
+            <span>Scikit-learn</span>
             <span>Pandas</span>
             <span>NumPy</span>
-            <span>Scikit-learn</span>
-            <span>TensorFlow</span>
-            <span>Jupyter/Colab</span>
           </div>
         </div>
 
         <div class="skill-group">
-          <h3>📊 Analytics & Visualization</h3>
+          <h3>🔧 Backend & Web</h3>
           <div class="skill-chips">
-            <span>Power BI</span>
-            <span>SQL Analytics</span>
-            <span>Data Warehousing</span>
-            <span>Tableau (Basics)</span>
+            <span>Django</span>
+            <span>Django REST Framework</span>
+            <span>REST APIs</span>
+            <span>PostgreSQL</span>
+            <span>Docker</span>
+            <span>nginx</span>
+            <span>CI/CD</span>
+            <span>Unit Testing</span>
+            <span>pytest</span>
           </div>
         </div>
 
         <div class="skill-group">
-          <h3>🛠️ Tools & Workflow</h3>
+          <h3>☁️ Cloud & AWS</h3>
+          <div class="skill-chips">
+            <span>AWS S3</span>
+            <span>AWS Glue</span>
+            <span>AWS EMR</span>
+            <span>AWS Redshift</span>
+            <span>AWS Lambda</span>
+            <span>AWS RDS</span>
+            <span>AWS EC2</span>
+            <span>AWS CloudWatch</span>
+            <span>AWS IAM</span>
+            <span>Apache Iceberg</span>
+            <span>Snowflake</span>
+          </div>
+        </div>
+
+        <div class="skill-group">
+          <h3>🛠️ Tools & DevOps</h3>
           <div class="skill-chips">
             <span>Git & GitHub</span>
             <span>VS Code</span>
             <span>Jupyter Notebooks</span>
-            <span>Notion</span>
+            <span>Power BI</span>
             <span>Linux/WSL</span>
+            <span>Postman</span>
+            <span>DBeaver</span>
           </div>
         </div>
       </div>
@@ -208,22 +239,89 @@
     <section id="projects" class="section">
       <div class="section-header">
         <h2>Featured Projects</h2>
-        <p>Hands-on work showcasing data engineering & ML</p>
+        <p>Real-world engineering work showcasing problem-solving and impact</p>
       </div>
 
       <div class="projects-grid">
 
+        <!-- Project 1: Hospital Management System -->
+        <article class="project-card">
+          <div class="project-tag">Backend Development</div>
+          <h3>🏥 Hospital Management System - Multi-Tenant Backend</h3>
+          <p class="project-role"><strong>Role:</strong> Backend Developer Intern</p>
+          
+          <div class="project-problem">
+            <h4>🎯 Problem</h4>
+            <p>Healthcare facilities needed a scalable, secure multi-tenant platform to manage patient records, appointments, billing, and staff operations across multiple clinics.</p>
+          </div>
+
+          <div class="project-solution">
+            <h4>💡 What I Built</h4>
+            <ul>
+              <li>Designed and implemented REST APIs using Django and Django REST Framework for patient management, appointment scheduling, and billing modules</li>
+              <li>Built multi-tenant architecture ensuring data isolation and security across different healthcare facilities</li>
+              <li>Integrated PostgreSQL database with optimized queries and indexing for high-performance operations</li>
+              <li>Implemented CI/CD pipelines with Docker and nginx for seamless deployment</li>
+              <li>Wrote comprehensive unit tests achieving 85%+ code coverage using pytest</li>
+              <li>Set up monitoring and logging systems ensuring 99.9% uptime</li>
+            </ul>
+          </div>
+
+          <div class="project-impact">
+            <h4>📈 Impact</h4>
+            <span class="impact-badge">✓ 99.9% Uptime</span>
+            <span class="impact-badge">✓ 85%+ Test Coverage</span>
+            <span class="impact-badge">✓ Multi-Tenant Architecture</span>
+            <span class="impact-badge">✓ RESTful API Design</span>
+          </div>
+
+          <ul class="project-tech">
+            <li>Django</li>
+            <li>Django REST Framework</li>
+            <li>PostgreSQL</li>
+            <li>Docker</li>
+            <li>nginx</li>
+            <li>pytest</li>
+            <li>CI/CD</li>
+          </ul>
+
+          <div class="project-links">
+            <a href="#" target="_blank" class="link-btn">View GitHub →</a>
+            <a href="#" target="_blank" class="link-btn secondary">Live Demo →</a>
+          </div>
+        </article>
+
+        <!-- Project 2: AWS Data Platform -->
         <article class="project-card">
           <div class="project-tag">Data Engineering</div>
           <h3>🏪 AWS Store Operations Analytics Platform</h3>
-          <p>
-            A production-grade data engineering project that ingests BestBuy product data and operational metrics into an S3-based Lakehouse architecture (Bronze → Silver → Gold layers). Orchestrated with Apache Airflow for reliability and scalability.
-          </p>
-          <div class="project-highlights">
-            <span>✓ Lakehouse Architecture</span>
-            <span>✓ Data Quality Checks</span>
-            <span>✓ Real-time Analytics</span>
+          <p class="project-role"><strong>Role:</strong> Data Engineer (Personal Project)</p>
+          
+          <div class="project-problem">
+            <h4>🎯 Problem</h4>
+            <p>Needed a production-grade data pipeline to ingest, transform, and analyze retail operations data from multiple sources with real-time analytics capabilities.</p>
           </div>
+
+          <div class="project-solution">
+            <h4>💡 What I Built</h4>
+            <ul>
+              <li>Architected a Lakehouse data platform using AWS S3 with Bronze → Silver → Gold layer pattern</li>
+              <li>Built ETL pipelines with Apache Airflow for automated data ingestion from BestBuy API</li>
+              <li>Implemented data quality checks and validation using Apache Iceberg table format</li>
+              <li>Integrated Snowflake data warehouse for analytics-ready datasets</li>
+              <li>Created Power BI dashboards for real-time operational insights</li>
+              <li>Optimized data partitioning and query performance reducing costs by 30%</li>
+            </ul>
+          </div>
+
+          <div class="project-impact">
+            <h4>📈 Impact</h4>
+            <span class="impact-badge">✓ 30% Cost Reduction</span>
+            <span class="impact-badge">✓ Lakehouse Architecture</span>
+            <span class="impact-badge">✓ Real-Time Analytics</span>
+            <span class="impact-badge">✓ Data Quality Automation</span>
+          </div>
+
           <ul class="project-tech">
             <li>AWS S3</li>
             <li>Apache Airflow</li>
@@ -231,117 +329,424 @@
             <li>Snowflake</li>
             <li>Power BI</li>
             <li>Python</li>
+            <li>PySpark</li>
           </ul>
+
           <div class="project-links">
-            <a href="https://github.com/maninampally/AWS-Data-Engineer-Project" target="_blank" class="link-btn">
-              View GitHub Repository →
-            </a>
+            <a href="https://github.com/maninampally/AWS-Data-Engineer-Project" target="_blank" class="link-btn">View GitHub →</a>
           </div>
         </article>
 
+        <!-- Project 3: Stock Market Dashboard -->
         <article class="project-card">
           <div class="project-tag">Full Stack</div>
           <h3>📈 Stock Market Analytics Dashboard</h3>
-          <p>
-            A web application integrating real-time stock data using Finnhub API. Built with Node.js backend and modern frontend, featuring secure API key management, real-time price updates, and fundamental analysis data visualization.
-          </p>
-          <div class="project-highlights">
-            <span>✓ Real-time Data</span>
-            <span>✓ API Integration</span>
-            <span>✓ Secure Backend</span>
+          <p class="project-role"><strong>Role:</strong> Full Stack Developer (Personal Project)</p>
+          
+          <div class="project-problem">
+            <h4>🎯 Problem</h4>
+            <p>Investors needed a centralized platform to track real-time stock prices, fundamental analysis, and market trends with secure data access.</p>
           </div>
+
+          <div class="project-solution">
+            <h4>💡 What I Built</h4>
+            <ul>
+              <li>Developed Node.js backend with Express.js for secure API key management and proxy requests</li>
+              <li>Integrated Finnhub API for real-time stock data, company fundamentals, and market news</li>
+              <li>Built responsive frontend with HTML/CSS/JavaScript for interactive data visualization</li>
+              <li>Implemented caching mechanisms to reduce API calls and improve performance</li>
+              <li>Designed RESTful endpoints for search, quote, and company profile data</li>
+            </ul>
+          </div>
+
+          <div class="project-impact">
+            <h4>📈 Impact</h4>
+            <span class="impact-badge">✓ Real-Time Data</span>
+            <span class="impact-badge">✓ Secure API Integration</span>
+            <span class="impact-badge">✓ Performance Optimized</span>
+            <span class="impact-badge">✓ Responsive Design</span>
+          </div>
+
           <ul class="project-tech">
             <li>Node.js</li>
-            <li>Express</li>
+            <li>Express.js</li>
             <li>Finnhub API</li>
             <li>HTML/CSS/JS</li>
+            <li>REST APIs</li>
           </ul>
+
           <div class="project-links">
-            <a href="#" target="_blank" class="link-btn">
-              GitHub Repo (Coming Soon) →
-            </a>
+            <a href="#" target="_blank" class="link-btn">View GitHub (Coming Soon) →</a>
+          </div>
+        </article>
+
+        <!-- Project 4: Placeholder for another project -->
+        <article class="project-card">
+          <div class="project-tag">Machine Learning</div>
+          <h3>🤖 ML Model Deployment Pipeline</h3>
+          <p class="project-role"><strong>Role:</strong> ML Engineer (Personal Project)</p>
+          
+          <div class="project-problem">
+            <h4>🎯 Problem</h4>
+            <p>Need to productionize ML models with automated training, versioning, and deployment capabilities.</p>
+          </div>
+
+          <div class="project-solution">
+            <h4>💡 What I'm Building</h4>
+            <ul>
+              <li>Developing end-to-end ML pipeline using TensorFlow and Scikit-learn</li>
+              <li>Implementing model versioning and experiment tracking with MLflow</li>
+              <li>Building REST API for model serving using FastAPI</li>
+              <li>Setting up automated retraining pipelines triggered by data drift detection</li>
+              <li>Containerizing ML models with Docker for consistent deployment</li>
+            </ul>
+          </div>
+
+          <div class="project-impact">
+            <h4>📈 Planned Impact</h4>
+            <span class="impact-badge">⏳ In Progress</span>
+            <span class="impact-badge">⏳ Model Versioning</span>
+            <span class="impact-badge">⏳ API Deployment</span>
+          </div>
+
+          <ul class="project-tech">
+            <li>TensorFlow</li>
+            <li>Scikit-learn</li>
+            <li>FastAPI</li>
+            <li>MLflow</li>
+            <li>Docker</li>
+            <li>Python</li>
+          </ul>
+
+          <div class="project-links">
+            <a href="#" target="_blank" class="link-btn">Coming Soon →</a>
           </div>
         </article>
 
       </div>
     </section>
 
-    <!-- Timeline Section -->
-    <section id="timeline" class="section">
+    <!-- Experience Section -->
+    <section id="experience" class="section">
       <div class="section-header">
-        <h2>Timeline</h2>
-        <p>Education & professional journey</p>
+        <h2>Work Experience</h2>
+        <p>Professional journey building data & backend systems</p>
       </div>
 
-      <div class="timeline">
-        <div class="timeline-item">
-          <div class="timeline-dot"></div>
-          <div class="timeline-content">
-            <h3>Masters in ITM (STEM) – Florida Atlantic University</h3>
-            <span class="timeline-date">2024 – Present</span>
-            <p>
-              Advanced coursework in Data Science, Machine Learning, Database Systems, Cloud Computing, and Data Engineering. Building real-world projects and exploring enterprise-level data solutions.
-            </p>
+      <div class="experience-timeline">
+        
+        <!-- Experience 1: Backend Developer Intern -->
+        <div class="experience-card">
+          <div class="experience-header">
+            <div class="experience-title-section">
+              <h3 class="experience-title">Backend Developer Intern</h3>
+              <p class="experience-company">🏥 [Company Name - Add from LinkedIn]</p>
+              <p class="experience-location">📍 [Location]</p>
+            </div>
+            <div class="experience-date">[Start Date] – [End Date]</div>
+          </div>
+          
+          <div class="experience-description">
+            <ul>
+              <li>Developed REST APIs for Hospital Management System using Django and Django REST Framework, enabling efficient patient management, appointment scheduling, and billing operations</li>
+              <li>Implemented multi-tenant architecture ensuring data isolation and security across multiple healthcare facilities</li>
+              <li>Optimized PostgreSQL database queries and indexing, improving API response times by 40%</li>
+              <li>Built CI/CD pipelines with Docker and nginx, achieving 99.9% uptime in production</li>
+              <li>Wrote comprehensive unit tests with pytest, achieving 85%+ code coverage and reducing production bugs by 60%</li>
+              <li>Collaborated with frontend team to integrate APIs and troubleshoot integration issues</li>
+            </ul>
+          </div>
+
+          <div class="experience-tech">
+            <span>Django</span>
+            <span>PostgreSQL</span>
+            <span>Docker</span>
+            <span>REST APIs</span>
+            <span>pytest</span>
+            <span>CI/CD</span>
           </div>
         </div>
 
-        <div class="timeline-item">
-          <div class="timeline-dot"></div>
-          <div class="timeline-content">
-            <h3>AWS Data Engineering Capstone Project</h3>
-            <span class="timeline-date">2025 – Present</span>
-            <p>
-              Designed and implemented a production-grade data engineering workflow using AWS services. Implemented best practices for data quality, orchestration, and analytics. Focus on scalability and cost optimization.
-            </p>
+        <!-- Experience 2: Data Engineer Intern (Placeholder) -->
+        <div class="experience-card">
+          <div class="experience-header">
+            <div class="experience-title-section">
+              <h3 class="experience-title">Data Engineer Intern</h3>
+              <p class="experience-company">🔧 [Company Name - Add from LinkedIn]</p>
+              <p class="experience-location">📍 [Location]</p>
+            </div>
+            <div class="experience-date">[Start Date] – [End Date]</div>
+          </div>
+          
+          <div class="experience-description">
+            <p><em>Please add your Data Engineering experience details from LinkedIn:</em></p>
+            <ul>
+              <li>[Add key responsibility and impact]</li>
+              <li>[Add key responsibility and impact]</li>
+              <li>[Add key responsibility and impact]</li>
+              <li>[Add key responsibility and impact]</li>
+              <li>[Add key responsibility and impact]</li>
+            </ul>
+          </div>
+
+          <div class="experience-tech">
+            <span>Python</span>
+            <span>AWS</span>
+            <span>ETL</span>
+            <span>Airflow</span>
+            <span>SQL</span>
           </div>
         </div>
 
-        <div class="timeline-item">
-          <div class="timeline-dot"></div>
-          <div class="timeline-content">
-            <h3>AWS Certified Cloud Practitioner Track</h3>
-            <span class="timeline-date">In Progress</span>
-            <p>
-              Pursuing AWS CLF-C02 certification to validate cloud computing expertise and best practices in cloud architecture and services.
-            </p>
+        <!-- Experience 3: Additional Role (Placeholder) -->
+        <div class="experience-card">
+          <div class="experience-header">
+            <div class="experience-title-section">
+              <h3 class="experience-title">[Job Title]</h3>
+              <p class="experience-company">🏢 [Company Name]</p>
+              <p class="experience-location">📍 [Location]</p>
+            </div>
+            <div class="experience-date">[Start Date] – [End Date]</div>
+          </div>
+          
+          <div class="experience-description">
+            <p><em>Add additional work experience from your LinkedIn:</em></p>
+            <ul>
+              <li>[Key achievement or responsibility]</li>
+              <li>[Key achievement or responsibility]</li>
+              <li>[Key achievement or responsibility]</li>
+            </ul>
+          </div>
+
+          <div class="experience-tech">
+            <span>[Technology]</span>
+            <span>[Technology]</span>
+            <span>[Technology]</span>
           </div>
         </div>
+
       </div>
     </section>
 
+    <!-- Certifications & Education Section -->
+    <section id="certifications" class="section">
+      <div class="section-header">
+        <h2>Certifications & Education</h2>
+        <p>Continuous learning and professional development</p>
+      </div>
+
+      <div class="cert-edu-grid">
+        
+        <!-- Certifications Column -->
+        <div class="certifications-section">
+          <h3 class="subsection-title">📜 Certifications</h3>
+          
+          <div class="cert-item">
+            <div class="cert-icon">☁️</div>
+            <div class="cert-details">
+              <h4>AWS Certified Cloud Practitioner</h4>
+              <p class="cert-issuer">Amazon Web Services (AWS)</p>
+              <p class="cert-date">In Progress – Expected February 2026</p>
+              <p class="cert-description">CLF-C02 certification validating cloud computing expertise and AWS best practices</p>
+            </div>
+          </div>
+
+          <div class="cert-item placeholder">
+            <div class="cert-icon">📜</div>
+            <div class="cert-details">
+              <h4>[Add Additional Certification from LinkedIn]</h4>
+              <p class="cert-issuer">[Issuing Organization]</p>
+              <p class="cert-date">[Issued Date]</p>
+              <p class="cert-description">[Brief description of certification]</p>
+            </div>
+          </div>
+
+          <div class="cert-item placeholder">
+            <div class="cert-icon">📜</div>
+            <div class="cert-details">
+              <h4>[Add Additional Certification from LinkedIn]</h4>
+              <p class="cert-issuer">[Issuing Organization]</p>
+              <p class="cert-date">[Issued Date]</p>
+              <p class="cert-description">[Brief description of certification]</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Education Column -->
+        <div class="education-section">
+          <h3 class="subsection-title">🎓 Education</h3>
+          
+          <div class="edu-item">
+            <div class="edu-icon">🎓</div>
+            <div class="edu-details">
+              <h4>Master of Science in Information Technology Management (STEM)</h4>
+              <p class="edu-school">Florida Atlantic University</p>
+              <p class="edu-location">📍 Boca Raton, Florida, USA</p>
+              <p class="edu-date">2024 – Present (Expected Graduation: [Add Month/Year])</p>
+              <div class="edu-highlights">
+                <p><strong>Relevant Coursework:</strong></p>
+                <ul>
+                  <li>Data Science & Analytics</li>
+                  <li>Machine Learning</li>
+                  <li>Database Systems</li>
+                  <li>Cloud Computing</li>
+                  <li>Data Engineering</li>
+                  <li>Software Engineering</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="edu-item placeholder">
+            <div class="edu-icon">🎓</div>
+            <div class="edu-details">
+              <h4>[Bachelor's Degree Title]</h4>
+              <p class="edu-school">[University Name]</p>
+              <p class="edu-location">📍 [Location]</p>
+              <p class="edu-date">[Start Year] – [Graduation Year]</p>
+              <p class="edu-gpa"><em>Add from LinkedIn if you want to include GPA</em></p>
+              <div class="edu-highlights">
+                <p><strong>Achievements/Activities:</strong></p>
+                <ul>
+                  <li>[Add relevant coursework, honors, or activities]</li>
+                  <li>[Add relevant coursework, honors, or activities]</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
     <!-- Contact Section -->
     <section id="contact" class="section">
       <div class="section-header">
         <h2>Let's Connect</h2>
-        <p>Reach out for opportunities, collaborations, or just a chat</p>
+        <p>Get in touch for opportunities, collaborations, or just to chat about tech</p>
       </div>
 
-      <div class="contact-grid">
-        <div class="contact-info">
-          <h3>Open To Opportunities</h3>
+      <div class="contact-container">
+        
+        <!-- Contact Info -->
+        <div class="contact-info-section">
+          <h3>Get In Touch</h3>
           <p>
-            I'm actively seeking <strong>internships, part-time roles, and full-time positions</strong> in data engineering, analytics, and machine learning. If my profile aligns with what you're looking for, I'd love to connect!
+            I'm actively seeking <strong>internships, part-time roles, and full-time positions</strong> in AI/ML engineering, data engineering, and backend development. Whether it's discussing system architecture, collaborating on ML projects, or exploring how I can contribute to your team, I'd love to connect!
           </p>
-          <p>
-            Whether it's discussing data architecture, collaborating on ML projects, or exploring how I can contribute to your team, feel free to reach out.
-          </p>
-        </div>
-        <div class="contact-card">
-          <div class="social-links">
-            <a href="mailto:manikanthnampally94@gmail.com" class="social-link" title="Send Email">
-              <span>📧</span> Email
+
+          <div class="contact-details">
+            <div class="contact-detail-item">
+              <img src="assets/icons/social/gmail.svg" alt="Email" class="contact-icon-img">
+              <div>
+                <strong>Email</strong>
+                <p><a href="mailto:manikanthnampally94@gmail.com">manikanthnampally94@gmail.com</a></p>
+              </div>
+            </div>
+
+            <div class="contact-detail-item">
+              <span class="contact-icon">📍</span>
+              <div>
+                <strong>Location</strong>
+                <p>Florida, USA</p>
+              </div>
+            </div>
+
+            <div class="contact-detail-item">
+              <img src="assets/icons/social/linkedin.svg" alt="LinkedIn" class="contact-icon-img">
+              <div>
+                <strong>LinkedIn</strong>
+                <p><a href="https://www.linkedin.com/in/manikanthn/" target="_blank">linkedin.com/in/manikanthn</a></p>
+              </div>
+            </div>
+
+            <div class="contact-detail-item">
+              <img src="assets/icons/tech/github.svg" alt="GitHub" class="contact-icon-img">
+              <div>
+                <strong>GitHub</strong>
+                <p><a href="https://github.com/maninampally" target="_blank">github.com/maninampally</a></p>
+              </div>
+            </div>
+          </div>
+
+          <div class="social-links-horizontal">
+            <a href="mailto:manikanthnampally94@gmail.com" class="social-btn" title="Email" aria-label="Send Email">
+              <img src="assets/icons/social/gmail.svg" alt="Email" class="social-icon-img">
             </a>
-            <a href="https://www.linkedin.com/in/manikanthn/" target="_blank" class="social-link" title="Visit LinkedIn">
-              <span>💼</span> LinkedIn
+            <a href="https://www.linkedin.com/in/manikanthn/" target="_blank" class="social-btn" title="LinkedIn" aria-label="Visit LinkedIn">
+              <img src="assets/icons/social/linkedin.svg" alt="LinkedIn" class="social-icon-img">
             </a>
-            <a href="https://github.com/maninampally" target="_blank" class="social-link" title="Visit GitHub">
-              <span>🐙</span> GitHub
+            <a href="https://github.com/maninampally" target="_blank" class="social-btn" title="GitHub" aria-label="Visit GitHub">
+              <img src="assets/icons/tech/github.svg" alt="GitHub" class="social-icon-img">
             </a>
           </div>
+        </div>
+
+        <!-- Contact Form -->
+        <div class="contact-form-section">
+          <h3>Send a Message</h3>
+          <form id="contact-form" class="contact-form" novalidate>
+            <div class="form-group">
+              <label for="name">Name *</label>
+              <input 
+                type="text" 
+                id="name" 
+                name="name" 
+                required 
+                placeholder="Your full name"
+                aria-required="true"
+              />
+              <span class="error-message" id="name-error"></span>
+            </div>
+
+            <div class="form-group">
+              <label for="email">Email *</label>
+              <input 
+                type="email" 
+                id="email" 
+                name="email" 
+                required 
+                placeholder="your.email@example.com"
+                aria-required="true"
+              />
+              <span class="error-message" id="email-error"></span>
+            </div>
+
+            <div class="form-group">
+              <label for="subject">Subject</label>
+              <input 
+                type="text" 
+                id="subject" 
+                name="subject" 
+                placeholder="Brief subject line"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="message">Message *</label>
+              <textarea 
+                id="message" 
+                name="message" 
+                rows="5" 
+                required 
+                placeholder="Your message..."
+                aria-required="true"
+              ></textarea>
+              <span class="error-message" id="message-error"></span>
+            </div>
+
+            <button type="submit" class="btn primary submit-btn">
+              <span class="btn-text">Send Message</span>
+              <span class="btn-loading" style="display: none;">Sending...</span>
+            </button>
+
+            <div class="form-status" id="form-status"></div>
+          </form>
+
           <p class="contact-note">
-            💡 <strong>Pro Tip:</strong> LinkedIn is the best way to connect - I typically respond within 24 hours.
+            💡 <strong>Pro Tip:</strong> LinkedIn is the fastest way to connect—I typically respond within 24 hours!
           </p>
         </div>
+
       </div>
     </section>
 
@@ -352,8 +757,11 @@
     </footer>
   </div>
 
-  <!-- Dark Mode Script -->
+  <!-- Scripts -->
   <script>
+    // ===========================
+    // Dark Mode Toggle
+    // ===========================
     const toggleBtn = document.getElementById('theme-toggle');
     const body = document.body;
 
@@ -371,6 +779,12 @@
       localStorage.setItem('theme', isDark ? 'dark' : 'light');
     });
 
+    // ===========================
+    // Smooth Scroll & Active Navigation
+    // ===========================
+    const navLinks = document.querySelectorAll('.nav-link');
+    const sections = document.querySelectorAll('section[id]');
+
     // Smooth scroll for navigation
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', function (e) {
@@ -383,6 +797,134 @@
         }
       });
     });
+
+    // Highlight active section in navigation
+    function highlightActiveSection() {
+      let current = '';
+      const scrollY = window.pageYOffset;
+
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        const sectionHeight = section.clientHeight;
+        
+        // Check if section is in viewport (with offset for header)
+        if (scrollY >= sectionTop - 150) {
+          current = section.getAttribute('id');
+        }
+      });
+
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === `#${current}`) {
+          link.classList.add('active');
+        }
+      });
+    }
+
+    // Run on scroll
+    window.addEventListener('scroll', highlightActiveSection);
+    // Run on page load
+    highlightActiveSection();
+
+    // ===========================
+    // Contact Form Validation & Submission
+    // ===========================
+    const contactForm = document.getElementById('contact-form');
+    const formStatus = document.getElementById('form-status');
+
+    if (contactForm) {
+      contactForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+
+        // Clear previous errors
+        document.querySelectorAll('.error-message').forEach(el => el.textContent = '');
+        document.querySelectorAll('.form-group input, .form-group textarea').forEach(el => {
+          el.classList.remove('error');
+        });
+
+        // Get form values
+        const name = document.getElementById('name').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const subject = document.getElementById('subject').value.trim();
+        const message = document.getElementById('message').value.trim();
+
+        let isValid = true;
+
+        // Validate name
+        if (!name || name.length < 2) {
+          showError('name', 'Please enter a valid name (at least 2 characters)');
+          isValid = false;
+        }
+
+        // Validate email
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!email || !emailRegex.test(email)) {
+          showError('email', 'Please enter a valid email address');
+          isValid = false;
+        }
+
+        // Validate message
+        if (!message || message.length < 10) {
+          showError('message', 'Please enter a message (at least 10 characters)');
+          isValid = false;
+        }
+
+        if (!isValid) {
+          return;
+        }
+
+        // Show loading state
+        const btnText = document.querySelector('.btn-text');
+        const btnLoading = document.querySelector('.btn-loading');
+        const submitBtn = document.querySelector('.submit-btn');
+        
+        btnText.style.display = 'none';
+        btnLoading.style.display = 'inline';
+        submitBtn.disabled = true;
+
+        // Simulate form submission (replace with actual backend endpoint)
+        try {
+          // TODO: Replace this with actual form submission to your backend
+          // Example: await fetch('/api/contact', { method: 'POST', body: JSON.stringify({name, email, subject, message}) });
+          
+          await new Promise(resolve => setTimeout(resolve, 1500)); // Simulate network delay
+
+          // Show success message
+          formStatus.innerHTML = '<div class="success-message">✓ Message sent successfully! I\'ll get back to you soon.</div>';
+          formStatus.style.display = 'block';
+
+          // Reset form
+          contactForm.reset();
+
+          // Hide success message after 5 seconds
+          setTimeout(() => {
+            formStatus.style.display = 'none';
+          }, 5000);
+
+        } catch (error) {
+          // Show error message
+          formStatus.innerHTML = '<div class="error-message-box">✗ Something went wrong. Please try emailing me directly at manikanthnampally94@gmail.com</div>';
+          formStatus.style.display = 'block';
+        } finally {
+          // Reset button state
+          btnText.style.display = 'inline';
+          btnLoading.style.display = 'none';
+          submitBtn.disabled = false;
+        }
+      });
+    }
+
+    function showError(fieldId, message) {
+      const errorElement = document.getElementById(`${fieldId}-error`);
+      const inputElement = document.getElementById(fieldId);
+      
+      if (errorElement) {
+        errorElement.textContent = message;
+      }
+      if (inputElement) {
+        inputElement.classList.add('error');
+      }
+    }
   </script>
 </body>
 </html>
