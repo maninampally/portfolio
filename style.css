@@ -656,18 +656,19 @@ body.dark .about-card {
 }
 
 .skill-group {
-  border-radius: var(--radius-lg);
-  padding: 1.8rem;
-  background: var(--surface);
-  border: 2px solid rgba(148, 163, 184, 0.20);
-  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  border-radius: 0;
+  padding: 0 0 1.5rem;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  transition: none;
   cursor: default;
 }
 
 .skill-group:hover {
-  border-color: rgba(37, 99, 235, 0.35);
-  transform: translateY(-6px);
-  box-shadow: 0 16px 45px rgba(37, 99, 235, 0.18);
+  border-color: none;
+  transform: none;
+  box-shadow: none;
 }
 
 .skill-group h3 {
@@ -709,32 +710,27 @@ body.dark .about-card {
 }
 
 .project-card {
-  border-radius: var(--radius-xl);
-  padding: 2.2rem;
-  background: var(--surface);
-  border: 2px solid rgba(148, 163, 184, 0.20);
-  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  border-radius: 0;
+  padding: 0 0 2rem;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  transition: none;
   position: relative;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .project-card::before {
-  content: "";
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 4px;
-  background: linear-gradient(90deg, var(--accent), rgba(37, 99, 235, 0));
-  opacity: 0;
-  transition: opacity 0.3s ease;
+  display: none;
 }
 
 .project-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 22px 60px rgba(37, 99, 235, 0.22);
-  border-color: rgba(37, 99, 235, 0.35);
+  transform: none;
+  box-shadow: none;
+  border-color: none;
 }
 
-.project-card:hover::before { opacity: 1; }
+.project-card:hover::before { opacity: 0; }
 
 .project-tag {
   display: inline-block;
@@ -992,19 +988,74 @@ body.dark .social-link {
 ========================= */
 
 .footer {
-  text-align: center;
-  font-size: 0.88rem;
-  color: var(--muted);
   margin-top: 3rem;
-  padding: 2rem 0;
-  border-top: 2px solid rgba(148, 163, 184, 0.25);
+  padding: 1.5rem 0;
+  background: #22354a;
+  color: #e5e7eb;
+  border-top: none;
 }
+
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.footer-brand p { margin: 0; }
 
 .footer-meta {
   font-size: 0.82rem;
-  color: var(--muted);
-  opacity: 0.75;
-  margin-top: 0.5rem;
+  color: rgba(229, 231, 235, 0.7);
+  margin-top: 0.25rem;
+}
+
+.footer-contact {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.footer-location {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: #e5e7eb;
+  font-weight: 600;
+}
+
+.footer-social-links {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.footer .social-btn {
+  background: transparent;
+  box-shadow: none;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  width: 42px;
+  height: 42px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+}
+
+.footer .social-btn:hover {
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.footer .social-btn-icon {
+  width: 22px;
+  height: 22px;
+  filter: brightness(0) invert(1);
 }
 
 /* =========================
@@ -1253,34 +1304,27 @@ body.dark .quick-facts-card {
 }
 
 .experience-card {
-  border-radius: var(--radius-lg);
-  padding: 2rem;
-  background: var(--surface);
-  border: 2px solid rgba(148, 163, 184, 0.20);
-  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  border-radius: 0;
+  padding: 0 0 1.5rem;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  transition: none;
   position: relative;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .experience-card::before {
-  content: "";
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 4px;
-  background: linear-gradient(90deg, var(--accent), rgba(37, 99, 235, 0));
-  opacity: 0;
-  transition: opacity 0.3s ease;
+  display: none;
 }
 
 .experience-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 18px 45px rgba(37, 99, 235, 0.20);
-  border-color: rgba(37, 99, 235, 0.35);
+  transform: none;
+  box-shadow: none;
+  border-color: none;
 }
 
-.experience-card:hover::before {
-  opacity: 1;
-}
+.experience-card:hover::before { opacity: 0; }
 
 .experience-header {
   display: flex;
@@ -1597,6 +1641,13 @@ body.dark .quick-facts-card {
 .social-btn:hover {
   transform: translateY(-5px) scale(1.05);
   box-shadow: 0 12px 30px rgba(37, 99, 235, 0.45);
+}
+
+.social-btn-icon {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+  filter: brightness(0) invert(1); /* Makes icons white */
 }
 
 .social-icon {
