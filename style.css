@@ -600,7 +600,7 @@ body.dark .hero-meta span {
 
 .about-grid strong {
   color: var(--text);
-  font-weight: 800;
+  font-weight: 400;
 }
 
 .about-card {
@@ -706,31 +706,54 @@ body.dark .about-card {
 .projects-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 2rem;
+  gap: 1.6rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
 }
 
 .project-card {
-  border-radius: 0;
-  padding: 0 0 2rem;
-  background: transparent;
-  border: none;
-  box-shadow: none;
-  transition: none;
+  border-radius: var(--radius-xl);
+  padding: 1.8rem;
+  background: var(--surface);
+  border: 1px solid rgba(148, 163, 184, 0.25);
+  box-shadow: 0 12px 28px rgba(2, 6, 23, 0.06);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
   position: relative;
-  overflow: visible;
+  overflow: hidden;
 }
 
 .project-card::before {
-  display: none;
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--accent), rgba(37, 99, 235, 0));
+  opacity: 0;
+  transition: opacity 0.25s ease;
 }
 
 .project-card:hover {
-  transform: none;
-  box-shadow: none;
-  border-color: none;
+  transform: translateY(-6px);
+  box-shadow: 0 18px 48px rgba(37, 99, 235, 0.14);
+  border-color: rgba(37, 99, 235, 0.35);
 }
 
-.project-card:hover::before { opacity: 0; }
+.project-card:hover::before { opacity: 1; }
+
+@media (min-width: 768px) {
+  .projects-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1100px) {
+  .projects-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
 
 .project-tag {
   display: inline-block;
@@ -1162,7 +1185,7 @@ body.dark .social-link {
 
 .about-story strong {
   color: var(--text);
-  font-weight: 800;
+  font-weight: 400;
 }
 
 .quick-facts-card {
@@ -1202,7 +1225,7 @@ body.dark .quick-facts-card {
   gap: 0.9rem;
   font-size: 0.92rem;
   color: var(--text-secondary);
-  font-weight: 600;
+  font-weight: 400;
 }
 
 .fact-icon {
@@ -1213,7 +1236,7 @@ body.dark .quick-facts-card {
 
 .fact-content strong {
   color: var(--text);
-  font-weight: 800;
+  font-weight: 400;
   display: inline-block;
   margin-bottom: 0.2rem;
 }
