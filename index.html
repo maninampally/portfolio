@@ -1,14 +1,14 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Quantitative Analyst | Data Engineer | Python • SQL • Airflow • Snowflake • AWS | Building analytics pipelines and reliable data systems" />
-  <meta name="keywords" content="Quantitative Analyst, Data Engineer, Python, SQL, Airflow, Snowflake, AWS, ETL, Analytics Pipelines, Data Quality" />
+  <meta name="description" content="Data Engineer with 2.5+ years of experience building ETL/ELT pipelines, cloud data warehouses, and BI-ready analytics systems on AWS and Azure." />
+  <meta name="keywords" content="Data Engineer, Python, PySpark, SQL, Airflow, AWS, Azure, ETL, ELT, Data Warehousing, Power BI, Tableau" />
   <meta name="author" content="Manikanth Nampally" />
-  <meta property="og:title" content="Manikanth Nampally - Quantitative Analyst | Data Engineer" />
-  <meta property="og:description" content="Python-driven analytics pipelines, data quality, and reliable data systems" />
-  <title>Manikanth Nampally | Quantitative Analyst | Data Engineer | Portfolio</title>
+  <meta property="og:title" content="Manikanth Nampally - Data Engineer" />
+  <meta property="og:description" content="ETL/ELT pipelines, cloud data platforms, and executive-ready analytics solutions on AWS and Azure" />
+  <title>Manikanth Nampally | Data Engineer | Portfolio</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -27,12 +27,17 @@
         <span class="logo-text">Mani</span>
       </div>
 
-      <nav class="nav">
+        <button id="nav-toggle" class="nav-toggle" aria-controls="primary-nav" aria-expanded="false" aria-label="Toggle navigation">
+          ☰
+        </button>
+
+        <nav id="primary-nav" class="nav" role="navigation">
         <a href="#home" class="nav-link">HOME</a>
         <a href="#about" class="nav-link">ABOUT</a>
         <a href="#skills" class="nav-link">SKILLS</a>
         <a href="#experience" class="nav-link">EXPERIENCE</a>
         <a href="#projects" class="nav-link">PROJECTS</a>
+        <a href="#education" class="nav-link">EDUCATION</a>
         <a href="#certifications" class="nav-link">CERTIFICATIONS</a>
         <a href="#contact" class="nav-link">CONTACT</a>
       </nav>
@@ -51,21 +56,21 @@
         <h1 class="hero-name">Manikanth Nampally</h1>
         <h2 class="hero-headline">Data Engineer</h2>
         <p class="hero-value-statement">
-          I design and build production-grade data pipelines that process terabytes of data daily, deliver real-time insights, and power data-driven decision-making. Specialized in cloud-native architectures, workflow orchestration, and modern data stack technologies.
+          Data Engineer with 2.5+ years of experience building end-to-end analytics solutions, from large-scale ETL/ELT pipelines on AWS and Azure to star-schema warehouses and executive-ready dashboards.
         </p>
 
         <div class="hero-highlights">
           <div class="highlight-item">
             <span class="highlight-icon">⚡</span>
-            <span class="highlight-text">Data engineering + backend experience</span>
+            <span class="highlight-text">2.5+ years in data engineering</span>
           </div>
           <div class="highlight-item">
             <span class="highlight-icon">🔧</span>
-            <span class="highlight-text">Python • SQL • Airflow • Snowflake • AWS</span>
+            <span class="highlight-text">Python • PySpark • SQL • Airflow • AWS • Azure</span>
           </div>
           <div class="highlight-item">
             <span class="highlight-icon">📊</span>
-            <span class="highlight-text">AWS Certified (Cloud + AI Practitioner)</span>
+            <span class="highlight-text">60% latency reduction • 99% pipeline reliability</span>
           </div>
         </div>
 
@@ -82,6 +87,31 @@
       </div>
     </section>
 
+    <script>
+      // Mobile nav toggle: toggles `nav-open` on the header
+      (function(){
+        const btn = document.getElementById('nav-toggle');
+        const header = document.querySelector('.header');
+        const nav = document.getElementById('primary-nav');
+
+        if(!btn || !header || !nav) return;
+
+        btn.addEventListener('click', function(){
+          const expanded = btn.getAttribute('aria-expanded') === 'true';
+          btn.setAttribute('aria-expanded', String(!expanded));
+          header.classList.toggle('nav-open');
+        });
+
+        // Close nav when a link is clicked (mobile)
+        nav.addEventListener('click', function(e){
+          if(e.target.matches('.nav-link')){
+            btn.setAttribute('aria-expanded', 'false');
+            header.classList.remove('nav-open');
+          }
+        });
+      })();
+    </script>
+
     <!-- About Section -->
     <section id="about" class="section">
       <div class="section-header">
@@ -91,16 +121,16 @@
       <div class="about-grid">
         <div class="about-story">
           <p>
-            I'm a <strong>graduate student in Information Technology Management</strong> at Florida Atlantic University with experience across <strong>data engineering</strong> and <strong>backend development</strong>. I enjoy building analytics pipelines that are fast, reliable, and easy to operate.
+            I am a <strong>Data Engineer</strong> with around <strong>2.5 years of experience</strong> building modern analytics platforms and production-grade data pipelines.
           </p>
           <p>
-            My work focuses on <strong>Python + SQL</strong> workflows, incremental loads, data validation, and monitoring—so stakeholders can trust the numbers and teams can ship changes safely.
+            My core stack includes <strong>Python, PySpark, SQL, and Airflow</strong>, with hands-on delivery across <strong>AWS and Azure</strong> for scalable ETL/ELT and data warehousing workloads.
           </p>
           <p>
-            I'm also passionate about <strong>financial markets</strong> and building data-driven tooling for research and analysis.
+            I focus on building dependable systems that improve analytics speed and quality, including measurable outcomes such as <strong>60% lower reporting latency</strong> and <strong>99% pipeline reliability</strong>.
           </p>
           <p>
-            My goal is to deliver systems that are <strong>accurate, observable, and production-ready</strong>—turning messy data into dependable datasets and dashboards.
+            I also work with <strong>LLM-powered workflows</strong> and BI platforms such as Power BI and Tableau to turn complex data into actionable business insights.
           </p>
         </div>
 
@@ -128,19 +158,19 @@
             <li>
               <span class="fact-icon">💼</span>
               <span class="fact-content">
-                <strong>Experience:</strong> Around 2 years in Data & Backend Engineering
+                <strong>Experience:</strong> Around 2.5 years in Data Engineering
               </span>
             </li>
             <li>
               <span class="fact-icon">🔧</span>
               <span class="fact-content">
-                <strong>Main Technologies:</strong> Python, SQL, Airflow, Snowflake, AWS
+                <strong>Main Technologies:</strong> Python, PySpark, SQL, Airflow, AWS, Azure
               </span>
             </li>
             <li>
               <span class="fact-icon">📚</span>
               <span class="fact-content">
-                <strong>Currently Learning:</strong> Advanced Data Engineering, RAG Systems, System Design
+                <strong>Currently Learning:</strong> LLM-based analytics, advanced orchestration, system design
               </span>
             </li>
             <li>
@@ -161,210 +191,93 @@
           <h2 class="tech-skills__title">TECHNICAL SKILLS</h2>
         </header>
 
-        <!-- SVG sprite (reusable icons) -->
+        <!-- SVG sprite -->
         <svg class="tech-skills__sprite" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <symbol id="ts-icon-code" viewBox="0 0 24 24">
-            <path d="M8 9l-3 3 3 3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-            <path d="M16 9l3 3-3 3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-            <path d="M14 7l-4 10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-          </symbol>
-
           <symbol id="ts-icon-db" viewBox="0 0 24 24">
-            <ellipse cx="12" cy="5" rx="7" ry="3" fill="none" stroke="currentColor" stroke-width="2" />
-            <path d="M5 5v6c0 1.7 3.1 3 7 3s7-1.3 7-3V5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-            <path d="M5 11v6c0 1.7 3.1 3 7 3s7-1.3 7-3v-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <ellipse cx="12" cy="5" rx="7" ry="3" fill="none" stroke="currentColor" stroke-width="2"/>
+            <path d="M5 5v6c0 1.7 3.1 3 7 3s7-1.3 7-3V5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M5 11v6c0 1.7 3.1 3 7 3s7-1.3 7-3v-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </symbol>
-
           <symbol id="ts-icon-pipeline" viewBox="0 0 24 24">
-            <circle cx="6" cy="7" r="2" fill="none" stroke="currentColor" stroke-width="2" />
-            <circle cx="18" cy="7" r="2" fill="none" stroke="currentColor" stroke-width="2" />
-            <circle cx="12" cy="17" r="2" fill="none" stroke="currentColor" stroke-width="2" />
-            <path d="M8 7h8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-            <path d="M7.5 8.5l3.5 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-            <path d="M16.5 8.5L13 14.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+            <circle cx="6" cy="7" r="2" fill="none" stroke="currentColor" stroke-width="2"/>
+            <circle cx="18" cy="7" r="2" fill="none" stroke="currentColor" stroke-width="2"/>
+            <circle cx="12" cy="17" r="2" fill="none" stroke="currentColor" stroke-width="2"/>
+            <path d="M8 7h8M7.5 8.5l3.5 6M16.5 8.5L13 14.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
           </symbol>
-
-          <symbol id="ts-icon-cloud" viewBox="0 0 24 24">
-            <path d="M7 18h11a4 4 0 0 0 .6-7.95A5.5 5.5 0 0 0 8.2 8.9 4.5 4.5 0 0 0 7 18Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-          </symbol>
-
-          <symbol id="ts-icon-container" viewBox="0 0 24 24">
-            <path d="M3 7l9-4 9 4-9 4-9-4Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
-            <path d="M3 7v10l9 4 9-4V7" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
-            <path d="M12 11v10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-          </symbol>
-
           <symbol id="ts-icon-cicd" viewBox="0 0 24 24">
-            <path d="M12 6v3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-            <path d="M12 15v3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-            <path d="M6 12h3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-            <path d="M15 12h3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-            <path d="M12 15a3 3 0 1 0 0-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M12 6v3M12 15v3M6 12h3M15 12h3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M12 15a3 3 0 1 0 0-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </symbol>
-
           <symbol id="ts-icon-api" viewBox="0 0 24 24">
-            <path d="M8 8l-4 4 4 4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-            <path d="M16 8l4 4-4 4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-            <path d="M14 6l-4 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-          </symbol>
-
-          <symbol id="ts-icon-lock" viewBox="0 0 24 24">
-            <path d="M7 11V8a5 5 0 0 1 10 0v3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-            <rect x="6" y="11" width="12" height="10" rx="2" fill="none" stroke="currentColor" stroke-width="2" />
-          </symbol>
-
-          <symbol id="ts-icon-chart" viewBox="0 0 24 24">
-            <path d="M4 19V5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-            <path d="M4 19h16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-            <path d="M8 16v-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-            <path d="M12 16v-8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-            <path d="M16 16v-3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-          </symbol>
-
-          <symbol id="ts-icon-tools" viewBox="0 0 24 24">
-            <path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L4 17l3 3 5.3-5.3a4 4 0 0 0 5.4-5.4l-2 2-2-2 2-2Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-          </symbol>
-
-          <symbol id="ts-icon-git" viewBox="0 0 24 24">
-            <circle cx="7" cy="7" r="2" fill="none" stroke="currentColor" stroke-width="2" />
-            <circle cx="17" cy="17" r="2" fill="none" stroke="currentColor" stroke-width="2" />
-            <circle cx="17" cy="7" r="2" fill="none" stroke="currentColor" stroke-width="2" />
-            <path d="M9 7h6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-            <path d="M7 9v6a4 4 0 0 0 4 4h4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-          </symbol>
-
-          <symbol id="ts-icon-github" viewBox="0 0 30 30">
-            <path fill="currentColor" d="M15,3C8.373,3,3,8.373,3,15c0,5.623,3.872,10.328,9.092,11.63C12.036,26.468,12,26.28,12,26.047v-2.051 c-0.487,0-1.303,0-1.508,0c-0.821,0-1.551-0.353-1.905-1.009c-0.393-0.729-0.461-1.844-1.435-2.526 c-0.289-0.227-0.069-0.486,0.264-0.451c0.615,0.174,1.125,0.596,1.605,1.222c0.478,0.627,0.703,0.769,1.596,0.769 c0.433,0,1.081-0.025,1.691-0.121c0.328-0.833,0.895-1.6,1.588-1.962c-3.996-0.411-5.903-2.399-5.903-5.098 c0-1.162,0.495-2.286,1.336-3.233C9.053,10.647,8.706,8.73,9.435,8c1.798,0,2.885,1.166,3.146,1.481C13.477,9.174,14.461,9,15.495,9 c1.036,0,2.024,0.174,2.922,0.483C18.675,9.17,19.763,8,21.565,8c0.732,0.731,0.381,2.656,0.102,3.594 c0.836,0.945,1.328,2.066,1.328,3.226c0,2.697-1.904,4.684-5.894,5.097C18.199,20.49,19,22.1,19,23.313v2.734 c0,0.104-0.023,0.179-0.035,0.268C23.641,24.676,27,20.236,27,15C27,8.373,21.627,3,15,3z" />
-          </symbol>
-
-          <symbol id="ts-icon-powerbi" viewBox="0 0 24 24">
-            <rect x="5" y="10" width="4" height="9" rx="1" fill="none" stroke="currentColor" stroke-width="2" />
-            <rect x="10" y="7" width="4" height="12" rx="1" fill="none" stroke="currentColor" stroke-width="2" />
-            <rect x="15" y="4" width="4" height="15" rx="1" fill="none" stroke="currentColor" stroke-width="2" />
+            <path d="M8 8l-4 4 4 4M16 8l4 4-4 4M14 6l-4 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </symbol>
         </svg>
 
         <div class="tech-skills__grid">
 
+          <!-- Card 1: Programming -->
           <article class="tech-skill-card">
-            <header class="tech-skill-card__header">
-              <h3 class="tech-skill-card__title">Data Engineering</h3>
-            </header>
+            <header class="tech-skill-card__header"><h3 class="tech-skill-card__title">Programming</h3></header>
+            <ul class="tech-skill-list" aria-label="Programming skills">
+              <li class="tech-skill-item"><img class="tech-skill-item__icon" aria-hidden="true" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg" alt=""><span class="tech-skill-item__label">Python</span></li>
+              <li class="tech-skill-item"><svg class="tech-skill-item__icon" aria-hidden="true" viewBox="0 0 24 24" focusable="false"><use href="#ts-icon-db"/></svg><span class="tech-skill-item__label">SQL</span></li>
+              <li class="tech-skill-item"><img class="tech-skill-item__icon" aria-hidden="true" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/java/java-original.svg" alt=""><span class="tech-skill-item__label">Java</span></li>
+              <li class="tech-skill-item"><img class="tech-skill-item__icon" aria-hidden="true" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/c/c-original.svg" alt=""><span class="tech-skill-item__label">C</span></li>
+            </ul>
+          </article>
+
+          <!-- Card 2: Data Engineering -->
+          <article class="tech-skill-card">
+            <header class="tech-skill-card__header"><h3 class="tech-skill-card__title">Data Engineering</h3></header>
             <ul class="tech-skill-list" aria-label="Data engineering skills">
-              <li class="tech-skill-item">
-                <span class="tech-skill-item__icon" aria-hidden="true"><img src="assets/icons/tech/python.svg" alt="" /></span>
-                <span class="tech-skill-item__label">Python</span>
-              </li>
-              <li class="tech-skill-item">
-                <span class="tech-skill-item__icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><use href="#ts-icon-db" /></svg></span>
-                <span class="tech-skill-item__label">SQL</span>
-              </li>
-              <li class="tech-skill-item">
-                <span class="tech-skill-item__icon" aria-hidden="true"><img class="tech-logo" src="https://cdn.simpleicons.org/apacheairflow" alt="" /></span>
-                <span class="tech-skill-item__label"> Airflow </span>
-              </li>
-              <li class="tech-skill-item">
-                <span class="tech-skill-item__icon" aria-hidden="true"><img class="tech-logo" src="https://cdn.simpleicons.org/snowflake" alt="" /></span>
-                <span class="tech-skill-item__label">Snowflake</span>
-              </li>
+              <li class="tech-skill-item"><img class="tech-skill-item__icon" aria-hidden="true" src="https://cdn.simpleicons.org/apachespark" alt=""><span class="tech-skill-item__label">PySpark</span></li>
+              <li class="tech-skill-item"><img class="tech-skill-item__icon" aria-hidden="true" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/apacheairflow/apacheairflow-original.svg" alt=""><span class="tech-skill-item__label">Apache Airflow</span></li>
+              <li class="tech-skill-item"><svg class="tech-skill-item__icon" aria-hidden="true" viewBox="0 0 24 24" focusable="false"><use href="#ts-icon-pipeline"/></svg><span class="tech-skill-item__label">ETL Pipelines</span></li>
+              <li class="tech-skill-item"><svg class="tech-skill-item__icon" aria-hidden="true" viewBox="0 0 24 24" focusable="false"><use href="#ts-icon-db"/></svg><span class="tech-skill-item__label">Data Modeling</span></li>
             </ul>
           </article>
 
+          <!-- Card 3: Databases -->
           <article class="tech-skill-card">
-            <header class="tech-skill-card__header">
-              <h3 class="tech-skill-card__title">Cloud & DevOps</h3>
-            </header>
+            <header class="tech-skill-card__header"><h3 class="tech-skill-card__title">Databases</h3></header>
+            <ul class="tech-skill-list" aria-label="Database skills">
+              <li class="tech-skill-item"><img class="tech-skill-item__icon" aria-hidden="true" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/mysql/mysql-original.svg" alt=""><span class="tech-skill-item__label">MySQL</span></li>
+              <li class="tech-skill-item"><img class="tech-skill-item__icon" aria-hidden="true" src="https://cdn.simpleicons.org/postgresql" alt=""><span class="tech-skill-item__label">PostgreSQL</span></li>
+              <li class="tech-skill-item"><img class="tech-skill-item__icon" aria-hidden="true" src="https://cdn.simpleicons.org/mongodb" alt=""><span class="tech-skill-item__label">MongoDB</span></li>
+            </ul>
+          </article>
+
+          <!-- Card 4: Cloud & DevOps -->
+          <article class="tech-skill-card">
+            <header class="tech-skill-card__header"><h3 class="tech-skill-card__title">Cloud & DevOps</h3></header>
             <ul class="tech-skill-list" aria-label="Cloud and DevOps skills">
-              <li class="tech-skill-item">
-                <span class="tech-skill-item__icon" aria-hidden="true"><img src="assets/icons/tech/icons8-aws.svg" alt="" /></span>
-                <span class="tech-skill-item__label">AWS</span>
-              </li>
-              <li class="tech-skill-item">
-                <span class="tech-skill-item__icon" aria-hidden="true"><img class="tech-logo" src="https://cdn.simpleicons.org/docker" alt="" /></span>
-                <span class="tech-skill-item__label">Docker</span>
-              </li>
-              <li class="tech-skill-item">
-                <span class="tech-skill-item__icon" aria-hidden="true"><img class="tech-logo" src="https://cdn.simpleicons.org/githubactions" alt="" /></span>
-                <span class="tech-skill-item__label">CI/CD </span>
-              </li>
-              <li class="tech-skill-item">
-                <span class="tech-skill-item__icon" aria-hidden="true"><img class="tech-logo" src="https://cdn.simpleicons.org/linux" alt="" /></span>
-                <span class="tech-skill-item__label">Linux & Shell</span>
-              </li>
+              <li class="tech-skill-item"><img class="tech-skill-item__icon" aria-hidden="true" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/amazonwebservices/amazonwebservices-plain-wordmark.svg" alt=""><span class="tech-skill-item__label">AWS</span></li>
+              <li class="tech-skill-item"><img class="tech-skill-item__icon" aria-hidden="true" src="https://cdn.simpleicons.org/docker" alt=""><span class="tech-skill-item__label">Docker</span></li>
+              <li class="tech-skill-item"><svg class="tech-skill-item__icon" aria-hidden="true" viewBox="0 0 24 24" focusable="false"><use href="#ts-icon-cicd"/></svg><span class="tech-skill-item__label">CI/CD</span></li>
+              <li class="tech-skill-item"><img class="tech-skill-item__icon" aria-hidden="true" src="https://cdn.simpleicons.org/linux" alt=""><span class="tech-skill-item__label">Linux</span></li>
             </ul>
           </article>
 
+          <!-- Card 5: Backend APIs -->
           <article class="tech-skill-card">
-            <header class="tech-skill-card__header">
-              <h3 class="tech-skill-card__title">AI & Generative Systems</h3>
-            </header>
-            <ul class="tech-skill-list" aria-label="AI and generative systems skills">
-              <li class="tech-skill-item">
-                <span class="tech-skill-item__icon" aria-hidden="true"><img class="tech-logo" src="https://cdn.simpleicons.org/langchain" alt="" /></span>
-                <span class="tech-skill-item__label">LangChain</span>
-              </li>
-              <li class="tech-skill-item">
-                <span class="tech-skill-item__icon" aria-hidden="true"><img class="tech-logo" src="https://cdn-icons-png.flaticon.com/512/17810/17810049.png" alt="" /></span>
-                <span class="tech-skill-item__label">Vector DB</span>
-              </li>
-              <li class="tech-skill-item">
-                <span class="tech-skill-item__icon" aria-hidden="true"><img class="tech-logo" src="https://cdn-icons-png.flaticon.com/512/751/751463.png" alt="" /></span>
-                <span class="tech-skill-item__label">RAG Systems</span>
-              </li>
-              <li class="tech-skill-item">
-                <span class="tech-skill-item__icon" aria-hidden="true"><img class="tech-logo" src="https://cdn-icons-png.flaticon.com/512/14228/14228681.png" alt="" /></span>
-                <span class="tech-skill-item__label">Prompt Engineering</span>
-              </li>
+            <header class="tech-skill-card__header"><h3 class="tech-skill-card__title">Backend APIs</h3></header>
+            <ul class="tech-skill-list" aria-label="Backend API skills">
+              <li class="tech-skill-item"><img class="tech-skill-item__icon" aria-hidden="true" src="https://cdn.simpleicons.org/fastapi" alt=""><span class="tech-skill-item__label">FastAPI</span></li>
+              <li class="tech-skill-item"><svg class="tech-skill-item__icon" aria-hidden="true" viewBox="0 0 24 24" focusable="false"><use href="#ts-icon-api"/></svg><span class="tech-skill-item__label">REST APIs</span></li>
             </ul>
           </article>
 
+          <!-- Card 6: Analytics & BI -->
           <article class="tech-skill-card">
-            <header class="tech-skill-card__header">
-              <h3 class="tech-skill-card__title">Backend & APIs</h3>
-            </header>
-            <ul class="tech-skill-list" aria-label="Backend and API skills">
-              <li class="tech-skill-item">
-                <span class="tech-skill-item__icon" aria-hidden="true"><img class="tech-logo" src="https://cdn.simpleicons.org/fastapi" alt="" /></span>
-                <span class="tech-skill-item__label">FastAPI</span>
-              </li>
-              <li class="tech-skill-item">
-                <span class="tech-skill-item__icon" aria-hidden="true"><img class="tech-logo" src="https://cdn.simpleicons.org/django" alt="" /></span>
-                <span class="tech-skill-item__label">Django / Flask</span>
-              </li>
-              <li class="tech-skill-item">
-                <span class="tech-skill-item__icon" aria-hidden="true"><img class="tech-logo" src="https://cdn.simpleicons.org/postman" alt="" /></span>
-                <span class="tech-skill-item__label">REST APIs</span>
-              </li>
-              <li class="tech-skill-item">
-                <span class="tech-skill-item__icon" aria-hidden="true"><img class="tech-logo" src="https://cdn.simpleicons.org/jsonwebtokens" alt="" /></span>
-                <span class="tech-skill-item__label">Auth & JWT</span>
-              </li>
+            <header class="tech-skill-card__header"><h3 class="tech-skill-card__title">Analytics & BI</h3></header>
+            <ul class="tech-skill-list" aria-label="Analytics and BI skills">
+              <li class="tech-skill-item"><img class="tech-skill-item__icon" aria-hidden="true" src="https://cdn.simpleicons.org/pandas" alt=""><span class="tech-skill-item__label">Pandas</span></li>
+              <li class="tech-skill-item"><img class="tech-skill-item__icon" aria-hidden="true" src="https://cdn.simpleicons.org/numpy" alt=""><span class="tech-skill-item__label">NumPy</span></li>
+              <li class="tech-skill-item"><img class="tech-skill-item__icon" aria-hidden="true" src="https://raw.githubusercontent.com/microsoft/PowerBI-Icons/main/SVG/Power-BI.svg" alt=""><span class="tech-skill-item__label">Power BI</span></li>
+              <li class="tech-skill-item"><svg class="tech-skill-item__icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="10.5" y="2" width="3" height="5" rx="0.5" fill="#4E9AC7"/><rect x="10.5" y="17" width="3" height="5" rx="0.5" fill="#4E9AC7"/><rect x="2" y="10.5" width="5" height="3" rx="0.5" fill="#E97627"/><rect x="17" y="10.5" width="5" height="3" rx="0.5" fill="#E97627"/><rect x="9.5" y="9.5" width="5" height="5" rx="0.5" fill="#1F4E79"/><rect x="3.5" y="3.5" width="3" height="3" rx="0.5" fill="#59A14F"/><rect x="17.5" y="17.5" width="3" height="3" rx="0.5" fill="#59A14F"/><rect x="17.5" y="3.5" width="3" height="3" rx="0.5" fill="#F28E2B"/><rect x="3.5" y="17.5" width="3" height="3" rx="0.5" fill="#F28E2B"/></svg><span class="tech-skill-item__label">Tableau</span></li>
             </ul>
           </article>
 
-          <article class="tech-skill-card">
-            <header class="tech-skill-card__header">
-              <h3 class="tech-skill-card__title">Analytics & Data Science</h3>
-            </header>
-            <ul class="tech-skill-list" aria-label="Analytics and data science skills">
-              <li class="tech-skill-item">
-                <span class="tech-skill-item__icon" aria-hidden="true"><img class="tech-logo" src="https://cdn.simpleicons.org/pandas" alt="" /></span>
-                <span class="tech-skill-item__label">Pandas</span>
-              </li>
-              <li class="tech-skill-item">
-                <span class="tech-skill-item__icon" aria-hidden="true"><img class="tech-logo" src="https://cdn.simpleicons.org/numpy" alt="" /></span>
-                <span class="tech-skill-item__label">NumPy</span>
-              </li>
-              <li class="tech-skill-item">
-                <span class="tech-skill-item__icon" aria-hidden="true"><img class="tech-logo" src="https://cdn.simpleicons.org/scikitlearn" alt="" /></span>
-                <span class="tech-skill-item__label">scikit-learn</span>
-              </li>
-              <li class="tech-skill-item">
-                <span class="tech-skill-item__icon" aria-hidden="true"><img class="tech-logo" src="assets/icons/tech/powerbi.svg" alt="" /></span>
-                <span class="tech-skill-item__label">Power BI</span>
-              </li>
-            </ul>
-          </article>
 
         </div>
       </div>
@@ -383,28 +296,32 @@
           <div class="experience-header">
             <div class="experience-title-section">
               <div class="experience-heading">
-                <h3 class="experience-title">Backend Developer Intern</h3>
-                <p class="experience-company">Opsylux LLC</p>
+                <h3 class="experience-title">Data Engineer</h3>
+                <p class="experience-company">Opsylux LLC · Internship</p>
               </div>
-              <p class="experience-location">📍 Boca Raton, FL, USA</p>
+              <p class="experience-location">📍 Seattle, WA, USA</p>
             </div>
             <div class="experience-date">Nov 2025 – Present</div>
           </div>
 
           <div class="experience-description">
             <ul>
-              <li>Developed Python and SQL-backed applications supporting analytics pipelines across 5+ tenant environments while maintaining production stability</li>
-              <li>Investigated and optimized SQL queries to improve processing efficiency and reduce response latency by ~30%</li>
-              <li>Automated deployment workflows to increase release efficiency by ~70% and reduce manual intervention</li>
-              <li>Partnered with engineering teams to troubleshoot failures and maintain consistent system uptime</li>
+              <li>Built an automated ETL pipeline orchestrated with Airflow and Docker to extract financial and booking data from multiple REST APIs, transform it using Python, PySpark, and SQL, and load it into PostgreSQL</li>
+              <li>Standardized and cleaned JSON responses from 3+ third-party APIs using business rules and data quality checks, reducing manual reporting preparation by ~50%</li>
+              <li>Modeled the warehouse in a star schema, separating fact tables (bookings, payments, refunds) and dimensions (date, customer, property, channel), reducing query load time by 30% and improving Power BI report performance</li>
+              <li>Developed Power BI dashboards for revenue, booking trends, occupancy, and cancellation rates to support stakeholder decision-making</li>
+              <li>Automated daily refresh and monitoring to keep metrics current and detect API/data quality issues early</li>
             </ul>
           </div>
 
           <div class="experience-tech">
+            <span>Airflow</span>
+            <span>Docker</span>
             <span>Python</span>
+            <span>PySpark</span>
             <span>SQL</span>
-            <span>APIs</span>
-            <span>CI/CD</span>
+            <span>PostgreSQL</span>
+            <span>Power BI</span>
           </div>
         </div>
 
@@ -415,28 +332,37 @@
           <div class="experience-header">
             <div class="experience-title-section">
               <div class="experience-heading">
-                <h3 class="experience-title">Data Engineer Intern</h3>
+                <h3 class="experience-title">Data Engineer</h3>
                 <p class="experience-company">LTIMindtree</p>
               </div>
               <p class="experience-location">📍 Hyderabad, India</p>
             </div>
-            <div class="experience-date">Oct 2023 – Jul 2024</div>
+            <div class="experience-date">May 2022 – Jul 2024</div>
           </div>
 
           <div class="experience-description">
             <ul>
-              <li>Built Python and PySpark ETL pipelines processing ~3–5 TB/day for automated reporting systems</li>
-              <li>Executed complex SQL transformations (joins, CTEs, subqueries) to streamline multi-source datasets</li>
-              <li>Applied automated validation frameworks to improve dataset accuracy and consistency</li>
-              <li>Automated incremental refresh workflows to reduce reporting latency by ~60%</li>
+              <li>Engineered scalable ELT pipelines using Python, PySpark, and SQL on AWS (S3, Glue, EMR, Redshift), Azure Data Factory, and GCP services to ingest, transform, and load 35+ TB of data daily from 20+ heterogeneous sources</li>
+              <li>Developed SQL transformation workflows to standardize fragmented data and reduced reporting latency from 24 hours to 9 hours, accelerating KPI delivery by 50%</li>
+              <li>Architected data validation frameworks using Great Expectations across 25+ datasets and prototyped LLM-based anomaly detection pipelines, reducing defects by 50%</li>
+              <li>Automated end-to-end orchestration and monitoring with Apache Airflow, AWS CloudWatch, and Azure Monitor, achieving 99% pipeline reliability and reducing manual interventions by 70%</li>
+              <li>Optimized 50+ SQL transformations in Amazon Redshift, Snowflake, and PostgreSQL using advanced partitioning, distribution keys, and sort key strategies, reducing average query runtime by 65% and improving Power BI dashboard load performance by 40%</li>
+              <li>Built AWS Glue and Lambda ingestion frameworks to consolidate on-prem and cloud data into a centralized S3 data lake</li>
+              <li>Documented end-to-end data pipelines, transformation logic, and database schemas, improving onboarding efficiency and cross-team knowledge sharing</li>
             </ul>
           </div>
 
           <div class="experience-tech">
-            <span>Python</span>
+            <span>AWS</span>
+            <span>Azure</span>
+            <span>GCP</span>
             <span>PySpark</span>
+            <span>Airflow</span>
+            <span>Redshift</span>
+            <span>Snowflake</span>
+            <span>Azure Monitor</span>
             <span>SQL</span>
-            <span>ETL</span>
+            <span>Great Expectations</span>
           </div>
         </div>
 
@@ -454,68 +380,75 @@
 
         <!-- Project 1 -->
         <article class="project-card">
-          <div class="project-tag">Data Engineering</div>
-          <h3>Store Ops Analytics</h3>
-          <p class="project-role"></p>
+          <div class="project-tag">AI + Financial Analytics</div>
+          <h3>StockSense - AI-Powered Financial Analysis Platform</h3>
 
           <div class="project-solution">
             <ul>
-              <li>Built Airflow ETL pipelines to load millions of store and transaction records into 10+ Snowflake reporting tables</li>
-              <li>Implemented incremental, idempotent merge logic across 8+ fact and dimension tables to reduce compute cost by ~60%</li>
-              <li>Designed transformations to maintain row-level correctness and consistency for stakeholder reporting</li>
+              <li>Built a Python backend integrating OpenAI GPT APIs to generate financial insights across 100+ publicly traded companies and process 50,000+ market records daily</li>
+              <li>Engineered LLM prompt workflows and output validation constraints to reduce hallucinations by 40%</li>
+              <li>Tracked experiments with MLflow and deployed a containerized Docker architecture to achieve 95% response consistency and 2x throughput</li>
+            </ul>
+          </div>
+          <ul class="project-tech">
+            <li>Python</li>
+            <li>OpenAI GPT</li>
+            <li>MLflow</li>
+            <li>Docker</li>
+            <li>SQL</li>
+          </ul>
+          <div class="project-links">
+            <a href="https://github.com/maninampally/StockSense-Financial-Chatbot" target="_blank" rel="noopener noreferrer" class="link-btn">View on GitHub →</a>
+          </div>
+        </article>
+
+        <!-- Project 2 -->
+        <article class="project-card">
+          <div class="project-tag">AWS Data Engineering</div>
+          <h3>Store Ops Analytics - Cloud Data Engineering Platform</h3>
+
+          <div class="project-solution">
+            <ul>
+              <li>Designed cloud data pipelines and a warehouse on AWS and GCP using Snowflake, Redshift, Python, and Airflow to consolidate retail operations data into star-schema fact and dimension tables, enabling self-serve BI reporting</li>
+              <li>Implemented incremental refresh logic and Great Expectations validation checks, reducing compute costs by 60% while maintaining full data quality and lineage tracking</li>
+              <li>Delivered Power BI dashboards with near real-time operational visibility for business stakeholders</li>
             </ul>
           </div>
           <ul class="project-tech">
             <li>Python</li>
             <li>Airflow</li>
             <li>Snowflake</li>
-            <li>SQL</li>
-            <li>dbt</li>
+            <li>Redshift</li>
+            <li>GCP</li>
+            <li>Power BI</li>
           </ul>
+          <div class="project-links">
+            <a href="https://github.com/maninampally/AWS-Data-Engineer-Project" target="_blank" rel="noopener noreferrer" class="link-btn">View on GitHub →</a>
+          </div>
         </article>
 
-        <!-- Project 2 -->
+        <!-- Project 4 -->
         <article class="project-card">
-          <div class="project-tag">Analytics Platform</div>
-          <h3>StockSense</h3>
-          <p class="project-role"></p>
+          <div class="project-tag">AWS Data Engineering</div>
+          <h3>Real-Time Security Analytics - Streaming Lakehouse on AWS</h3>
 
           <div class="project-solution">
             <ul>
-              <li>Built Python and SQL ETL pipelines to extract and standardize 10+ years of financial time-series data into analytics- and ML-ready datasets</li>
-              <li>Developed automated reconciliation jobs comparing outputs with 100+ official disclosures per year to improve consistency to ~95%</li>
-              <li>Reduced manual analysis time by ~60% by automating validation and reporting workflows</li>
+              <li>Designed an end-to-end streaming pipeline using Kinesis Data Streams, Apache Flink, and S3 to process enterprise authentication logs</li>
+              <li>Provisioned infrastructure with Terraform modules to enable one-command environment deployment</li>
+              <li>Modeled curated security features as Apache Iceberg tables queried via AWS Glue and Athena, with real-time CloudWatch throughput monitoring</li>
             </ul>
           </div>
           <ul class="project-tech">
-            <li>Python</li>
-            <li>FastAPI</li>
-            <li>React</li>
-            <li>SQL</li>
-            <li>APIs</li>
+            <li>AWS Kinesis</li>
+            <li>Apache Flink</li>
+            <li>S3</li>
+            <li>Apache Iceberg</li>
+            <li>Terraform</li>
           </ul>
-        </article>
-
-        <!-- Project 3 -->
-        <article class="project-card">
-          <div class="project-tag">Generative AI</div>
-          <h3>IntelliQuery – RAG-Powered Data Assistant</h3>
-          <p class="project-role"></p>
-
-          <div class="project-solution">
-            <ul>
-              <li>Built retrieval-augmented generation (RAG) pipeline enabling natural language queries over structured data using vector similarity search</li>
-              <li>Integrated Amazon Bedrock with semantic search to generate accurate SQL queries and context-aware answers from database schemas</li>
-              <li>Reduced analyst query time by ~40% through automated natural language interface with authentication and validation</li>
-            </ul>
+          <div class="project-links">
+            <a href="https://github.com/maninampally/authpulse-aws-streaming-security-analytics" target="_blank" rel="noopener noreferrer" class="link-btn">View on GitHub →</a>
           </div>
-          <ul class="project-tech">
-            <li>Python</li>
-            <li>LangChain</li>
-            <li>AWS Bedrock</li>
-            <li>Vector DB</li>
-            <li>FastAPI</li>
-          </ul>
         </article>
 
         </div>
@@ -540,16 +473,6 @@
           </div>
         </div>
 
-        <div class="edu-item">
-          <div class="edu-icon">🎓</div>
-          <div class="edu-details">
-            <h4>Bachelor of Technology in Electrical and Electronics Engineering</h4>
-            <p class="edu-school">Sreenidhi Institute of Science and Technology</p>
-            <p class="edu-location">📍 Hyderabad, India</p>
-            <p class="edu-date">May 2024</p>
-            <p class="edu-gpa">GPA: 3.3 / 4.0</p>
-          </div>
-        </div>
       </div>
     </section>
 
@@ -602,6 +525,10 @@
             Prefer quick links? Reach me here:
           </p>
 
+          <p class="contact-note">
+            📞 <a href="tel:+15615426494" style="color: inherit; text-decoration: none; font-weight: inherit;">+1 (561) 542-6494</a>
+          </p>
+
           <div class="contact-social-links" aria-label="Social links">
             <a href="mailto:manikanthnampally94@gmail.com" class="social-btn" title="Email" aria-label="Send Email">
               <img src="assets/icons/social/gmail.svg" alt="Email" class="social-btn-icon">
@@ -610,7 +537,7 @@
               <img src="assets/icons/social/linkedin.svg" alt="LinkedIn" class="social-btn-icon">
             </a>
             <a href="https://github.com/maninampally" target="_blank" rel="noopener noreferrer" class="social-btn" title="GitHub" aria-label="Visit GitHub">
-              <img src="assets/icons/tech/github.svg" alt="GitHub" class="social-btn-icon mono">
+              <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/github/github-original.svg" alt="GitHub" class="social-btn-icon mono">
             </a>
           </div>
         </div>
@@ -701,13 +628,15 @@
               <img src="assets/icons/social/linkedin.svg" alt="" class="social-btn-icon" />
             </a>
             <a href="https://github.com/maninampally" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="GitHub">
-              <img src="assets/icons/tech/github.svg" alt="" class="social-btn-icon mono" />
+              <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/github/github-original.svg" alt="" class="social-btn-icon mono" />
             </a>
           </div>
         </div>
       </div>
     </footer>
   </div>
+
+  <button id="scroll-top" class="scroll-top-btn" aria-label="Scroll to top" title="Back to top">↑</button>
 
   <script type="text/javascript" async src="https://cdn.credly.com/assets/utilities/embed.js"></script>
 
@@ -836,12 +765,19 @@
         btnLoading.style.display = 'inline';
         submitBtn.disabled = true;
 
-        // Simulate form submission (replace with actual backend endpoint)
         try {
-          // TODO: Replace this with actual form submission to your backend
-          // Example: await fetch('/api/contact', { method: 'POST', body: JSON.stringify({name, email, subject, message}) });
-          
-          await new Promise(resolve => setTimeout(resolve, 1500)); // Simulate network delay
+          const response = await fetch('https://formspree.io/f/mlgjwvww', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json'
+            },
+            body: JSON.stringify({ name, email, subject, message })
+          });
+
+          if (!response.ok) {
+            throw new Error('Submission failed');
+          }
 
           // Show success message
           formStatus.innerHTML = '<div class="success-message">✓ Message sent successfully! Mani will respond within 24 hours.</div>';
@@ -871,7 +807,7 @@
     function showError(fieldId, message) {
       const errorElement = document.getElementById(`${fieldId}-error`);
       const inputElement = document.getElementById(fieldId);
-      
+
       if (errorElement) {
         errorElement.textContent = message;
       }
@@ -879,6 +815,23 @@
         inputElement.classList.add('error');
       }
     }
+
+    // ===========================
+    // Scroll to Top
+    // ===========================
+    const scrollTopBtn = document.getElementById('scroll-top');
+
+    window.addEventListener('scroll', function() {
+      if (window.pageYOffset > 400) {
+        scrollTopBtn.classList.add('visible');
+      } else {
+        scrollTopBtn.classList.remove('visible');
+      }
+    });
+
+    scrollTopBtn.addEventListener('click', function() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
   </script>
 </body>
 </html>

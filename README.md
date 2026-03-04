@@ -13,7 +13,7 @@ A modern, professional single-page portfolio website built with HTML, CSS, and v
   - About section with career story and quick facts
   - Skills organized by category (Programming, Data & AI, Backend, Cloud, Tools)
   - Detailed project showcases with problem-solution-impact format
-  - Work experience timeline with placeholders for LinkedIn data
+   - Work experience timeline aligned with LinkedIn roles and dates
   - Certifications and education
   - Contact form with social links
 - **Modern Aesthetics**: Clean design with smooth animations and transitions
@@ -74,7 +74,7 @@ portfolio/
 - Include specific metrics and impact
 
 **Experience**:
-- Fill in the placeholder experience cards with data from your LinkedIn:
+- Keep experience cards synced with your LinkedIn:
   - Job titles, company names, locations
   - Start/end dates
   - 3-5 bullet points highlighting achievements
@@ -188,7 +188,8 @@ Integrate EmailJS for email sending without backend.
 
 - [ ] Profile photo added and optimized
 - [ ] Resume PDF uploaded
-- [ ] All LinkedIn data filled in (experience, education, certifications)
+- [x] LinkedIn experience data synced
+- [ ] LinkedIn education/certification data synced
 - [ ] Project links working (GitHub repos, live demos)
 - [ ] Email, LinkedIn, GitHub links verified
 - [ ] Contact form configured (if using backend)
