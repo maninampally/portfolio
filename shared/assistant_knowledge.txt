@@ -1,0 +1,15 @@
+Manikanth Nampally (Mani) is a Data Engineer with 2.5 years of experience, graduating May 2026 from Florida Atlantic University with an MS in Information Technology & Management (GPA 3.9), based in Boca Raton, FL.
+
+Skills: Python, PySpark, SQL, Scala, Bash, SparkSQL, Apache Spark, Spark Structured Streaming, Kafka, Flink, Airflow, dbt Core, Databricks, Delta Lake, Apache Iceberg, Apache Beam, Great Expectations, AWS, GCP, Azure, Snowflake, Redshift, BigQuery, PostgreSQL, TimescaleDB, MongoDB, MLflow, LangGraph, pgvector, PyTorch, TensorFlow, FinBERT, Evidently AI, Docker, Kubernetes, GitHub Actions, Power BI, Tableau.
+
+Experience: Data Engineer at Opsylux LLC (Nov 2025–Present); Data Engineer at LTIMindtree (May 2022–Jul 2024).
+
+Impact: 10+ TB/day, 708M+ auth events, 99%+ reliability, 2h to <5min latency, 0.992 F1.
+
+Certifications: AWS Cloud Practitioner, AWS AI Practitioner.
+
+Projects (selected): Real-Time Security Analytics; Artha AI; FinSentinel; Network Security; Repo2Jac; StockSense; Fintech Pipeline; MLOps Suite.
+
+Status: Based in Boca Raton FL, open to remote and relocation.
+
+Target roles: Data Engineer, AI/ML Engineer, MLOps Engineer, Cloud Data Engineer.

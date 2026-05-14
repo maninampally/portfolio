@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ManiOS — Manikanth Nampally · Data & AI Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@500;600;700;800&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg:        #0a0a0f;
+    --surface:   #13131a;
+    --elev:      #1c1c26;
+    --elev-2:    #23232f;
+    --border:    #2a2a3a;
+    --border-2:  #353548;
+    --primary:   #6C63FF;
+    --primary-2: #8C84FF;
+    --teal:      #1DB88E;
+    --amber:     #F5A623;
+    --red:       #FF5F57;
+    --text:      #F0F0FF;
+    --text-2:    #8888AA;
+    --text-3:    #4a4a6a;
+    --font-display: 'Syne', sans-serif;
+    --font-body: 'Inter', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  body.is-desktop, html.is-desktop { height: 100%; width: 100%; overflow: hidden; }
+  body.is-desktop { user-select: none; }
+  body.is-mobile { min-height: 100vh; }
+  body.is-desktop #root { width: 100vw; height: 100vh; position: relative; overflow: hidden; }
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: #2a2a3a; border-radius: 4px; }
+  ::-webkit-scrollbar-thumb:hover { background: #3a3a4a; }
+  input, textarea, button { font-family: inherit; }
+  button { cursor: pointer; }
+  a { color: var(--primary-2); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  /* Light theme */
+  body.light {
+    --bg:        #f4f4f8;
+    --surface:   #ffffff;
+    --elev:      #f0f0f5;
+    --elev-2:    #e6e6ee;
+    --border:    #d6d6e0;
+    --border-2:  #c0c0d0;
+    --text:      #14141f;
+    --text-2:    #5c5c78;
+    --text-3:    #9090a8;
+  }
+
+  /* Mobile responsive overrides */
+  @media (max-width: 767px) {
+    /* Stack 2-col grids inside window content on mobile */
+    body.is-mobile section [style*="grid-template-columns: 1fr 1fr"],
+    body.is-mobile section [style*="gridTemplateColumns: 1fr 1fr"] {
+      grid-template-columns: 1fr !important;
+    }
+    /* 5-layer architecture cards → 2-col */
+    body.is-mobile [style*="repeat(5, 1fr)"] {
+      grid-template-columns: repeat(2, 1fr) !important;
+    }
+    /* Hero stat bar / current cards → stack on mobile */
+    body.is-mobile [style*="repeat(5, minmax(0, 1fr))"],
+    body.is-mobile [style*="repeat(3, minmax(0, 1fr))"] {
+      grid-template-columns: 1fr !important;
+    }
+    /* Reduce inner padding on mobile */
+    body.is-mobile section > div > div[style*="padding: 24px 28px"] {
+      padding: 18px 16px !important;
+    }
+    /* Hero name smaller */
+    body.is-mobile section h1 { font-size: 32px !important; }
+  }
+</style>
+
+<!--
+  api-base: optional absolute origin for the FastAPI backend when the UI is hosted separately.
+  Example: <meta name="api-base" content="https://your-api.up.railway.app" />
+  Match that origin in backend ALLOWED_ORIGINS (see backend/README.md).
+-->
+<meta name="api-base" content="" />
+<script>
+  (function () {
+    var meta = document.querySelector('meta[name="api-base"]');
+    var raw = (meta && meta.getAttribute('content')) || '';
+    var trimmed = raw.replace(/^\s+|\s+$/g, '');
+    window.__API_BASE__ = trimmed || window.location.origin;
+  })();
+</script>
+</head>
+<body>
+<div id="root"></div>
+<script type="module" src="/main.jsx"></script>
+</body>
+</html>
