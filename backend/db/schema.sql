@@ -1,0 +1,28 @@
+-- Tables for ManiOS backend
+
+CREATE TABLE IF NOT EXISTS contact_messages (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(255) NOT NULL,
+  email VARCHAR(255) NOT NULL,
+  subject VARCHAR(255) NOT NULL,
+  message TEXT NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  replied BOOLEAN DEFAULT FALSE
+);
+
+CREATE TABLE IF NOT EXISTS chatbot_sessions (
+  id VARCHAR(255) PRIMARY KEY,
+  messages JSONB DEFAULT '[]',
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS feed_cache (
+  key VARCHAR(255) PRIMARY KEY,
+  data JSONB NOT NULL,
+  cached_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  expires_at TIMESTAMP NOT NULL
+);
+
+CREATE INDEX IF NOT EXISTS idx_contact_email ON contact_messages(email);
+CREATE INDEX IF NOT EXISTS idx_feed_expires ON feed_cache(expires_at);
