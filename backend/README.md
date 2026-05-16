@@ -23,7 +23,7 @@ cp .env.example .env
 
 Required:
 - `DATABASE_URL` — PostgreSQL connection string
-- `ANTHROPIC_API_KEY` — Claude API key (get from console.anthropic.com)
+- `GEMINI_API_KEY` — Gemini API key (get from aistudio.google.com)
 - `RESEND_API_KEY` — Email service (sign up at resend.com)
 - `GITHUB_TOKEN` — Personal access token (github.com/settings/tokens)
 
@@ -132,11 +132,11 @@ DATABASE_URL=postgresql://user:password@host:5432/dbname
 
 # Email (Resend)
 RESEND_API_KEY=re_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-MANI_EMAIL=your-email@example.com
+MANI_EMAIL=manikanthnampally94@gmail.com
 FROM_EMAIL=noreply@yourdomain.com
 
-# AI (Anthropic)
-ANTHROPIC_API_KEY=sk-ant-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+# AI (Gemini)
+GEMINI_API_KEY=AIzaSy_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 # GitHub
 GITHUB_TOKEN=ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
@@ -157,8 +157,8 @@ ALLOWED_ORIGINS=https://your-site.vercel.app
 pip install psycopg2-binary
 ```
 
-**"ANTHROPIC_API_KEY not found"**
-- Create key at console.anthropic.com
+**"GEMINI_API_KEY not found"**
+- Create key at aistudio.google.com
 - Add to `.env` file
 - Restart server
 

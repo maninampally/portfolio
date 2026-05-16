@@ -1,10 +1,38 @@
 from fastapi import APIRouter, HTTPException
 from datetime import datetime
 import json
+import time
 from db.connection import execute_single, execute_insert
 from services.github_service import get_github_commits
 
 router = APIRouter(prefix="/api", tags=["feed"])
+
+# In-memory cache — no DB required
+_gh_cache: dict = {"data": None, "at": 0}
+_GH_TTL = 3600  # 1 hour
+
+
+@router.get("/github-activity")
+async def github_activity():
+    """Live GitHub commits with in-memory cache. No DB needed."""
+    global _gh_cache
+    now = time.time()
+    if _gh_cache["data"] and (now - _gh_cache["at"]) < _GH_TTL:
+        return _gh_cache["data"]
+    try:
+        commits = await get_github_commits()
+        result = {
+            "commits": commits,
+            "cached_at": datetime.utcnow().isoformat(),
+            "ttl_seconds": _GH_TTL,
+        }
+        _gh_cache = {"data": result, "at": now}
+        return result
+    except Exception as e:
+        print(f"GitHub activity error: {e}")
+        if _gh_cache["data"]:
+            return _gh_cache["data"]
+        raise HTTPException(status_code=503, detail="GitHub API unavailable")
 
 LINKEDIN_NOTE = (
     "The `linkedin` array contains illustrative sample-style items only; "

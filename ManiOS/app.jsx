@@ -1,5 +1,6 @@
 // Main App — ManiOS desktop
 import React from 'react';
+import { PERSON, PROJECTS } from './data.js';
 const { useState: useAS, useEffect: useAE, useCallback: useAC } = React;
 
 // Initialize chat session
@@ -9,27 +10,36 @@ if (!window.chatSessionId) {
 
 // ============== App registry ==============
 const APPS = [
-  { id: 'home',     slug: 'home',     title: 'home',          icon: '◈', label: 'Home',         desc: 'Profile & intro', w: 640, h: 560, IconC: 'IconHome',    bg: 'linear-gradient(135deg, #6C63FF, #4B45C9)' },
+  { id: 'home',     slug: 'home',     title: 'home',          icon: '◈', label: 'Home',         desc: 'Profile & intro', w: 640, h: 700, IconC: 'IconHome',    bg: 'linear-gradient(135deg, #6C63FF, #4B45C9)' },
   { id: 'about',    slug: 'about',    title: 'about_me',      icon: '◉', label: 'About',        desc: 'Who I am', w: 560, h: 600, IconC: 'IconUser',    bg: 'linear-gradient(135deg, #1DB88E, #178A6B)' },
   { id: 'projects', slug: 'projects', title: 'projects',      icon: '▣', label: 'Projects',     desc: 'Work samples', w: 720, h: 580, IconC: 'IconBox',     bg: 'linear-gradient(135deg, #F5A623, #C67E12)' },
-  { id: 'exp',      slug: 'experience', title: 'experience',  icon: '▤', label: 'Experience',   desc: 'Background', w: 600, h: 540, IconC: 'IconBriefcase', bg: 'linear-gradient(135deg, #8C84FF, #6C63FF)' },
+  { id: 'exp',      slug: 'experience', title: 'experience',  icon: '▤', label: 'Experience',   desc: 'Background', w: 600, h: 540, IconC: 'IconBriefcase', bg: 'linear-gradient(135deg, #F97316, #EA580C)' },
   { id: 'skills',   slug: 'skills',   title: 'skills',        icon: '◇', label: 'Skills',       desc: 'Expertise', w: 680, h: 580, IconC: 'IconChip',    bg: 'linear-gradient(135deg, #1DB88E, #F5A623)' },
-  { id: 'certs',    slug: 'certifications', title: 'certs',   icon: '✦', label: 'Certs',        desc: 'Credentials', w: 560, h: 380, IconC: 'IconAward',   bg: 'linear-gradient(135deg, #F5A623, #F58523)' },
-  { id: 'edu',      slug: 'education', title: 'education',    icon: '◐', label: 'Education',    desc: 'Degrees', w: 540, h: 480, IconC: 'IconGrad',    bg: 'linear-gradient(135deg, #6C63FF, #1DB88E)' },
-  { id: 'feed',     slug: 'impact',   title: 'impact',        icon: '⌁', label: 'Impact',       desc: 'Activity feed', w: 760, h: 560, IconC: 'IconFeed',    bg: 'linear-gradient(135deg, #2A2A3A, #4a4a6a)' },
+  { id: 'certs',    slug: 'certifications', title: 'certs',   icon: '✦', label: 'Certs',        desc: 'Credentials', w: 560, h: 380, IconC: 'IconAward',   bg: 'linear-gradient(135deg, #EAB308, #CA8A04)', fg: '#0a0a0f' },
+  { id: 'edu',      slug: 'education', title: 'education',    icon: '◐', label: 'Education',    desc: 'Degrees', w: 540, h: 480, IconC: 'IconGrad',    bg: 'linear-gradient(135deg, #0EA5E9, #0284C7)' },
+  { id: 'feed',     slug: 'impact',   title: 'impact',        icon: '⌁', label: 'Impact',       desc: 'Activity feed', w: 760, h: 560, IconC: 'IconFeed',    bg: 'linear-gradient(135deg, #9333EA, #6D28D9)' },
   { id: 'contact',  slug: 'contact',  title: 'contact',       icon: '✉', label: 'Contact',      desc: 'Get in touch', w: 520, h: 620, IconC: 'IconMail',    bg: 'linear-gradient(135deg, #FF6B6B, #C9474B)' },
   { id: 'resume',   slug: 'resume',   title: 'resume.pdf',    icon: '▾', label: 'Resume',       desc: 'Download PDF', w: 640, h: 620, IconC: 'IconDoc',     bg: 'linear-gradient(135deg, #F0F0FF, #8888AA)', fg: '#0a0a0f' },
   // Desktop-icon-only
   { id: 'artha',    slug: 'artha-ai', title: 'artha_ai',      icon: 'α', label: 'Artha AI',     desc: 'AI project', w: 700, h: 620, IconC: 'IconSparkle', bg: 'linear-gradient(135deg, #6C63FF, #1DB88E)' },
   { id: 'stock',    slug: 'finsentinel', title: 'finsentinel', icon: '▲', label: 'FinSentinel', desc: 'Finance app', w: 640, h: 540, IconC: 'IconChart', bg: 'linear-gradient(135deg, #1DB88E, #6C63FF)' },
   { id: 'testimonials', slug: 'snapshot', title: 'snapshot', icon: '❝', label: 'Snapshot', desc: 'Testimonials', w: 600, h: 580, IconC: 'IconQuote', bg: 'linear-gradient(135deg, #F5A623, #FF6B6B)' },
+  { id: 'terminal', slug: 'terminal', title: 'terminal', icon: '$', label: 'Terminal', desc: 'Interactive shell', w: 660, h: 460, IconC: 'IconTerm', bg: 'linear-gradient(135deg, #10B981, #047857)' },
 ];
 
 // Dock order: grouped by type (Profile → Work → Meta)
-const DOCK_ORDER = ['home', 'about', 'projects', 'exp', 'skills', 'certs', 'edu', 'feed', 'contact', 'resume'];
-const DESKTOP_ICONS = ['artha', 'stock', 'resume', 'feed', 'contact'];
+const DOCK_ORDER = ['home', 'about', 'projects', 'exp', 'skills', 'certs', 'edu', 'feed', 'contact', 'terminal'];
+const DESKTOP_ICONS = ['artha', 'stock', 'terminal', 'feed', 'contact'];
 
 function getApp(id) { return APPS.find(a => a.id === id); }
+
+function getWallpaperFilter() {
+  const h = new Date().getHours();
+  if (h >= 6 && h < 12)  return 'brightness(0.88) saturate(0.9) sepia(0.08)';        // morning — warm soft
+  if (h >= 12 && h < 18) return 'brightness(1.0) saturate(1.05)';                     // afternoon — full daylight
+  if (h >= 18 && h < 24) return 'brightness(0.52) saturate(1.05) hue-rotate(15deg)';  // evening — deeper tones
+  return 'brightness(0.3) saturate(0.5) hue-rotate(190deg)';                           // night — dark blue
+}
 
 function renderContent(id, ctx) {
   switch (id) {
@@ -46,6 +56,7 @@ function renderContent(id, ctx) {
     case 'artha':   return <window.ArthaWindow onOpenWindow={ctx.open} />;
     case 'stock':   return <window.StockWindow />;
     case 'testimonials': return <window.TestimonialsWindow />;
+    case 'terminal':   return <window.TerminalWindow onOpenWindow={ctx.open} />;
     default: return null;
   }
 }
@@ -76,6 +87,9 @@ function App() {
   const [zCounter, setZCounter] = useAS(20);
   const [spotlightOpen, setSpotlightOpen] = useAS(false);
   const [chatOpen, setChatOpen] = useAS(false);
+  const [toast, setToast] = useAS(null);
+  const [tourStep, setTourStep] = useAS(null);
+  const [recruiterActive, setRecruiterActive] = useAS(false);
 
   useAE(() => {
     document.body.classList.toggle('light', theme === 'light');
@@ -138,6 +152,66 @@ function App() {
     setWindows(prev => prev.map(win => win.id === id ? { ...win, w, h } : win));
   }, []);
 
+  const recruiterMode = useAC(() => {
+    const vw = window.innerWidth;
+    const vh = window.innerHeight;
+    const gap = 8;
+    const px = 12;
+    const y = 48;
+    const h = Math.max(420, vh - 38 - 88 - 20);
+    const colW = Math.floor((vw - px * 2 - gap * 2) / 3);
+    const layout = [
+      { id: 'resume',   x: px,                        y, w: colW, h },
+      { id: 'exp',      x: px + colW + gap,            y, w: colW, h },
+      { id: 'projects', x: px + (colW + gap) * 2,      y, w: colW, h },
+    ];
+    setWindows(prev => {
+      let next = [...prev];
+      layout.forEach((cfg, i) => {
+        const z = zCounter + i + 1;
+        const app = getApp(cfg.id);
+        const idx = next.findIndex(w => w.id === cfg.id);
+        if (idx >= 0) {
+          next[idx] = { ...next[idx], ...cfg, z, minimized: false, maximized: false };
+        } else {
+          next.push({ ...app, ...cfg, z, minimized: false, maximized: false });
+        }
+      });
+      return next;
+    });
+    setZCounter(c => c + 3);
+    setFocusId('projects');
+    setRecruiterActive(true);
+    setToast('Most-viewed sections loaded · ~90 seconds to learn everything');
+    setTimeout(() => setToast(null), 4000);
+  }, [zCounter]);
+
+  const exitRecruiterMode = useAC(() => {
+    setWindows(prev => prev.filter(w => !['resume', 'exp', 'projects'].includes(w.id)));
+    setRecruiterActive(false);
+  }, []);
+
+  const TOUR_STEPS = [
+    { id: 'home',    label: 'This is who I am',      sub: 'Intro · photo · stats · links' },
+    { id: 'exp',     label: "Here's my work history", sub: `${PERSON.currentCompany} · LTIMindtree · ${PERSON.yearsExp} years` },
+    { id: 'projects',label: "Here's what I built",   sub: `${PROJECTS.length} projects · real metrics · live code` },
+    { id: 'contact', label: "Let's talk",             sub: 'Open to roles · replies in 24h' },
+  ];
+
+  const startTour = useAC(() => {
+    open('home');
+    setTourStep(0);
+  }, [open]);
+
+  const advanceTour = useAC(() => {
+    setTourStep(prev => {
+      const next = prev + 1;
+      if (next >= TOUR_STEPS.length) return null;
+      open(TOUR_STEPS[next].id);
+      return next;
+    });
+  }, [open]);
+
   // Keyboard: '/' opens spotlight, 1-9 launches dock apps
   useAE(() => {
     const onKey = (e) => {
@@ -199,7 +273,8 @@ function App() {
           height: '100%',
           objectFit: 'cover',
           zIndex: 0,
-          filter: 'brightness(0.75) saturate(0.9)',
+          filter: getWallpaperFilter(),
+          transition: 'filter 2s ease',
         }}
       />
 
@@ -209,13 +284,15 @@ function App() {
         onToggleTheme={() => setTheme(t => t === 'dark' ? 'light' : 'dark')}
         onOpenSpotlight={() => setSpotlightOpen(true)}
         statusOnline={true}
+        onRecruiterMode={recruiterActive ? exitRecruiterMode : recruiterMode}
+        recruiterActive={recruiterActive}
       />
 
       {/* Hint banner */}
       <HintHud />
 
       {/* Desktop greeting — left side */}
-      <DesktopGreeting onOpen={open} />
+      <DesktopGreeting onOpen={open} onStartTour={startTour} />
 
       {/* Desktop icons */}
       <window.DesktopIcons icons={desktopIcons} onOpen={open} />
@@ -252,6 +329,20 @@ function App() {
       <window.ChatPanel open={chatOpen} onClose={() => setChatOpen(false)} />
       <window.ChatBubble open={chatOpen} onToggle={() => setChatOpen(o => !o)} />
 
+      {/* Toast */}
+      <Toast message={toast} />
+
+      {/* Tour overlay */}
+      {tourStep !== null && (
+        <TourOverlay
+          step={TOUR_STEPS[tourStep]}
+          stepIndex={tourStep}
+          totalSteps={TOUR_STEPS.length}
+          onNext={advanceTour}
+          onSkip={() => setTourStep(null)}
+        />
+      )}
+
       {/* Minimized strip */}
       <MinimizedStrip
         windows={windows.filter(w => w.minimized)}
@@ -262,14 +353,14 @@ function App() {
 }
 
 // DesktopGreeting — left-side panel visible on the empty desktop
-function DesktopGreeting({ onOpen }) {
+function DesktopGreeting({ onOpen, onStartTour }) {
   const sections = [
-    { id: 'exp',   label: 'Experience',     icon: '▤', desc: '2 companies · 2.5 years' },
-    { id: 'edu',   label: 'Education',      icon: '◐', desc: 'FAU MS · GPA 3.9' },
-    { id: 'certs', label: 'Certifications', icon: '✦', desc: 'AWS Cloud · AI Practitioner' },
-    { id: 'skills',label: 'Skills',         icon: '◇', desc: 'Spark · AWS · GCP · MLOps' },
-    { id: 'projects', label: 'Projects',   icon: '▣', desc: '4 projects · Artha AI · FinSentinel' },
-    { id: 'contact',  label: 'Contact',    icon: '✉', desc: 'manikanthnampally94@gmail.com' },
+    { id: 'exp',     label: 'Experience',     icon: '▤', desc: `${PERSON.companies} companies · ${PERSON.yearsExp} years` },
+    { id: 'edu',     label: 'Education',      icon: '◐', desc: `${PERSON.universityShort} MS · GPA ${PERSON.gpa}` },
+    { id: 'certs',   label: 'Certifications', icon: '✦', desc: 'AWS Cloud · AI Practitioner' },
+    { id: 'skills',  label: 'Skills',         icon: '◇', desc: 'Spark · AWS · GCP · MLOps' },
+    { id: 'projects',label: 'Projects',       icon: '▣', desc: `${PROJECTS.length} projects · Artha AI · FinSentinel` },
+    { id: 'contact', label: 'Contact',        icon: '✉', desc: PERSON.email },
   ];
   return (
     <div style={{
@@ -286,11 +377,11 @@ function DesktopGreeting({ onOpen }) {
         borderRadius: 14,
         boxShadow: '0 12px 32px -8px rgba(0,0,0,0.5)',
       }}>
-        <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10, color: 'var(--primary)', letterSpacing: '0.18em', marginBottom: 6 }}>MANIKANTH NAMPALLY</div>
-        <div style={{ fontFamily: 'var(--font-display)', fontSize: 22, fontWeight: 700, color: 'var(--text)', lineHeight: 1.2 }}>Data &amp; AI Engineer</div>
-        <div style={{ fontSize: 12, color: 'var(--text-2)', marginTop: 6, lineHeight: 1.5 }}>Building production pipelines, AI products, and tools people actually use.</div>
+        <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10, color: 'var(--primary)', letterSpacing: '0.18em', marginBottom: 6 }}>{PERSON.name.toUpperCase()}</div>
+        <div style={{ fontFamily: 'var(--font-display)', fontSize: 22, fontWeight: 700, color: 'var(--text)', lineHeight: 1.2 }}>{PERSON.titleFull}</div>
+        <div style={{ fontSize: 12, color: 'var(--text-2)', marginTop: 6, lineHeight: 1.5 }}>{PERSON.tagline}</div>
         <div style={{ marginTop: 12, display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-          {[['🟢','Data Engineer'],['📍','Boca Raton, FL'],['🎓','FAU · May 2026']].map(([icon, label]) => (
+          {[['🟢', PERSON.title],['📍', PERSON.location],['🎓', `${PERSON.universityShort} · ${PERSON.graduation}`]].map(([icon, label]) => (
             <span key={label} style={{ fontFamily: 'var(--font-mono)', fontSize: 10, color: 'var(--text-2)', display: 'flex', alignItems: 'center', gap: 4 }}>{icon} {label}</span>
           ))}
         </div>
@@ -327,6 +418,25 @@ function DesktopGreeting({ onOpen }) {
           ))}
         </div>
       </div>
+
+      {/* Start Tour */}
+      <button onClick={onStartTour} style={{
+        width: '100%', padding: '10px 14px',
+        background: 'rgba(29,184,142,0.12)',
+        backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)',
+        border: '1px solid rgba(29,184,142,0.25)',
+        borderRadius: 10, cursor: 'pointer',
+        display: 'flex', alignItems: 'center', gap: 8,
+        fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--teal)',
+        transition: 'background 140ms, border-color 140ms',
+      }}
+      onMouseEnter={e => { e.currentTarget.style.background = 'rgba(29,184,142,0.2)'; e.currentTarget.style.borderColor = 'rgba(29,184,142,0.4)'; }}
+      onMouseLeave={e => { e.currentTarget.style.background = 'rgba(29,184,142,0.12)'; e.currentTarget.style.borderColor = 'rgba(29,184,142,0.25)'; }}
+      >
+        <span style={{ fontSize: 13 }}>▶</span>
+        <span style={{ fontWeight: 600 }}>Start Tour</span>
+        <span style={{ color: 'var(--text-3)', marginLeft: 'auto' }}>4 stops · ~60s</span>
+      </button>
 
       {/* Tip */}
       <div style={{
@@ -396,6 +506,75 @@ function MinimizedStrip({ windows: mins, onRestore }) {
           {w.title}
         </button>
       ))}
+    </div>
+  );
+}
+
+function TourOverlay({ step, stepIndex, totalSteps, onNext, onSkip }) {
+  const isLast = stepIndex === totalSteps - 1;
+  return (
+    <div style={{
+      position: 'absolute', bottom: 110, left: '50%', transform: 'translateX(-50%)',
+      zIndex: 1600, width: 360,
+      background: 'rgba(19,19,26,0.95)',
+      backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)',
+      border: '1px solid rgba(29,184,142,0.35)',
+      borderRadius: 14,
+      boxShadow: '0 20px 50px -10px rgba(0,0,0,0.7), 0 0 0 1px rgba(29,184,142,0.12)',
+      padding: '16px 18px',
+      animation: 'toastIn 280ms cubic-bezier(.34,1.56,.64,1)',
+    }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 10 }}>
+        {Array.from({ length: totalSteps }).map((_, i) => (
+          <div key={i} style={{
+            height: 3, flex: 1, borderRadius: 2,
+            background: i <= stepIndex ? 'var(--teal)' : 'var(--border)',
+            transition: 'background 300ms',
+          }} />
+        ))}
+      </div>
+      <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10, color: 'var(--teal)', letterSpacing: '0.14em', marginBottom: 6 }}>
+        STOP {stepIndex + 1} / {totalSteps}
+      </div>
+      <div style={{ fontSize: 18, fontFamily: 'var(--font-display)', fontWeight: 700, color: 'var(--text)', marginBottom: 4 }}>
+        {step.label}
+      </div>
+      <div style={{ fontSize: 12, color: 'var(--text-2)', marginBottom: 14 }}>{step.sub}</div>
+      <div style={{ display: 'flex', gap: 8, justifyContent: 'flex-end' }}>
+        <button onClick={onSkip} style={{
+          background: 'transparent', border: '1px solid var(--border)',
+          borderRadius: 8, padding: '6px 12px',
+          fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--text-3)',
+          cursor: 'pointer',
+        }}>Skip</button>
+        <button onClick={isLast ? onSkip : onNext} style={{
+          background: 'var(--teal)', border: 'none',
+          borderRadius: 8, padding: '6px 14px',
+          fontFamily: 'var(--font-mono)', fontSize: 11, color: '#0a0a0f',
+          fontWeight: 700, cursor: 'pointer',
+        }}>{isLast ? 'Done ✓' : 'Next →'}</button>
+      </div>
+    </div>
+  );
+}
+
+function Toast({ message }) {
+  if (!message) return null;
+  return (
+    <div style={{
+      position: 'absolute', bottom: 100, left: '50%', transform: 'translateX(-50%)',
+      zIndex: 1500, padding: '10px 20px', borderRadius: 999,
+      background: 'rgba(108,99,255,0.92)',
+      backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)',
+      border: '1px solid rgba(255,255,255,0.15)',
+      fontFamily: 'var(--font-mono)', fontSize: 12, color: '#fff',
+      whiteSpace: 'nowrap', pointerEvents: 'none',
+      boxShadow: '0 8px 28px rgba(108,99,255,0.45)',
+      display: 'flex', alignItems: 'center', gap: 8,
+      animation: 'toastIn 280ms cubic-bezier(.34,1.56,.64,1)',
+    }}>
+      <span>✓</span>{message}
+      <style>{`@keyframes toastIn { from { opacity:0; transform:translateX(-50%) translateY(12px); } to { opacity:1; transform:translateX(-50%) translateY(0); } }`}</style>
     </div>
   );
 }

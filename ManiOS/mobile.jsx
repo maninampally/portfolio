@@ -1,5 +1,6 @@
 // Mobile fallback — stacked scroll layout for < 768px
 import React from 'react';
+import { PERSON } from './data.js';
 const { useState: useMS, useEffect: useME, useRef: useMR } = React;
 
 function MobileApp() {
@@ -179,7 +180,7 @@ function MobileApp() {
         textAlign: 'center', padding: '24px 16px 100px',
         fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--text-3)',
       }}>
-        ManiOS v1.0 · Built with ◈ in Boca Raton
+        ManiOS v1.0 · Built with ◈ in {PERSON.location}
       </div>
 
       {/* Chatbot */}
@@ -243,7 +244,10 @@ function MobileChatContent({ onClose }) {
       window.chatSessionId = data.session_id;
       setMessages([...next, { role: 'assistant', content: data.reply }]);
     } catch {
-      setMessages([...next, { role: 'assistant', content: "You can reach Mani directly via the Contact section." }]);
+      const reply = (typeof window.localAnswer === 'function')
+        ? window.localAnswer(q)
+        : "You can reach Mani directly via the Contact section.";
+      setMessages([...next, { role: 'assistant', content: reply }]);
     }
     setThinking(false);
   }

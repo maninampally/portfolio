@@ -2,7 +2,7 @@ import os
 from resend import Resend
 
 client = Resend(api_key=os.getenv("RESEND_API_KEY"))
-MANI_EMAIL = os.getenv("MANI_EMAIL", "mani@example.com")
+MANI_EMAIL = os.getenv("MANI_EMAIL", "manikanthnampally94@gmail.com")
 FROM_EMAIL = os.getenv("FROM_EMAIL", "noreply@manios.dev")
 
 async def send_contact_email(name: str, email: str, subject: str, message: str):

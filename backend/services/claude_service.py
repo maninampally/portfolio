@@ -58,7 +58,7 @@ async def chat_with_gemini(message: str, conversation_history: list = None):
     try:
         # Initialize Gemini model
         model = genai.GenerativeModel(
-            model_name="gemini-1.5-flash",
+            model_name="gemini-2.0-flash",
             system_instruction=SYSTEM_PROMPT,
             generation_config=genai.types.GenerationConfig(
                 max_output_tokens=500,

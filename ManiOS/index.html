@@ -93,12 +93,17 @@
   Match that origin in backend ALLOWED_ORIGINS (see backend/README.md).
 -->
 <meta name="api-base" content="" />
+<meta name="github-api-base" content="" />
 <script>
   (function () {
     var meta = document.querySelector('meta[name="api-base"]');
     var raw = (meta && meta.getAttribute('content')) || '';
     var trimmed = raw.replace(/^\s+|\s+$/g, '');
     window.__API_BASE__ = trimmed || window.location.origin;
+
+    var ghMeta = document.querySelector('meta[name="github-api-base"]');
+    var ghRaw = (ghMeta && ghMeta.getAttribute('content')) || '';
+    window.__GITHUB_API_BASE__ = ghRaw.trim() || window.__API_BASE__;
   })();
 </script>
 </head>

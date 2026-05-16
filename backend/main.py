@@ -16,7 +16,7 @@ if origins_env:
     allow_origins = [o.strip() for o in origins_env.split(",") if o.strip()]
 else:
     # sensible dev defaults; override ALLOWED_ORIGINS in production
-    allow_origins = ["http://localhost:3000", "http://localhost:5173"]
+    allow_origins = ["http://localhost:3000", "http://localhost:5173", "http://localhost:5174"]
 
 # If wildcard is used, disallow credentials for browser safety
 allow_credentials = False if allow_origins == ["*"] else True

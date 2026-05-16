@@ -1,0 +1,171 @@
+// Single source of truth — all portfolio content lives here.
+// Import from this file in windows.jsx, chatbot.jsx, and app.jsx.
+
+export const PERSON = {
+  name:          'Manikanth Nampally',
+  nameFirst:     'Manikanth',
+  title:         'Data Engineer',
+  titleFull:     'Data & AI Engineer',
+  tagline:       'Building production pipelines, AI products, and tools people actually use.',
+  location:      'Boca Raton, FL',
+  relocate:      'Remote / Relocate',
+  email:         'manikanthnampally94@gmail.com',
+  phone:         '+1 (561) 542-6494',
+  linkedin:      'linkedin.com/in/manikanthn',
+  linkedinUrl:   'https://www.linkedin.com/in/manikanthn/',
+  github:        'github.com/maninampally',
+  githubUrl:     'https://github.com/maninampally',
+  yearsExp:      '2.5',
+  dataScale:     '10+ TB/day',
+  gpa:           '3.9',
+  graduation:    'May 2026',
+  university:    'Florida Atlantic University',
+  universityShort: 'FAU',
+  degree:        'M.S. IT & Management',
+  degreeFull:    'Master of Science in Information Technology & Management',
+  companies:     '2',
+  certCount:     '2 AWS',
+  currentCompany: 'Opsylux LLC',
+  currentRole:   'Data Engineer',
+  currentSince:  'Nov 2025',
+};
+
+export const RESUME_DRIVE_ID = '1ScLEqxTeXzynnt-vUE9SFjVIm4hxF5Qs';
+
+export const PROJECTS = [
+  {
+    name: 'Real-Time Security Analytics',
+    tagline: 'Streaming lakehouse on AWS processing 708M+ authentication events across 11K+ users and 22K+ endpoints with a 4-tier risk engine.',
+    stack: ['AWS Kinesis', 'S3', 'Lambda', 'Terraform', 'CloudWatch', 'Streaming'],
+    period: 'Dec 2025 — Feb 2026',
+    impact: '15s end-to-end latency',
+    accent: 'var(--red)',
+  },
+  {
+    name: 'Artha AI',
+    tagline: 'AI financial intelligence platform orchestrating LangGraph multi-agent workflows across 10+ investor philosophy models.',
+    stack: ['LangGraph', 'Airflow', 'dbt Core', 'PostgreSQL', 'TimescaleDB', 'Redis'],
+    period: 'Mar 2026 — Present',
+    impact: '500+ equities/day',
+    accent: 'var(--primary)',
+  },
+  {
+    name: 'FinSentinel',
+    tagline: 'Real-time financial news sentiment platform on GCP with Pub/Sub, Dataflow, BigQuery, and FinBERT.',
+    stack: ['GCP', 'Pub/Sub', 'Dataflow', 'BigQuery', 'PyTorch', 'FastAPI', 'Redis'],
+    period: 'Apr 2026 — Present',
+    impact: '0.95 F1',
+    accent: 'var(--teal)',
+  },
+  {
+    name: 'Network Security',
+    tagline: 'End-to-end MLOps pipeline for phishing detection with drift checks, MLflow experiments, and Dockerized FastAPI deployment.',
+    stack: ['MongoDB', 'MLflow', 'FastAPI', 'Docker', 'AWS ECR', 'EC2', 'GitHub Actions'],
+    period: 'Jan 2026 — Mar 2026',
+    impact: '0.992 F1',
+    accent: 'var(--amber)',
+  },
+  {
+    name: 'Repo2Jac',
+    tagline: 'LLM workflow automation project for translating repository changes into structured developer context and downstream actions.',
+    stack: ['LLM', 'Automation', 'Workflow', 'GitHub', 'Python'],
+    period: 'GitHub project',
+    impact: 'Dev workflow automation',
+    accent: 'var(--primary-2)',
+  },
+  {
+    name: 'StockSense',
+    tagline: 'AI financial insights chatbot that turns market signals into plain-language investment context and summaries.',
+    stack: ['RAG', 'AI Chat', 'Financial Data', 'PostgreSQL', 'FastAPI'],
+    period: 'GitHub project',
+    impact: 'Conversational insights',
+    accent: 'var(--teal)',
+  },
+  {
+    name: 'Fintech Pipeline',
+    tagline: 'Multi-source ETL orchestration project for automating finance data flows and analytics-ready transformations.',
+    stack: ['ETL', 'Orchestration', 'SQL', 'Python', 'Cloud'],
+    period: 'GitHub project',
+    impact: 'Production data flow',
+    accent: 'var(--red)',
+  },
+  {
+    name: 'MLOps Suite',
+    tagline: 'Model monitoring and deployment toolkit for tracking experiments, validating drift, and shipping models reliably.',
+    stack: ['MLflow', 'Monitoring', 'Docker', 'CI/CD', 'FastAPI'],
+    period: 'GitHub project',
+    impact: 'Model lifecycle tooling',
+    accent: 'var(--amber)',
+  },
+];
+
+export const EXPERIENCE = [
+  {
+    role: 'Data Engineer',
+    company: 'Opsylux LLC',
+    time: 'Nov 2025 — Present',
+    current: true,
+    bullets: [
+      'Architected and own end-to-end data infrastructure, building idempotent ELT pipelines in Python, Airflow, and Azure Data Factory ingesting from REST APIs, flat files, and databases into Azure SQL.',
+      'Reduced pipeline errors from 12% to under 2%, achieved 99%+ reliability, and cut reporting prep time by 50% for internal teams and client-facing data products.',
+      'Designed and implemented a star schema warehouse on Azure Databricks with dbt Core transformations, GitHub Actions CI/CD, and Great Expectations validation.',
+      'Reduced query load time by 30%, enforced schema validation, lineage tracking, and SLA monitoring across 3+ downstream analytical consumers.',
+      'Translated business requirements into production Power BI dashboards and automated pipelines, eliminating manual reporting across internal operations and client-facing products.',
+    ],
+  },
+  {
+    role: 'Data Engineer',
+    company: 'LTIMindtree',
+    time: 'May 2022 — Jul 2024',
+    bullets: [
+      'Built and owned Python and PySpark ETL/ELT pipelines on AWS ingesting 10+ TB/day from 20+ heterogeneous sources into Redshift, BigQuery, and Databricks.',
+      'Cut report delivery from 8 hours to 3 hours across multiple client environments.',
+      'Led end-to-end design and implementation of medallion architecture (Bronze/Silver/Gold) on Databricks Delta Lake with Great Expectations validation across 25+ datasets.',
+      'Reduced data defects by 50% and infrastructure costs by 40%.',
+      'Architected Spark Structured Streaming and Kafka ingestion platform layered with dbt Core transformations, cutting reporting latency from 24 hours to 9 hours.',
+      'Hardened pipeline security and observability with KMS encryption, IAM controls, CloudWatch monitoring, and Terraform IaC, achieving 99% pipeline reliability and reducing manual reconciliation by 60%.',
+      'Refactored 50+ SQL transformations across Redshift and BigQuery using partition pruning, CTEs, and window functions, reducing average query runtime from 4.2 minutes to 88 seconds and saving ~$18K annually in compute costs.',
+      'Engineered dbt Core transformation workflows across 3 analytics teams and data science leads, defining SLA requirements and accelerating KPI delivery by 50%.',
+    ],
+  },
+];
+
+export const SKILL_ROWS = [
+  { name: 'Python',            pct: 96, level: 'Expert',  ctx: '3+ yrs · daily · pipelines + APIs',      color: 'var(--teal)' },
+  { name: 'SQL / SparkSQL',    pct: 93, level: 'Expert',  ctx: '3+ yrs · 50+ transformations shipped',   color: 'var(--teal)' },
+  { name: 'PySpark',           pct: 90, level: 'Expert',  ctx: '2.5 yrs · 10+ TB/day production',        color: 'var(--teal)' },
+  { name: 'Airflow',           pct: 85, level: 'Expert',  ctx: '2 yrs · DAG design · SLA monitoring',    color: 'var(--teal)' },
+  { name: 'dbt Core',          pct: 84, level: 'Expert',  ctx: '2 yrs · 3 analytics teams · CI/CD',      color: 'var(--teal)' },
+  { name: 'AWS',               pct: 80, level: 'Strong',  ctx: 'certified · Kinesis, S3, Lambda, ECR',   color: 'var(--amber)' },
+  { name: 'Kafka',             pct: 78, level: 'Strong',  ctx: '1.5 yrs · streaming + ingestion',        color: 'var(--amber)' },
+  { name: 'Delta Lake',        pct: 76, level: 'Strong',  ctx: 'medallion arch · Bronze/Silver/Gold',    color: 'var(--amber)' },
+  { name: 'Azure',             pct: 75, level: 'Strong',  ctx: 'ADF, Databricks, Azure SQL · current',   color: 'var(--amber)' },
+  { name: 'Databricks',        pct: 74, level: 'Strong',  ctx: 'star schema · dbt + Great Expectations', color: 'var(--amber)' },
+  { name: 'GCP',               pct: 70, level: 'Strong',  ctx: 'BigQuery · Pub/Sub · Dataflow',          color: 'var(--amber)' },
+  { name: 'Terraform',         pct: 68, level: 'Strong',  ctx: 'IaC · KMS · IAM · CloudWatch',           color: 'var(--amber)' },
+  { name: 'Docker / K8s',      pct: 65, level: 'Solid',   ctx: 'containerised deployments · ECR',        color: 'var(--primary)' },
+  { name: 'LangGraph',         pct: 62, level: 'Solid',   ctx: 'Artha AI · multi-agent workflows',       color: 'var(--primary)' },
+  { name: 'MLflow',            pct: 60, level: 'Solid',   ctx: 'experiment tracking · model registry',   color: 'var(--primary)' },
+  { name: 'FastAPI',           pct: 58, level: 'Solid',   ctx: 'portfolio backend · serving APIs',       color: 'var(--primary)' },
+  { name: 'PyTorch / FinBERT', pct: 50, level: 'Growing', ctx: 'FinSentinel · sentiment models',         color: 'var(--text-3)' },
+  { name: 'Scala',             pct: 40, level: 'Growing', ctx: 'Spark jobs · reading / writing',         color: 'var(--text-3)' },
+];
+
+export const CERTS = [
+  {
+    name: 'AWS Certified Cloud Practitioner',
+    code: 'CLF-C02',
+    issuer: 'Amazon Web Services',
+    color: 'var(--amber)',
+    credlyUrl: 'https://www.credly.com/badges/1c61f0c9-465d-403f-bd14-83def5da04b0',
+    badgeImg: 'https://images.credly.com/size/340x340/images/00634f82-b07f-4bbd-a6bb-53de397fc3a6/image.png',
+  },
+  {
+    name: 'AWS Certified AI Practitioner',
+    code: 'AIF-C01',
+    issuer: 'Amazon Web Services',
+    color: 'var(--primary)',
+    credlyUrl: 'https://www.credly.com/badges/54c0266d-8a07-44ad-83fe-8a09f7a828d3',
+    badgeImg: 'https://images.credly.com/size/340x340/images/4d4693bb-530e-4bca-9327-de07f3aa2348/image.png',
+  },
+];

@@ -5,7 +5,7 @@ const { useEffect, useRef, useState, useCallback } = React;
 // ============================================================
 // MENU BAR — top
 // ============================================================
-function MenuBar({ theme, onToggleTheme, onOpenSpotlight, statusOnline }) {
+function MenuBar({ theme, onToggleTheme, onOpenSpotlight, statusOnline, onRecruiterMode, recruiterActive }) {
   const [now, setNow] = useState(() => new Date());
   useEffect(() => {
     const t = setInterval(() => setNow(new Date()), 1000 * 30);
@@ -41,6 +41,23 @@ function MenuBar({ theme, onToggleTheme, onOpenSpotlight, statusOnline }) {
         </div>
       </div>
       <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+        <button onClick={onRecruiterMode} title={recruiterActive ? 'Exit Recruiter Mode' : 'Recruiter Mode — tile key windows'} style={{
+          ...iconBtn,
+          padding: '4px 10px',
+          background: recruiterActive ? 'rgba(255,107,107,0.15)' : 'rgba(108,99,255,0.15)',
+          border: `1px solid ${recruiterActive ? 'rgba(255,107,107,0.4)' : 'rgba(108,99,255,0.35)'}`,
+          borderRadius: 6,
+          color: recruiterActive ? 'var(--red)' : 'var(--primary-2)',
+          fontSize: 11,
+          fontWeight: 600,
+          letterSpacing: '0.04em',
+          transition: 'all 160ms',
+        }}
+        onMouseEnter={e => e.currentTarget.style.background = recruiterActive ? 'rgba(255,107,107,0.26)' : 'rgba(108,99,255,0.28)'}
+        onMouseLeave={e => e.currentTarget.style.background = recruiterActive ? 'rgba(255,107,107,0.15)' : 'rgba(108,99,255,0.15)'}
+        >
+          {recruiterActive ? '✕ Exit Recruiter Mode' : '⚡ Recruiter Mode'}
+        </button>
         <button onClick={onOpenSpotlight} title="Search (/)" style={iconBtn}>
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
         </button>
@@ -59,6 +76,7 @@ function MenuBar({ theme, onToggleTheme, onOpenSpotlight, statusOnline }) {
         </div>
         <span>{date}</span>
         <span style={{ color: 'var(--text)' }}>{time}</span>
+        <PipelineWidget />
       </div>
     </div>
   );
@@ -430,8 +448,7 @@ function DesktopIcons({ icons, onOpen }) {
       {icons.map(icon => (
         <button
           key={icon.id}
-          onDoubleClick={() => onOpen(icon.id)}
-          onClick={(e) => { if (e.detail === 1) e.currentTarget.classList.toggle('sel'); }}
+          onClick={() => onOpen(icon.id)}
           style={{
             background: 'transparent', border: 'none', padding: '6px 4px', borderRadius: 8,
             display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6,
@@ -543,6 +560,108 @@ function Spotlight({ open, onClose, items, onPick }) {
           ))}
         </div>
       </div>
+    </div>
+  );
+}
+
+// ============================================================
+// PIPELINE STATUS WIDGET — menu bar right side
+// ============================================================
+const PIPELINE_RUNS = [
+  { name: 'azure-etl-pipeline',    status: 'success', duration: '4m 12s',    ago: '2h ago',   records: '~2.1TB' },
+  { name: 'kafka-stream-ingest',   status: 'running', duration: 'continuous', ago: 'live',     records: '10TB+/day' },
+  { name: 'dbt-transformations',   status: 'success', duration: '1m 48s',    ago: '4h ago',   records: '25 models' },
+  { name: 'great-expectations',    status: 'success', duration: '22s',       ago: '4h ago',   records: '0 failures' },
+  { name: 'power-bi-refresh',      status: 'success', duration: '3m 05s',    ago: '6h ago',   records: '4 reports' },
+];
+
+function PipelineWidget() {
+  const [open, setOpen] = useState(false);
+  const ref = useRef(null);
+
+  useEffect(() => {
+    if (!open) return;
+    const onClickOutside = (e) => { if (ref.current && !ref.current.contains(e.target)) setOpen(false); };
+    document.addEventListener('mousedown', onClickOutside);
+    return () => document.removeEventListener('mousedown', onClickOutside);
+  }, [open]);
+
+  const statusColor = { success: 'var(--teal)', running: 'var(--amber)', failed: 'var(--red)' };
+
+  return (
+    <div ref={ref} style={{ position: 'relative' }}>
+      <button onClick={() => setOpen(o => !o)} style={{
+        ...iconBtn,
+        display: 'flex', alignItems: 'center', gap: 6,
+        padding: '4px 8px',
+        background: open ? 'rgba(29,184,142,0.12)' : 'transparent',
+        border: '1px solid',
+        borderColor: open ? 'rgba(29,184,142,0.3)' : 'transparent',
+        borderRadius: 6,
+        transition: 'all 140ms',
+      }}
+      onMouseEnter={e => { if (!open) e.currentTarget.style.background = 'rgba(29,184,142,0.08)'; }}
+      onMouseLeave={e => { if (!open) e.currentTarget.style.background = 'transparent'; }}
+      >
+        <span style={{
+          width: 7, height: 7, borderRadius: '50%',
+          background: 'var(--teal)',
+          boxShadow: '0 0 6px var(--teal)',
+          animation: 'pulseDot 2s ease-in-out infinite',
+          flexShrink: 0,
+        }} />
+        <span style={{ fontSize: 11, color: 'var(--teal)', fontWeight: 500 }}>Pipeline: Healthy</span>
+        <span style={{ color: 'var(--text-3)', fontSize: 10 }}>· 2h ago · 10TB+</span>
+        <style>{`@keyframes pulseDot { 0%,100% { opacity:1; } 50% { opacity:0.45; } }`}</style>
+      </button>
+
+      {open && (
+        <div style={{
+          position: 'absolute', top: 'calc(100% + 8px)', right: 0, zIndex: 3000,
+          width: 340, background: 'var(--surface)',
+          border: '1px solid var(--border-2)', borderRadius: 12,
+          boxShadow: '0 24px 56px -10px rgba(0,0,0,0.7), 0 0 0 1px rgba(29,184,142,0.12)',
+          overflow: 'hidden',
+        }}>
+          <div style={{
+            padding: '10px 14px',
+            background: 'linear-gradient(180deg, var(--elev-2), var(--elev))',
+            borderBottom: '1px solid var(--border)',
+            display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 7 }}>
+              <span style={{ width: 8, height: 8, borderRadius: '50%', background: 'var(--teal)', boxShadow: '0 0 6px var(--teal)' }} />
+              <span style={{ fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--text)', fontWeight: 600 }}>System Monitor</span>
+            </div>
+            <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10, color: 'var(--text-3)' }}>
+              0 alerts · all systems go
+            </div>
+          </div>
+          <div style={{ padding: '8px 6px', display: 'flex', flexDirection: 'column', gap: 2 }}>
+            {PIPELINE_RUNS.map((run, i) => (
+              <div key={i} style={{
+                display: 'grid', gridTemplateColumns: '10px 1fr auto',
+                alignItems: 'center', gap: 10,
+                padding: '8px 10px', borderRadius: 8,
+                background: i % 2 === 0 ? 'var(--elev)' : 'transparent',
+              }}>
+                <span style={{
+                  width: 8, height: 8, borderRadius: '50%',
+                  background: statusColor[run.status] || 'var(--text-3)',
+                  boxShadow: run.status === 'running' ? '0 0 5px var(--amber)' : 'none',
+                  animation: run.status === 'running' ? 'pulseDot 1.4s ease-in-out infinite' : 'none',
+                  flexShrink: 0,
+                }} />
+                <div>
+                  <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--text)', letterSpacing: '0.02em' }}>{run.name}</div>
+                  <div style={{ fontSize: 10, color: 'var(--text-3)', marginTop: 2 }}>{run.records} · {run.duration}</div>
+                </div>
+                <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10, color: 'var(--text-3)', textAlign: 'right' }}>{run.ago}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

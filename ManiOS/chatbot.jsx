@@ -1,7 +1,85 @@
 // Ask Mani — floating chatbot
 import React from 'react';
+import { PERSON, PROJECTS, EXPERIENCE, CERTS } from './data.js';
 
 const { useState: useChatS, useRef: useChatR, useEffect: useChatE } = React;
+
+// ============== Local knowledge base (runs with no backend) ==============
+const KB = [
+  {
+    keys: ['role', 'open to', 'looking for', 'position', 'job', 'hire', 'hiring', 'available', 'seeking'],
+    answer: `Mani is open to **Data Engineer**, **ML Engineer**, and **Data Platform Engineer** roles — full-time or contract. Remote-first, open to relocation to major US tech hubs. Targeting teams building data infrastructure or AI products at scale.`,
+  },
+  {
+    keys: ['artha', 'artha ai'],
+    answer: `**Artha AI** is Mani's flagship AI project — a financial intelligence platform orchestrating LangGraph multi-agent workflows across 10+ investor philosophy models. It processes **${PROJECTS.find(p => p.name === 'Artha AI').impact}** through Airflow DAGs → dbt transforms → TimescaleDB → Redis cache. Built from scratch, currently live.`,
+  },
+  {
+    keys: ['stack', 'tech', 'skills', 'know', 'tools', 'languages', 'technologies', 'expertise'],
+    answer: `Core stack: **Python**, **SQL**, **Spark**, **Kafka**, **dbt**, **Delta Lake**, **Iceberg**.\n\nCloud: **AWS** (Kinesis, S3, Lambda, Glue, EMR), **GCP**, **Azure**.\n\nAI/ML: **LangGraph**, **LangChain**, **scikit-learn**, **SageMaker**.\n\nInfra: **Airflow**, **Terraform**, **Docker**, **Kubernetes**.`,
+  },
+  {
+    keys: ['experience', 'work history', 'companies', 'background', 'career'],
+    answer: `${PERSON.yearsExp} years across ${PERSON.companies} companies:\n\n• **${EXPERIENCE[0].company}** (current) — ${EXPERIENCE[0].role} at an AI-driven SaaS startup. Owns streaming pipelines, lakehouse design, and data governance.\n\n• **${EXPERIENCE[1].company}** — ${EXPERIENCE[1].role} at a global IT services firm (80K+ employees). ETL pipelines, data warehouses, and BI reporting.`,
+  },
+  {
+    keys: ['finsentinel', 'fin sentinel', 'stock', 'sentiment'],
+    answer: `**FinSentinel** is a real-time financial data pipeline with ML-powered sentiment analysis. Ingests live market feeds, runs NLP on financial news, and surfaces risk signals on a dashboard. Built on GCP Pub/Sub, Dataflow, BigQuery, and FinBERT. Achieved **${PROJECTS.find(p => p.name === 'FinSentinel').impact}**.`,
+  },
+  {
+    keys: ['education', 'degree', 'ms', 'masters', 'florida', 'fau', 'university', 'gpa', 'school'],
+    answer: `${PERSON.degree} at **${PERSON.university}** (${PERSON.location}), graduating ${PERSON.graduation} with a **${PERSON.gpa} GPA**.`,
+  },
+  {
+    keys: ['cert', 'aws', 'certification', 'cloud practitioner', 'ai practitioner', 'credential'],
+    answer: `Two active AWS certifications:\n\n• **${CERTS[0].name}**\n• **${CERTS[1].name}**\n\nBoth verifiable on Credly. Open the **Certs** window for badge links.`,
+  },
+  {
+    keys: ['contact', 'reach', 'email', 'linkedin', 'message', 'talk', 'connect'],
+    answer: `Best ways to reach Mani:\n\n• Email: **${PERSON.email}**\n• LinkedIn: **${PERSON.linkedin}**\n• GitHub: **${PERSON.github}**\n\nOr use the **Contact** window — he replies within 24h.`,
+  },
+  {
+    keys: ['project', 'projects', 'built', 'portfolio', 'work samples', 'what has he'],
+    answer: `${PROJECTS.length} production projects including:\n\n• **${PROJECTS[0].name}** — ${PROJECTS[0].impact}\n• **${PROJECTS[1].name}** — LangGraph multi-agent finance intelligence\n• **${PROJECTS[2].name}** — Live stock pipeline + ML sentiment\n• **${PROJECTS[7].name}** — End-to-end ML pipeline automation\n\nOpen the **Projects** window for full metrics.`,
+  },
+  {
+    keys: ['location', 'where', 'based', 'relocate', 'remote', 'boca', 'florida', 'city'],
+    answer: `Based in **${PERSON.location}**. Open to remote and relocation to major US tech hubs. Available immediately after ${PERSON.graduation} graduation.`,
+  },
+  {
+    keys: ['who', 'whoami', 'about', 'introduce', 'tell me about mani', 'manikanth'],
+    answer: `${PERSON.name} is a **${PERSON.title}** with ${PERSON.yearsExp} years building production data systems — processing **${PERSON.dataScale}** across AWS, GCP, and Azure. He specializes in streaming architectures (Kafka, Spark), lakehouse design (Delta Lake, Iceberg), and AI-powered data products. Currently at ${PERSON.currentCompany}; finishing ${PERSON.degree} at ${PERSON.universityShort} (GPA ${PERSON.gpa}).`,
+  },
+  {
+    keys: ['resume', 'cv', 'download', 'pdf'],
+    answer: `You can view and download Mani's resume by opening the **Resume** window (it's a live Google Drive embed — always the latest version).`,
+  },
+  {
+    keys: ['salary', 'rate', 'compensation', 'pay'],
+    answer: `Compensation details are best discussed directly. Use the **Contact** window or email **${PERSON.email}** to start a conversation.`,
+  },
+];
+
+function localAnswer(q) {
+  const lower = q.toLowerCase();
+  for (const entry of KB) {
+    if (entry.keys.some(k => lower.includes(k))) return entry.answer;
+  }
+  return "I can answer questions about Mani's experience, projects, skills, certifications, or availability. Try asking about his **tech stack**, **Artha AI**, **open roles**, or **certifications**. You can also reach him directly via the **Contact** window.";
+}
+
+function renderText(text) {
+  return text.split('\n').map((line, i) => (
+    React.createElement(React.Fragment, { key: i },
+      i > 0 && React.createElement('br'),
+      ...line.split(/(\*\*[^*]+\*\*)/).map((part, j) =>
+        part.startsWith('**') && part.endsWith('**')
+          ? React.createElement('strong', { key: j }, part.slice(2, -2))
+          : part
+      )
+    )
+  ));
+}
 
 function ChatBubble({ open, onToggle, unread, compact }) {
   return (
@@ -58,18 +136,25 @@ function ChatPanel({ open, onClose }) {
     setMessages(next);
     setInput('');
     setThinking(true);
+
+    let reply = null;
+
     try {
       const res = await fetch(window.__API_BASE__ + '/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: q, session_id: window.chatSessionId })
+        body: JSON.stringify({ message: q, session_id: window.chatSessionId }),
+        signal: AbortSignal.timeout(5000),
       });
-      const data = await res.json();
-      window.chatSessionId = data.session_id;
-      setMessages([...next, { role: 'assistant', content: data.reply }]);
-    } catch (err) {
-      setMessages([...next, { role: 'assistant', content: "You can reach Mani directly via the Contact window." }]);
-    }
+      if (res.ok) {
+        const data = await res.json();
+        window.chatSessionId = data.session_id;
+        reply = data.reply;
+      }
+    } catch (_) {}
+
+    if (!reply) reply = localAnswer(q);
+    setMessages([...next, { role: 'assistant', content: reply }]);
     setThinking(false);
   }
 
@@ -128,7 +213,9 @@ function ChatPanel({ open, onClose }) {
             border: m.role === 'user' ? 'none' : '1px solid var(--border)',
             borderTopRightRadius: m.role === 'user' ? 4 : 12,
             borderTopLeftRadius:  m.role === 'user' ? 12 : 4,
-          }}>{m.content}</div>
+          }}>
+            {m.role === 'assistant' ? renderText(m.content) : m.content}
+          </div>
         ))}
         {thinking && (
           <div style={{
@@ -198,4 +285,4 @@ function ChatPanel({ open, onClose }) {
   );
 }
 
-Object.assign(window, { ChatBubble, ChatPanel });
+Object.assign(window, { ChatBubble, ChatPanel, localAnswer });

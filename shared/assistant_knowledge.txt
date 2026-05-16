@@ -1,15 +1,60 @@
-Manikanth Nampally (Mani) is a Data Engineer with 2.5 years of experience, graduating May 2026 from Florida Atlantic University with an MS in Information Technology & Management (GPA 3.9), based in Boca Raton, FL.
+# Portfolio assistant knowledge base
+# Keep in sync with ManiOS/data.js (PERSON, PROJECTS, EXPERIENCE, CERTS, SKILL_ROWS).
 
-Skills: Python, PySpark, SQL, Scala, Bash, SparkSQL, Apache Spark, Spark Structured Streaming, Kafka, Flink, Airflow, dbt Core, Databricks, Delta Lake, Apache Iceberg, Apache Beam, Great Expectations, AWS, GCP, Azure, Snowflake, Redshift, BigQuery, PostgreSQL, TimescaleDB, MongoDB, MLflow, LangGraph, pgvector, PyTorch, TensorFlow, FinBERT, Evidently AI, Docker, Kubernetes, GitHub Actions, Power BI, Tableau.
+Manikanth Nampally (goes by Mani) is a Data & AI Engineer with 2.5 years of experience building
+production data infrastructure and ML-ready pipelines across AWS, Azure, and GCP, processing 10+ TB/day.
+Currently at Opsylux LLC; graduating May 2026 from Florida Atlantic University with an
+MS in Information Technology & Management (GPA 3.9). Based in Boca Raton, FL.
+Open to remote and relocation to major US tech hubs.
 
-Experience: Data Engineer at Opsylux LLC (Nov 2025–Present); Data Engineer at LTIMindtree (May 2022–Jul 2024).
-
-Impact: 10+ TB/day, 708M+ auth events, 99%+ reliability, 2h to <5min latency, 0.992 F1.
-
-Certifications: AWS Cloud Practitioner, AWS AI Practitioner.
-
-Projects (selected): Real-Time Security Analytics; Artha AI; FinSentinel; Network Security; Repo2Jac; StockSense; Fintech Pipeline; MLOps Suite.
-
-Status: Based in Boca Raton FL, open to remote and relocation.
+Contact:
+- Email: manikanthnampally94@gmail.com
+- LinkedIn: linkedin.com/in/manikanthn
+- GitHub: github.com/maninampally
+- Phone: +1 (561) 542-6494
 
 Target roles: Data Engineer, AI/ML Engineer, MLOps Engineer, Cloud Data Engineer.
+
+Experience:
+- Data Engineer at Opsylux LLC (Nov 2025–Present): owns end-to-end data infrastructure;
+  idempotent ELT pipelines in Python, Airflow, Azure Data Factory; star schema warehouse on
+  Azure Databricks with dbt Core + Great Expectations; 99%+ reliability, pipeline errors down
+  from 12% to under 2%, reporting prep time cut 50%.
+- Data Engineer at LTIMindtree (May 2022–Jul 2024): Python/PySpark ETL/ELT on AWS ingesting
+  10+ TB/day from 20+ sources; medallion architecture (Bronze/Silver/Gold) on Databricks Delta Lake;
+  Spark Structured Streaming + Kafka; cut report latency from 24h to 9h; saved ~$18K/yr in compute
+  costs; 99% pipeline reliability.
+
+Skills (expert): Python, SQL/SparkSQL, PySpark, Airflow, dbt Core.
+Skills (strong): AWS (certified), Kafka, Delta Lake, Azure, Databricks, GCP, Terraform.
+Skills (solid): Docker/K8s, LangGraph, MLflow, FastAPI.
+Skills (growing): PyTorch/FinBERT, Scala.
+
+Certifications:
+- AWS Certified Cloud Practitioner (CLF-C02) — verify at Credly
+- AWS Certified AI Practitioner (AIF-C01) — verify at Credly
+
+Education:
+- Florida Atlantic University, Boca Raton FL
+- Master of Science in Information Technology & Management
+- GPA: 3.9 / 4.0, Graduating May 2026
+
+Projects (8 total):
+1. Real-Time Security Analytics — AWS Kinesis/S3/Lambda streaming lakehouse; 708M+ auth events
+   across 11K+ users, 22K+ endpoints; 4-tier risk engine; 15s end-to-end latency.
+2. Artha AI — LangGraph multi-agent financial intelligence platform; 10+ investor philosophy models;
+   500+ equities/day via Airflow DAGs → dbt → TimescaleDB/Redis.
+3. FinSentinel — GCP real-time sentiment pipeline; Pub/Sub + Dataflow + BigQuery + FinBERT; 0.95 F1.
+4. Network Security — MLOps pipeline for phishing detection; MLflow + Docker + FastAPI; 0.992 F1.
+5. Repo2Jac — LLM workflow automation; translates repo changes into developer context.
+6. StockSense — AI financial insights chatbot; RAG + PostgreSQL + FastAPI.
+7. Fintech Pipeline — multi-source ETL orchestration for finance data flows.
+8. MLOps Suite — model monitoring and deployment toolkit; MLflow + CI/CD + Docker.
+
+Impact numbers:
+- 10+ TB/day processing scale
+- 99%+ pipeline reliability
+- 708M+ authentication events processed
+- 2h → <5min latency improvement (Opsylux reporting)
+- 0.992 F1 (phishing detection)
+- ~$18K/yr compute savings (LTIMindtree SQL refactor)

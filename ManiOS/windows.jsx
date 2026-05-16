@@ -1,6 +1,12 @@
 // Window content modules — all 13 sections
 import React from 'react';
+import { PERSON, RESUME_DRIVE_ID, PROJECTS, EXPERIENCE, SKILL_ROWS, CERTS } from './data.js';
 const { useState: useS, useEffect: useE } = React;
+
+// Resume URLs derived from RESUME_DRIVE_ID in data.js
+const RESUME_VIEW_URL     = `https://drive.google.com/file/d/${RESUME_DRIVE_ID}/view`;
+const RESUME_DOWNLOAD_URL = `https://drive.google.com/uc?export=download&id=${RESUME_DRIVE_ID}`;
+const RESUME_PREVIEW_URL  = `https://drive.google.com/file/d/${RESUME_DRIVE_ID}/preview`;
 
 // ============== Shared building blocks ==============
 const padX = { padding: '24px 28px' };
@@ -97,7 +103,7 @@ function HeroWindow({ onOpenWindow }) {
             marginTop: 8, fontFamily: 'var(--font-mono)', fontSize: 14,
             color: 'var(--text-2)', letterSpacing: '0.04em',
           }}>
-            Data Engineer · 2.5 years building production data systems
+            {PERSON.title} · {PERSON.yearsExp} years building production data systems
           </div>
           <p style={{
             marginTop: 16, marginBottom: 0, fontSize: 16, color: 'var(--text)',
@@ -114,13 +120,13 @@ function HeroWindow({ onOpenWindow }) {
         padding: '10px 14px', background: 'var(--elev)', borderRadius: 10,
         border: '1px solid var(--border)',
       }}>
-        <StatusDot label="Data Engineer" />
+        <StatusDot label={PERSON.title} />
         <span style={{ color: 'var(--text-3)', fontFamily: 'var(--font-mono)', fontSize: 11 }}>·</span>
         <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--text-2)' }}>
-          Boca Raton, FL · Remote / Relocate
+          {PERSON.location} · {PERSON.relocate}
         </span>
         <span style={{ flex: 1 }} />
-        <Tag color="var(--amber)">10+ TB/day</Tag>
+        <Tag color="var(--amber)">{PERSON.dataScale}</Tag>
       </div>
 
       <div style={{
@@ -128,10 +134,10 @@ function HeroWindow({ onOpenWindow }) {
         marginBottom: 24,
       }}>
         {[
-          ['Experience', '2.5 years'],
-          ['Companies', '2'],
-          ['Data Scale', '10+ TB/day'],
-          ['Certs', '2 AWS'],
+          ['Experience', `${PERSON.yearsExp} years`],
+          ['Companies', PERSON.companies],
+          ['Data Scale', PERSON.dataScale],
+          ['Certs', PERSON.certCount],
         ].map(([label, value]) => (
           <div key={label} style={{
             padding: '12px 14px', background: 'var(--elev)', borderRadius: 10,
@@ -146,15 +152,15 @@ function HeroWindow({ onOpenWindow }) {
       <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
         <Btn onClick={() => onOpenWindow('resume')} icon={<IconDoc />}>Download Résumé</Btn>
         <Btn variant="ghost" onClick={() => onOpenWindow('contact')} icon={<IconMail />}>Get in Touch</Btn>
-        <Btn variant="ghost" onClick={() => window.open('https://github.com/maninampally', '_blank')} icon={<IconGithub />}>GitHub</Btn>
-        <Btn variant="ghost" onClick={() => window.open('https://www.linkedin.com/in/manikanthn/', '_blank')} icon={<IconLink />}>LinkedIn</Btn>
+        <Btn variant="ghost" onClick={() => window.open(PERSON.githubUrl, '_blank')} icon={<IconGithub />}>GitHub</Btn>
+        <Btn variant="ghost" onClick={() => window.open(PERSON.linkedinUrl, '_blank')} icon={<IconLink />}>LinkedIn</Btn>
       </div>
 
       <div style={{ marginTop: 28 }}>
         <Section title="Currently">
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, minmax(0, 1fr))', gap: 12 }}>
-            <FactCard label="Role" value="Data Engineer" sub="Opsylux LLC" />
-            <FactCard label="Degree" value="M.S. IT & Management" sub="Florida Atlantic · GPA 3.9" />
+            <FactCard label="Role" value={PERSON.currentRole} sub={PERSON.currentCompany} />
+            <FactCard label="Degree" value={PERSON.degree} sub={`Florida Atlantic · GPA ${PERSON.gpa}`} />
             <FactCard label="Focus" value="Streaming + Lakehouse" sub="Kafka · Delta Lake · Iceberg" />
             <FactCard label="Certs" value="AWS Cloud + AI" sub="2026" />
           </div>
@@ -212,7 +218,7 @@ function AboutWindow() {
 
       <Section title="Bio">
         <p style={{ margin: 0, lineHeight: 1.65, color: 'var(--text)', fontSize: 14 }}>
-          I'm a Data Engineer with 2.5 years of experience building production-grade data infrastructure and ML-ready pipelines across AWS, Azure, and GCP, processing 10+ TB/day.
+          I'm a {PERSON.title} with {PERSON.yearsExp} years of experience building production-grade data infrastructure and ML-ready pipelines across AWS, Azure, and GCP, processing {PERSON.dataScale}.
         </p>
         <p style={{ marginTop: 12, marginBottom: 0, lineHeight: 1.65, color: 'var(--text)', fontSize: 14 }}>
           I specialize in streaming architectures (Kafka, Spark Structured Streaming), lakehouse design (Delta Lake, Iceberg),
@@ -225,10 +231,10 @@ function AboutWindow() {
 
       <Section title="Quick facts">
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
-          <FactCard label="University" value="Florida Atlantic" sub="Boca Raton, FL" />
-          <FactCard label="Program" value="MS IT & Management" sub="Graduating May 2026" />
-          <FactCard label="GPA" value="3.9 / 4.0" />
-          <FactCard label="Experience" value="2.5 years" sub="10+ TB/day · 2 companies" />
+          <FactCard label="University" value={PERSON.universityShort} sub={PERSON.location} />
+          <FactCard label="Program" value={PERSON.degree} sub={`Graduating ${PERSON.graduation}`} />
+          <FactCard label="GPA" value={`${PERSON.gpa} / 4.0`} />
+          <FactCard label="Experience" value={`${PERSON.yearsExp} years`} sub={`${PERSON.dataScale} · ${PERSON.companies} companies`} />
         </div>
       </Section>
 
@@ -244,77 +250,11 @@ function AboutWindow() {
 }
 
 // ============== 3. PROJECTS ==============
-const PROJECTS = [
-  {
-    name: 'Real-Time Security Analytics',
-    tagline: 'Streaming lakehouse on AWS processing 708M+ authentication events across 11K+ users and 22K+ endpoints with a 4-tier risk engine.',
-    stack: ['AWS Kinesis', 'S3', 'Lambda', 'Terraform', 'CloudWatch', 'Streaming'],
-    period: 'Dec 2025 — Feb 2026',
-    impact: '15s end-to-end latency',
-    accent: 'var(--red)',
-  },
-  {
-    name: 'Artha AI',
-    tagline: 'AI financial intelligence platform orchestrating LangGraph multi-agent workflows across 10+ investor philosophy models.',
-    stack: ['LangGraph', 'Airflow', 'dbt Core', 'PostgreSQL', 'TimescaleDB', 'Redis'],
-    period: 'Mar 2026 — Present',
-    impact: '500+ equities/day',
-    accent: 'var(--primary)',
-  },
-  {
-    name: 'FinSentinel',
-    tagline: 'Real-time financial news sentiment platform on GCP with Pub/Sub, Dataflow, BigQuery, and FinBERT.',
-    stack: ['GCP', 'Pub/Sub', 'Dataflow', 'BigQuery', 'PyTorch', 'FastAPI', 'Redis'],
-    period: 'Apr 2026 — Present',
-    impact: '0.95 F1',
-    accent: 'var(--teal)',
-  },
-  {
-    name: 'Network Security',
-    tagline: 'End-to-end MLOps pipeline for phishing detection with drift checks, MLflow experiments, and Dockerized FastAPI deployment.',
-    stack: ['MongoDB', 'MLflow', 'FastAPI', 'Docker', 'AWS ECR', 'EC2', 'GitHub Actions'],
-    period: 'Jan 2026 — Mar 2026',
-    impact: '0.992 F1',
-    accent: 'var(--amber)',
-  },
-  {
-    name: 'Repo2Jac',
-    tagline: 'LLM workflow automation project for translating repository changes into structured developer context and downstream actions.',
-    stack: ['LLM', 'Automation', 'Workflow', 'GitHub', 'Python'],
-    period: 'GitHub project',
-    impact: 'Dev workflow automation',
-    accent: 'var(--primary-2)',
-  },
-  {
-    name: 'StockSense',
-    tagline: 'AI financial insights chatbot that turns market signals into plain-language investment context and summaries.',
-    stack: ['RAG', 'AI Chat', 'Financial Data', 'PostgreSQL', 'FastAPI'],
-    period: 'GitHub project',
-    impact: 'Conversational insights',
-    accent: 'var(--teal)',
-  },
-  {
-    name: 'Fintech Pipeline',
-    tagline: 'Multi-source ETL orchestration project for automating finance data flows and analytics-ready transformations.',
-    stack: ['ETL', 'Orchestration', 'SQL', 'Python', 'Cloud'],
-    period: 'GitHub project',
-    impact: 'Production data flow',
-    accent: 'var(--red)',
-  },
-  {
-    name: 'MLOps Suite',
-    tagline: 'Model monitoring and deployment toolkit for tracking experiments, validating drift, and shipping models reliably.',
-    stack: ['MLflow', 'Monitoring', 'Docker', 'CI/CD', 'FastAPI'],
-    period: 'GitHub project',
-    impact: 'Model lifecycle tooling',
-    accent: 'var(--amber)',
-  },
-];
 
 function ProjectsWindow({ onOpenWindow }) {
   return (
     <div style={{ ...padX, overflow: 'auto', maxHeight: '100%' }}>
-      <Section title="Selected projects">
+      <Section title={`All Projects (${PROJECTS.length})`}>
         <div style={{ marginBottom: 10, fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--text-3)' }}>
           {PROJECTS.length} projects · scroll to explore ↓
         </div>
@@ -357,36 +297,6 @@ function ProjectsWindow({ onOpenWindow }) {
 }
 
 // ============== 4. EXPERIENCE ==============
-const EXPERIENCE = [
-  {
-    role: 'Data Engineer',
-    company: 'Opsylux LLC',
-    time: 'Nov 2025 — Present',
-    current: true,
-    bullets: [
-      'Architected and own end-to-end data infrastructure, building idempotent ELT pipelines in Python, Airflow, and Azure Data Factory ingesting from REST APIs, flat files, and databases into Azure SQL.',
-      'Reduced pipeline errors from 12% to under 2%, achieved 99%+ reliability, and cut reporting prep time by 50% for internal teams and client-facing data products.',
-      'Designed and implemented a star schema warehouse on Azure Databricks with dbt Core transformations, GitHub Actions CI/CD, and Great Expectations validation.',
-      'Reduced query load time by 30%, enforced schema validation, lineage tracking, and SLA monitoring across 3+ downstream analytical consumers.',
-      'Translated business requirements into production Power BI dashboards and automated pipelines, eliminating manual reporting across internal operations and client-facing products.',
-    ],
-  },
-  {
-    role: 'Data Engineer',
-    company: 'LTIMindtree',
-    time: 'May 2022 — Jul 2024',
-    bullets: [
-      'Built and owned Python and PySpark ETL/ELT pipelines on AWS ingesting 10+ TB/day from 20+ heterogeneous sources into Redshift, BigQuery, and Databricks.',
-      'Cut report delivery from 8 hours to 3 hours across multiple client environments.',
-      'Led end-to-end design and implementation of medallion architecture (Bronze/Silver/Gold) on Databricks Delta Lake with Great Expectations validation across 25+ datasets.',
-      'Reduced data defects by 50% and infrastructure costs by 40%.',
-      'Architected Spark Structured Streaming and Kafka ingestion platform layered with dbt Core transformations, cutting reporting latency from 24 hours to 9 hours.',
-      'Hardened pipeline security and observability with KMS encryption, IAM controls, CloudWatch monitoring, and Terraform IaC, achieving 99% pipeline reliability and reducing manual reconciliation by 60%.',
-      'Refactored 50+ SQL transformations across Redshift and BigQuery using partition pruning, CTEs, and window functions, reducing average query runtime from 4.2 minutes to 88 seconds and saving ~$18K annually in compute costs.',
-      'Engineered dbt Core transformation workflows across 3 analytics teams and data science leads, defining SLA requirements and accelerating KPI delivery by 50%.',
-    ],
-  },
-];
 
 function ExperienceWindow() {
   return (
@@ -405,7 +315,12 @@ function ExperienceWindow() {
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', flexWrap: 'wrap', gap: 8 }}>
                 <div>
                   <div style={{ fontFamily: 'var(--font-display)', fontSize: 17, fontWeight: 600 }}>{job.role}</div>
-                  <div style={{ fontSize: 13, color: 'var(--primary-2)', marginTop: 2 }}>{job.company}</div>
+                  <div style={{ fontSize: 13, color: 'var(--primary-2)', marginTop: 2 }}>
+                    {job.company}
+                    {job.company === 'LTIMindtree' && (
+                      <span style={{ fontSize: 11, color: 'var(--text-3)', marginLeft: 8, fontStyle: 'italic' }}>Global IT services · 80K+ employees</span>
+                    )}
+                  </div>
                 </div>
                 <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--text-3)' }}>{job.time}</div>
               </div>
@@ -421,116 +336,90 @@ function ExperienceWindow() {
 }
 
 // ============== 5. SKILLS ==============
-// Curated groups — concise cards, not a resume keyword dump.
-const SKILL_GROUPS = [
-  {
-    title: 'Languages',
-    subtitle: 'Primary languages for pipelines, APIs, and analytics code.',
-    accent: 'var(--primary)',
-    chips: ['Python', 'SQL', 'Scala', 'Bash', 'SparkSQL'],
-  },
-  {
-    title: 'Streaming & orchestration',
-    subtitle: 'Real-time and batch workloads with dependable scheduling.',
-    accent: 'var(--teal)',
-    chips: ['Spark', 'Kafka', 'Flink', 'Airflow', 'Beam'],
-  },
-  {
-    title: 'Lakehouse & quality',
-    subtitle: 'Medallion-style layers, contracts, and warehouse best practices.',
-    accent: 'var(--amber)',
-    chips: ['Delta Lake', 'Iceberg', 'dbt Core', 'Databricks', 'Great Expectations'],
-  },
-  {
-    title: 'Cloud',
-    subtitle: 'Multi-cloud data platforms — depth on AWS, GCP, and Azure in production.',
-    accent: 'var(--primary-2)',
-    chips: ['AWS', 'GCP', 'Azure', 'Terraform', 'IaC & observability'],
-  },
-  {
-    title: 'Stores & BI',
-    subtitle: 'Operational stores, warehouses, and how insights are delivered.',
-    accent: 'var(--primary)',
-    chips: ['PostgreSQL', 'Snowflake', 'BigQuery', 'MongoDB', 'Power BI', 'Tableau'],
-  },
-  {
-    title: 'ML, AI & shipping',
-    subtitle: 'Model lifecycle, evaluation, and getting services to production.',
-    accent: 'var(--amber)',
-    chips: ['LangGraph', 'MLflow', 'PyTorch', 'Docker', 'Kubernetes', 'GitHub Actions'],
-  },
-];
+
+const LEVEL_ORDER = ['Expert', 'Strong', 'Solid', 'Growing'];
 
 function SkillsWindow() {
+  const [animated, setAnimated] = useS(false);
+  const [filter, setFilter] = useS('All');
+
+  useE(() => {
+    const t = setTimeout(() => setAnimated(true), 80);
+    return () => clearTimeout(t);
+  }, []);
+
+  const filters = ['All', ...LEVEL_ORDER];
+  const visible = filter === 'All' ? SKILL_ROWS : SKILL_ROWS.filter(s => s.level === filter);
+
   return (
     <div style={{ ...padX, paddingBottom: 28 }}>
-      <p style={{
-        margin: '0 0 22px',
-        fontSize: 14,
-        color: 'var(--text-2)',
-        lineHeight: 1.6,
-        maxWidth: 520,
-      }}>
-        A tight map of how skills show up in real work — not every keyword from a résumé. Happy to go deep on any area in conversation.
-      </p>
-      <div style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fill, minmax(272px, 1fr))',
-        gap: 14,
-      }}>
-        {SKILL_GROUPS.map(g => (
-          <div
-            key={g.title}
-            style={{
-              position: 'relative',
-              padding: '20px 18px 18px',
-              borderRadius: 14,
-              background: 'linear-gradient(165deg, var(--elev) 0%, color-mix(in oklab, var(--elev) 88%, var(--bg)) 100%)',
-              border: '1px solid var(--border)',
-              boxShadow: '0 8px 28px -14px rgba(0,0,0,0.55)',
-              overflow: 'hidden',
-            }}
+      {/* Filter tabs */}
+      <div style={{ display: 'flex', gap: 6, marginBottom: 18, flexWrap: 'wrap' }}>
+        {filters.map(f => (
+          <button key={f} onClick={() => setFilter(f)} style={{
+            padding: '5px 12px', borderRadius: 20,
+            fontFamily: 'var(--font-mono)', fontSize: 11, fontWeight: 500,
+            border: '1px solid',
+            borderColor: filter === f ? 'var(--primary)' : 'var(--border)',
+            background: filter === f ? 'color-mix(in oklab, var(--primary) 18%, transparent)' : 'transparent',
+            color: filter === f ? 'var(--primary-2)' : 'var(--text-3)',
+            cursor: 'pointer', transition: 'all 140ms',
+          }}>{f}</button>
+        ))}
+        <span style={{ marginLeft: 'auto', fontFamily: 'var(--font-mono)', fontSize: 10, color: 'var(--text-3)', alignSelf: 'center' }}>
+          {visible.length} skills
+        </span>
+      </div>
+
+      {/* Legend */}
+      <div style={{ display: 'flex', gap: 14, marginBottom: 16, flexWrap: 'wrap' }}>
+        {[['Expert','var(--teal)'],['Strong','var(--amber)'],['Solid','var(--primary)'],['Growing','var(--text-3)']].map(([l,c]) => (
+          <span key={l} style={{ display: 'flex', alignItems: 'center', gap: 5, fontFamily: 'var(--font-mono)', fontSize: 10, color: 'var(--text-3)' }}>
+            <span style={{ width: 8, height: 8, borderRadius: 2, background: c, flexShrink: 0 }} />{l}
+          </span>
+        ))}
+      </div>
+
+      {/* Heatmap rows */}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+        <style>{`
+          @keyframes barGrow { from { width: 0 } }
+        `}</style>
+        {visible.map((s, i) => (
+          <div key={s.name} style={{
+            display: 'grid', gridTemplateColumns: '148px 1fr 62px',
+            alignItems: 'center', gap: 12,
+            padding: '8px 12px', borderRadius: 10,
+            background: i % 2 === 0 ? 'var(--elev)' : 'transparent',
+            border: '1px solid',
+            borderColor: i % 2 === 0 ? 'var(--border)' : 'transparent',
+            transition: 'border-color 160ms',
+          }}
+          onMouseEnter={e => e.currentTarget.style.borderColor = s.color}
+          onMouseLeave={e => e.currentTarget.style.borderColor = i % 2 === 0 ? 'var(--border)' : 'transparent'}
           >
-            <div style={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              right: 0,
-              height: 3,
-              background: `linear-gradient(90deg, ${g.accent}, color-mix(in oklab, ${g.accent} 45%, transparent))`,
-            }} />
-            <div style={{
-              fontFamily: 'var(--font-display)',
-              fontSize: 17,
-              fontWeight: 600,
-              color: 'var(--text)',
-              letterSpacing: '-0.02em',
-              marginBottom: 8,
-            }}>{g.title}</div>
-            <div style={{
-              fontSize: 12.5,
-              color: 'var(--text-2)',
-              lineHeight: 1.55,
-              marginBottom: 14,
-            }}>{g.subtitle}</div>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
-              {g.chips.map(c => (
-                <span
-                  key={c}
-                  style={{
-                    fontFamily: 'var(--font-mono)',
-                    fontSize: 11,
-                    fontWeight: 500,
-                    letterSpacing: '0.02em',
-                    padding: '6px 10px',
-                    borderRadius: 8,
-                    background: 'color-mix(in oklab, var(--bg) 55%, transparent)',
-                    border: '1px solid var(--border)',
-                    color: 'var(--text)',
-                  }}
-                >{c}</span>
-              ))}
+            {/* Name */}
+            <div>
+              <div style={{ fontFamily: 'var(--font-mono)', fontSize: 12, fontWeight: 600, color: 'var(--text)' }}>{s.name}</div>
+              <div style={{ fontSize: 10, color: 'var(--text-3)', marginTop: 2, lineHeight: 1.3 }}>{s.ctx}</div>
             </div>
+
+            {/* Bar track */}
+            <div style={{ height: 8, background: 'var(--border)', borderRadius: 4, overflow: 'hidden' }}>
+              <div style={{
+                height: '100%', borderRadius: 4,
+                background: `linear-gradient(90deg, ${s.color}, color-mix(in oklab, ${s.color} 70%, transparent))`,
+                width: animated ? `${s.pct}%` : '0%',
+                transition: `width 700ms cubic-bezier(.4,0,.2,1) ${i * 35}ms`,
+                boxShadow: `0 0 8px color-mix(in oklab, ${s.color} 60%, transparent)`,
+              }} />
+            </div>
+
+            {/* Level badge */}
+            <span style={{
+              fontFamily: 'var(--font-mono)', fontSize: 10, fontWeight: 600,
+              color: s.color, textAlign: 'right', letterSpacing: '0.04em',
+            }}>{s.level}</span>
           </div>
         ))}
       </div>
@@ -539,42 +428,46 @@ function SkillsWindow() {
 }
 
 // ============== 6. CERTIFICATIONS ==============
-const CERTS = [
-  { name: 'AWS Certified Cloud Practitioner', code: 'CLF-C02', issuer: 'Amazon Web Services', color: 'var(--amber)', credlyUrl: 'https://www.credly.com/badges/1c61f0c9-465d-403f-bd14-83def5da04b0' },
-  { name: 'AWS Certified AI Practitioner',    code: 'AIF-C01', issuer: 'Amazon Web Services', color: 'var(--primary)', credlyUrl: 'https://www.credly.com/badges/54c0266d-8a07-44ad-83fe-8a09f7a828d3' },
-];
 
 function CertsWindow() {
   return (
     <div style={padX}>
       <Section title="Verified credentials">
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
           {CERTS.map(c => (
-            <div key={c.code} style={{
-              padding: 18, background: 'var(--elev)', borderRadius: 12,
+            <a key={c.code} href={c.credlyUrl} target="_blank" rel="noopener noreferrer" style={{
+              padding: 20, background: 'var(--elev)', borderRadius: 14,
               border: '1px solid var(--border)',
-              display: 'flex', flexDirection: 'column', gap: 12, alignItems: 'flex-start',
-            }}>
-              <div style={{
-                width: 56, height: 56, borderRadius: 12,
-                background: `linear-gradient(135deg, ${c.color}, color-mix(in oklab, ${c.color} 30%, transparent))`,
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                boxShadow: `0 8px 20px -6px color-mix(in oklab, ${c.color} 60%, transparent)`,
-              }}>
-                <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#0a0a0f" strokeWidth="2.5"><path d="M12 2l3 6 6 1-4.5 4 1 6-5.5-3-5.5 3 1-6L3 9l6-1z"/></svg>
+              display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 14,
+              textDecoration: 'none',
+              transition: 'border-color 180ms, transform 180ms, box-shadow 180ms',
+            }}
+            onMouseEnter={e => {
+              e.currentTarget.style.borderColor = c.color;
+              e.currentTarget.style.transform = 'translateY(-3px)';
+              e.currentTarget.style.boxShadow = `0 12px 32px -8px color-mix(in oklab, ${c.color} 35%, transparent)`;
+            }}
+            onMouseLeave={e => {
+              e.currentTarget.style.borderColor = 'var(--border)';
+              e.currentTarget.style.transform = 'translateY(0)';
+              e.currentTarget.style.boxShadow = 'none';
+            }}
+            >
+              <img
+                src={c.badgeImg}
+                alt={c.name}
+                style={{ width: 110, height: 110, objectFit: 'contain', filter: 'drop-shadow(0 8px 16px rgba(0,0,0,0.4))' }}
+              />
+              <div style={{ textAlign: 'center' }}>
+                <div style={{ fontSize: 13.5, fontWeight: 600, color: 'var(--text)', lineHeight: 1.3 }}>{c.name}</div>
+                <div style={{ fontSize: 12, color: 'var(--text-2)', marginTop: 4 }}>{c.issuer}</div>
+                <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--text-3)', marginTop: 6 }}>{c.code}</div>
               </div>
-              <div>
-                <div style={{ fontSize: 14, fontWeight: 600, color: 'var(--text)' }}>{c.name}</div>
-                <div style={{ fontSize: 12, color: 'var(--text-2)', marginTop: 3 }}>{c.issuer}</div>
-                <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--text-3)', marginTop: 6 }}>
-                  ID: {c.code}
-                </div>
-              </div>
-              <a href={c.credlyUrl} target="_blank" rel="noopener noreferrer" style={{
+              <span style={{
                 fontFamily: 'var(--font-mono)', fontSize: 11, color: c.color,
-                display: 'inline-flex', alignItems: 'center', gap: 6,
-              }}>verify credential →</a>
-            </div>
+                display: 'inline-flex', alignItems: 'center', gap: 4,
+              }}>verify on Credly →</span>
+            </a>
           ))}
         </div>
       </Section>
@@ -598,8 +491,8 @@ function EducationWindow() {
                style={{ width: 54, height: 54, borderRadius: 0, objectFit: 'contain', flexShrink: 0 }}
             />
             <div>
-              <div style={{ fontSize: 16, fontWeight: 600 }}>Florida Atlantic University</div>
-              <div style={{ fontSize: 12, color: 'var(--text-2)', marginTop: 2 }}>Boca Raton, FL</div>
+              <div style={{ fontSize: 16, fontWeight: 600 }}>{PERSON.university}</div>
+              <div style={{ fontSize: 12, color: 'var(--text-2)', marginTop: 2 }}>{PERSON.location}</div>
             </div>
           </div>
           <div style={{ fontSize: 15, color: 'var(--text)' }}>
@@ -609,9 +502,9 @@ function EducationWindow() {
             display: 'flex', gap: 12, marginTop: 14, flexWrap: 'wrap',
             paddingTop: 14, borderTop: '1px solid var(--border)',
           }}>
-            <Stat label="GPA"        value="3.9 / 4.0" />
-            <Stat label="Graduation" value="May 2026" />
-            <Stat label="Location"   value="Boca Raton, FL" />
+            <Stat label="GPA"        value={`${PERSON.gpa} / 4.0`} />
+            <Stat label="Graduation" value={PERSON.graduation} />
+            <Stat label="Location"   value={PERSON.location} />
           </div>
         </div>
       </Section>
@@ -636,40 +529,108 @@ function Stat({ label, value }) {
 
 // ============== 8. IMPACT ==============
 function FeedWindow() {
+  const [feed, setFeed] = useS(null);
+  const [loading, setLoading] = useS(true);
+  const [fetchError, setFetchError] = useS(false);
+
+  useE(() => {
+    let cancelled = false;
+    fetch(window.__API_BASE__ + '/api/feed')
+      .then(r => r.json())
+      .then(data => {
+        if (!cancelled) {
+          setFeed({
+            github: data.github || [],
+            linkedin: data.linkedin || [],
+            timestamp: data.timestamp,
+          });
+          setLoading(false);
+        }
+      })
+      .catch(() => { if (!cancelled) { setFetchError(true); setLoading(false); } });
+    return () => { cancelled = true; };
+  }, []);
+
+  const spinner = (
+    <div style={{ display: 'flex', gap: 6, alignItems: 'center', color: 'var(--text-3)', fontFamily: 'var(--font-mono)', fontSize: 11 }}>
+      <span style={{ animation: 'spin 1s linear infinite', display: 'inline-block' }}>⟳</span> Loading…
+      <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
+    </div>
+  );
+  const offline = (
+    <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--text-3)' }}>
+      Backend offline — start FastAPI server to see live data.
+    </div>
+  );
+
   return (
     <div style={padX}>
       <Section title="Impact">
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
-          <FactCard label="Scale" value="10+ TB/day" sub="AWS · Azure · GCP" />
+          <FactCard label="Scale" value={PERSON.dataScale} sub="AWS · Azure · GCP" />
           <FactCard label="Reliability" value="99%+" sub="Pipeline reliability" />
           <FactCard label="Latency" value="2h → <5min" sub="Opsylux reporting" />
           <FactCard label="Quality" value="0.992 F1" sub="Phishing detection" />
         </div>
       </Section>
-      <Section title="Experience snapshot">
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
-          <div style={{ padding: 14, background: 'var(--elev)', borderRadius: 12, border: '1px solid var(--border)' }}>
-            <div style={{ fontSize: 15, fontWeight: 600, color: 'var(--text)' }}>Opsylux LLC</div>
-            <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--text-3)', marginTop: 4 }}>Nov 2025 — Present</div>
-            <div style={{ fontSize: 12.5, color: 'var(--text-2)', lineHeight: 1.6, marginTop: 8 }}>
-              Python, Airflow, Azure Data Factory, Azure Databricks, dbt Core, Great Expectations, Power BI.
+
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+        {/* GitHub commits */}
+        <Section title="GitHub Activity">
+          {loading && spinner}
+          {fetchError && offline}
+          {feed && feed.github.length > 0 && (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 7 }}>
+              {feed.github.map((c, i) => (
+                <a key={i} href={c.url} target="_blank" rel="noopener noreferrer" style={{
+                  display: 'flex', flexDirection: 'column', gap: 3,
+                  padding: '9px 11px', background: 'var(--elev)', borderRadius: 10,
+                  border: '1px solid var(--border)', textDecoration: 'none',
+                  transition: 'border-color 160ms',
+                }}
+                onMouseEnter={e => e.currentTarget.style.borderColor = 'var(--primary)'}
+                onMouseLeave={e => e.currentTarget.style.borderColor = 'var(--border)'}
+                >
+                  <div style={{ display: 'flex', justifyContent: 'space-between', gap: 6 }}>
+                    <span style={{ fontFamily: 'var(--font-mono)', fontSize: 10, color: 'var(--primary)', flexShrink: 0 }}>⬡ {c.repo}</span>
+                    <span style={{ fontFamily: 'var(--font-mono)', fontSize: 9, color: 'var(--text-3)' }}>{c.date}</span>
+                  </div>
+                  <div style={{ fontSize: 12, color: 'var(--text)', lineHeight: 1.4 }}>{c.message}</div>
+                </a>
+              ))}
             </div>
-          </div>
-          <div style={{ padding: 14, background: 'var(--elev)', borderRadius: 12, border: '1px solid var(--border)' }}>
-            <div style={{ fontSize: 15, fontWeight: 600, color: 'var(--text)' }}>LTIMindtree</div>
-            <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--text-3)', marginTop: 4 }}>May 2022 — Jul 2024</div>
-            <div style={{ fontSize: 12.5, color: 'var(--text-2)', lineHeight: 1.6, marginTop: 8 }}>
-              Spark Structured Streaming, Kafka, Delta Lake, Redshift, BigQuery, Terraform, CloudWatch.
+          )}
+          {feed && feed.github.length === 0 && !loading && (
+            <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--text-3)' }}>
+              No commits — add GITHUB_TOKEN to .env.
             </div>
-          </div>
-        </div>
-      </Section>
-      <Section title="Activity note">
-        <p style={{ margin: 0, fontSize: 12.5, color: 'var(--text-2)', lineHeight: 1.6 }}>
-          LinkedIn-style items returned by <span style={{ fontFamily: 'var(--font-mono)', color: 'var(--text-3)' }}>/api/feed</span> are
-          illustrative samples only, not live LinkedIn posts. GitHub data in that API is live when the backend is configured with a token.
-        </p>
-      </Section>
+          )}
+          {feed?.timestamp && (
+            <div style={{ fontFamily: 'var(--font-mono)', fontSize: 9, color: 'var(--text-3)', marginTop: 6 }}>
+              cached · refreshes hourly
+            </div>
+          )}
+        </Section>
+
+        {/* LinkedIn-style posts */}
+        <Section title="Posts">
+          {loading && spinner}
+          {fetchError && offline}
+          {feed && feed.linkedin.length > 0 && (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 7 }}>
+              {feed.linkedin.map((p, i) => (
+                <div key={i} style={{
+                  padding: '9px 11px', background: 'var(--elev)', borderRadius: 10,
+                  border: '1px solid var(--border)',
+                }}>
+                  <div style={{ fontSize: 12, color: 'var(--text)', lineHeight: 1.5 }}>{p.text}</div>
+                  <div style={{ fontFamily: 'var(--font-mono)', fontSize: 9, color: 'var(--text-3)', marginTop: 5 }}>{p.date}</div>
+                </div>
+              ))}
+            </div>
+          )}
+        </Section>
+      </div>
     </div>
   );
 }
@@ -746,10 +707,10 @@ function ContactWindow() {
         marginTop: 24, paddingTop: 18, borderTop: '1px solid var(--border)',
         display: 'flex', gap: 16, flexWrap: 'wrap',
       }}>
-        <ContactLink icon={<IconMail />}   label="manikanthnampally94@gmail.com"           href="mailto:manikanthnampally94@gmail.com"         color="var(--primary)" />
-        <ContactLink icon={<IconMail />}   label="+1 (561) 542-6494"                      href="tel:+15615426494"                            color="var(--primary)" />
-        <ContactLink icon={<IconLink />}   label="linkedin.com/in/manikanthn"       href="https://www.linkedin.com/in/manikanthn/" color="var(--teal)" />
-        <ContactLink icon={<IconGithub />} label="github.com/maninampally"    href="https://github.com/maninampally"   color="var(--amber)" />
+        <ContactLink icon={<IconMail />}   label={PERSON.email}    href={`mailto:${PERSON.email}`}    color="var(--primary)" />
+        <ContactLink icon={<IconMail />}   label={PERSON.phone}    href={`tel:${PERSON.phone.replace(/\D/g,'')}`} color="var(--primary)" />
+        <ContactLink icon={<IconLink />}   label={PERSON.linkedin} href={PERSON.linkedinUrl}           color="var(--teal)" />
+        <ContactLink icon={<IconGithub />} label={PERSON.github}   href={PERSON.githubUrl}             color="var(--amber)" />
       </div>
     </div>
   );
@@ -790,78 +751,35 @@ function ContactLink({ icon, label, href, color }) {
 // ============== 10. RESUME ==============
 function ResumeWindow() {
   return (
-    <div style={padX}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
+    <div style={{ ...padX, display: 'flex', flexDirection: 'column', height: '100%', boxSizing: 'border-box' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12, flexShrink: 0 }}>
         <div>
           <h2 style={{ margin: 0, fontFamily: 'var(--font-display)', fontSize: 20, fontWeight: 600 }}>Résumé</h2>
           <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--text-3)', marginTop: 4 }}>
-            Resume preview · PDF · 2 pages
+            Live from Google Drive · always current
           </div>
         </div>
-        <Btn icon={<IconDoc />} onClick={() => window.open('/assets/MANIKANTH%20NAMPALLY%20RESUME%20(1).pdf', '_blank')}>Download PDF</Btn>
+        <div style={{ display: 'flex', gap: 8 }}>
+          <Btn variant="ghost" onClick={() => window.open(RESUME_VIEW_URL, '_blank')} icon={<IconLink />}>Open in Drive</Btn>
+          <Btn icon={<IconDoc />} onClick={() => window.open(RESUME_DOWNLOAD_URL, '_blank')}>Download PDF</Btn>
+        </div>
       </div>
-      <div style={{
-        background: '#f6f7fb',
-        color: '#14141f',
-        borderRadius: 16,
-        border: '1px solid #d7dbe8',
-        overflow: 'hidden',
-        boxShadow: '0 18px 40px -20px rgba(0,0,0,0.45)',
-        marginBottom: 16,
-      }}>
-        <div style={{
-          padding: '18px 22px',
-          background: 'linear-gradient(180deg, #ffffff, #f3f5fb)',
-          borderBottom: '1px solid #dde2ee',
-        }}>
-          <div style={{ fontFamily: 'var(--font-display)', fontSize: 22, fontWeight: 700, color: '#14141f' }}>
-            Manikanth Nampally
-          </div>
-          <div style={{ fontFamily: 'var(--font-body)', fontSize: 12, color: '#5c5c78', marginTop: 4 }}>
-            Data &amp; AI Engineer · Boca Raton, FL · manikanthnampally94@gmail.com
-          </div>
-        </div>
-        <div style={{ display: 'grid', gap: 14, padding: 22 }}>
-          <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 0.8fr', gap: 14 }}>
-            <div style={{ padding: 16, background: '#ffffff', borderRadius: 12, border: '1px solid #e1e5f0' }}>
-              <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10, color: '#7b8197', letterSpacing: '0.15em', textTransform: 'uppercase', marginBottom: 8 }}>Summary</div>
-              <div style={{ fontFamily: 'var(--font-body)', fontSize: 13.5, lineHeight: 1.65, color: '#202236' }}>
-                Data Engineer with 2.5 years building production-grade data infrastructure and ML-ready pipelines across AWS, Azure, and GCP.
-                Specialized in streaming architectures, lakehouse design, data governance, and AI-powered data products.
-              </div>
-            </div>
-            <div style={{ padding: 16, background: '#ffffff', borderRadius: 12, border: '1px solid #e1e5f0' }}>
-              <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10, color: '#7b8197', letterSpacing: '0.15em', textTransform: 'uppercase', marginBottom: 8 }}>Highlights</div>
-              <div style={{ display: 'grid', gap: 8, fontFamily: 'var(--font-body)', fontSize: 13, color: '#202236' }}>
-                <div>• 10+ TB/day data throughput</div>
-                <div>• 708M+ auth events</div>
-                <div>• 2 AWS certifications</div>
-              </div>
-            </div>
-          </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 12 }}>
-            <div style={{ padding: 14, background: '#ffffff', borderRadius: 12, border: '1px solid #e1e5f0' }}>
-              <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10, color: '#7b8197', letterSpacing: '0.15em', textTransform: 'uppercase', marginBottom: 6 }}>Education</div>
-              <div style={{ fontFamily: 'var(--font-body)', fontSize: 13.5, fontWeight: 600, color: '#14141f' }}>M.S. IT &amp; Management</div>
-              <div style={{ fontFamily: 'var(--font-body)', fontSize: 12, color: '#5c5c78', marginTop: 4 }}>Florida Atlantic University · GPA 3.9</div>
-            </div>
-            <div style={{ padding: 14, background: '#ffffff', borderRadius: 12, border: '1px solid #e1e5f0' }}>
-              <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10, color: '#7b8197', letterSpacing: '0.15em', textTransform: 'uppercase', marginBottom: 6 }}>Experience</div>
-              <div style={{ fontFamily: 'var(--font-body)', fontSize: 13.5, fontWeight: 600, color: '#14141f' }}>Opsylux · LTIMindtree</div>
-              <div style={{ fontFamily: 'var(--font-body)', fontSize: 12, color: '#5c5c78', marginTop: 4 }}>ELT pipelines · streaming · lakehouse · analytics</div>
-            </div>
-            <div style={{ padding: 14, background: '#ffffff', borderRadius: 12, border: '1px solid #e1e5f0' }}>
-              <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10, color: '#7b8197', letterSpacing: '0.15em', textTransform: 'uppercase', marginBottom: 6 }}>Core Stack</div>
-              <div style={{ fontFamily: 'var(--font-body)', fontSize: 12.5, color: '#202236', lineHeight: 1.6 }}>Python · PySpark · SQL · AWS · GCP · Azure · dbt Core · Airflow</div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div style={{ display: 'flex', justifyContent: 'center' }}>
-        <Btn icon={<IconDoc />} onClick={() => window.open('/assets/MANIKANTH%20NAMPALLY%20RESUME%20(1).pdf', '_blank')}>
-          Open Resume PDF
-        </Btn>
+      {/* Live Drive preview iframe */}
+      <div style={{
+        flex: 1, borderRadius: 12, overflow: 'hidden',
+        border: '1px solid var(--border)',
+        boxShadow: '0 12px 32px -10px rgba(0,0,0,0.5)',
+        minHeight: 0,
+      }}>
+        <iframe
+          src={RESUME_PREVIEW_URL}
+          title="Resume Preview"
+          width="100%"
+          height="100%"
+          style={{ display: 'block', border: 'none', minHeight: 420 }}
+          allow="autoplay"
+        />
       </div>
     </div>
   );
@@ -869,6 +787,7 @@ function ResumeWindow() {
 
 // ============== 11. ARTHA AI Spotlight ==============
 function ArthaWindow({ onOpenWindow }) {
+  const [showArch, setShowArch] = useS(false);
   return (
     <div style={padX}>
       <div style={{
@@ -902,26 +821,45 @@ function ArthaWindow({ onOpenWindow }) {
         </p>
       </Section>
 
-      <Section title="Architecture · 5 layers">
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: 6 }}>
-          {[
-            { n: '01', t: 'Ingestion',   d: 'Polygon · SEC EDGAR · FRED · OpenInsider' },
-            { n: '02', t: 'Orchestration', d: 'Airflow DAGs · LangGraph agents' },
-            { n: '03', t: 'Transform',   d: 'dbt Core · PostgreSQL · TimescaleDB' },
-            { n: '04', t: 'Serving',     d: 'FastAPI · Redis cache · pgvector' },
-            { n: '05', t: 'Tracking',    d: 'MLflow · reproducible scoring runs' },
-          ].map(L => (
-            <div key={L.n} style={{
-              padding: 12, background: 'var(--elev)', borderRadius: 10,
-              border: '1px solid var(--border)',
-            }}>
-              <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10, color: 'var(--primary)', letterSpacing: '0.1em' }}>{L.n}</div>
-              <div style={{ fontSize: 13, fontWeight: 600, marginTop: 4 }}>{L.t}</div>
-              <div style={{ fontSize: 11, color: 'var(--text-3)', marginTop: 4, lineHeight: 1.4, fontFamily: 'var(--font-mono)' }}>{L.d}</div>
-            </div>
-          ))}
+      <div style={{ marginBottom: 20 }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+            <span style={{ width: 4, height: 14, borderRadius: 2, background: 'var(--primary)', display: 'inline-block' }} />
+            <h3 style={{ margin: 0, fontFamily: 'var(--font-mono)', fontSize: 11, fontWeight: 500, color: 'var(--text-2)', letterSpacing: '0.18em', textTransform: 'uppercase' }}>
+              Architecture · 5 layers
+            </h3>
+          </div>
+          <button onClick={() => setShowArch(a => !a)} style={{
+            fontFamily: 'var(--font-mono)', fontSize: 11, fontWeight: 600,
+            padding: '5px 12px', borderRadius: 8, cursor: 'pointer',
+            border: '1px solid',
+            borderColor: showArch ? 'var(--primary)' : 'var(--border)',
+            background: showArch ? 'color-mix(in oklab, var(--primary) 15%, transparent)' : 'transparent',
+            color: showArch ? 'var(--primary-2)' : 'var(--text-3)',
+            transition: 'all 150ms',
+          }}>
+            {showArch ? '▣ Hide Diagram' : '▣ Show Diagram'}
+          </button>
         </div>
-      </Section>
+        {showArch
+          ? <ArthaArchDiagram />
+          : <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: 6 }}>
+              {[
+                { n: '01', t: 'Ingestion',     d: 'Polygon · SEC EDGAR · FRED · OpenInsider' },
+                { n: '02', t: 'Orchestration', d: 'Airflow DAGs · LangGraph agents' },
+                { n: '03', t: 'Transform',     d: 'dbt Core · PostgreSQL · TimescaleDB' },
+                { n: '04', t: 'Serving',       d: 'FastAPI · Redis cache · pgvector' },
+                { n: '05', t: 'Tracking',      d: 'MLflow · reproducible scoring runs' },
+              ].map(L => (
+                <div key={L.n} style={{ padding: 12, background: 'var(--elev)', borderRadius: 10, border: '1px solid var(--border)' }}>
+                  <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10, color: 'var(--primary)', letterSpacing: '0.1em' }}>{L.n}</div>
+                  <div style={{ fontSize: 13, fontWeight: 600, marginTop: 4 }}>{L.t}</div>
+                  <div style={{ fontSize: 11, color: 'var(--text-3)', marginTop: 4, lineHeight: 1.4, fontFamily: 'var(--font-mono)' }}>{L.d}</div>
+                </div>
+              ))}
+            </div>
+        }
+      </div>
 
       <Section title="Stack">
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
@@ -950,6 +888,7 @@ function ArthaWindow({ onOpenWindow }) {
 
 // ============== 12. STOCK DASHBOARD ==============
 function StockWindow() {
+  const [showArch, setShowArch] = useS(false);
   return (
     <div style={padX}>
       <h2 style={{ margin: '0 0 6px', fontFamily: 'var(--font-display)', fontSize: 22 }}>FinSentinel</h2>
@@ -964,7 +903,7 @@ function StockWindow() {
         marginBottom: 16, padding: 16,
       }}>
         <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--text-3)', marginBottom: 8 }}>
-          // sentiment pipeline · 30d · mock
+          // sentiment pipeline · 30d
         </div>
         <svg viewBox="0 0 400 140" style={{ width: '100%', height: 160 }} preserveAspectRatio="none">
           <defs>
@@ -979,23 +918,36 @@ function StockWindow() {
         </svg>
       </div>
 
-      <Section title="Pipeline">
-        <div style={{
-          display: 'flex', alignItems: 'center', gap: 4,
-          fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--text-2)',
-          flexWrap: 'wrap',
-        }}>
-          {['Pub/Sub', 'Dataflow', 'BigQuery', 'dbt Core', 'FinBERT', 'FastAPI'].map((s, i, a) => (
-            <React.Fragment key={s}>
-              <span style={{
-                padding: '6px 10px', background: 'var(--elev)',
-                borderRadius: 6, border: '1px solid var(--border)', color: 'var(--text)',
-              }}>{s}</span>
-              {i < a.length - 1 && <span style={{ color: 'var(--primary)' }}>→</span>}
-            </React.Fragment>
-          ))}
+      <div style={{ marginBottom: 20 }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+            <span style={{ width: 4, height: 14, borderRadius: 2, background: 'var(--teal)', display: 'inline-block' }} />
+            <h3 style={{ margin: 0, fontFamily: 'var(--font-mono)', fontSize: 11, fontWeight: 500, color: 'var(--text-2)', letterSpacing: '0.18em', textTransform: 'uppercase' }}>Pipeline</h3>
+          </div>
+          <button onClick={() => setShowArch(a => !a)} style={{
+            fontFamily: 'var(--font-mono)', fontSize: 11, fontWeight: 600,
+            padding: '5px 12px', borderRadius: 8, cursor: 'pointer',
+            border: '1px solid',
+            borderColor: showArch ? 'var(--teal)' : 'var(--border)',
+            background: showArch ? 'color-mix(in oklab, var(--teal) 15%, transparent)' : 'transparent',
+            color: showArch ? 'var(--teal)' : 'var(--text-3)',
+            transition: 'all 150ms',
+          }}>
+            {showArch ? '▣ Hide Diagram' : '▣ Show Diagram'}
+          </button>
         </div>
-      </Section>
+        {showArch
+          ? <FinSentArchDiagram />
+          : <div style={{ display: 'flex', alignItems: 'center', gap: 4, fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--text-2)', flexWrap: 'wrap' }}>
+              {['Pub/Sub', 'Dataflow', 'BigQuery', 'dbt Core', 'FinBERT', 'FastAPI'].map((s, i, a) => (
+                <React.Fragment key={s}>
+                  <span style={{ padding: '6px 10px', background: 'var(--elev)', borderRadius: 6, border: '1px solid var(--border)', color: 'var(--text)' }}>{s}</span>
+                  {i < a.length - 1 && <span style={{ color: 'var(--teal)' }}>→</span>}
+                </React.Fragment>
+              ))}
+            </div>
+        }
+      </div>
 
       <Section title="Stack">
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
@@ -1012,9 +964,9 @@ function TestimonialsWindow() {
     <div style={padX}>
       <Section title="Snapshot">
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, minmax(0, 1fr))', gap: 12 }}>
-          <FactCard label="Experience" value="2.5 years" sub="2 companies" />
+          <FactCard label="Experience" value={`${PERSON.yearsExp} years`} sub={`${PERSON.companies} companies`} />
           <FactCard label="Projects" value="8 major projects" sub="Artha AI · FinSentinel · StockSense" />
-          <FactCard label="Education" value="M.S. IT & Management" sub="Florida Atlantic · GPA 3.9" />
+          <FactCard label="Education" value={PERSON.degree} sub={`${PERSON.university} · GPA ${PERSON.gpa}`} />
           <FactCard label="Certifications" value="2 AWS certs" sub="Cloud Practitioner · AI Practitioner" />
         </div>
       </Section>
@@ -1023,6 +975,246 @@ function TestimonialsWindow() {
           {['Streaming', 'Lakehouse', 'Governance', 'MLOps', 'AI Products', 'Power BI'].map(t => <Tag key={t}>{t}</Tag>)}
         </div>
       </Section>
+    </div>
+  );
+}
+
+// ============== ARCH DIAGRAMS ==============
+const ARCH_STYLE = `
+  @keyframes archFlow { from { stroke-dashoffset: 14; } to { stroke-dashoffset: 0; } }
+`;
+
+function ArchNode({ x, title, color, subs }) {
+  return (
+    <g>
+      <rect x={x} y={30} width={108} height={94} rx={8}
+        fill={color} fillOpacity="0.10"
+        stroke={color} strokeOpacity="0.45" strokeWidth="1"
+      />
+      <text x={x + 54} y={48} textAnchor="middle"
+        fill={color} fontSize="10.5" fontWeight="700" fontFamily="monospace"
+      >{title}</text>
+      {subs.map((s, i) => (
+        <text key={i} x={x + 54} y={63 + i * 13} textAnchor="middle"
+          fill="rgba(220,220,255,0.52)" fontSize="9" fontFamily="monospace"
+        >{s}</text>
+      ))}
+    </g>
+  );
+}
+
+function ArchArrows({ color, markerId }) {
+  return (
+    <>
+      <defs>
+        <marker id={markerId} viewBox="0 0 8 8" refX="7" refY="4" markerWidth="5" markerHeight="5" orient="auto">
+          <path d="M0 0 L8 4 L0 8z" fill={color} fillOpacity="0.7" />
+        </marker>
+      </defs>
+      {[[118,138],[246,266],[374,394],[502,522]].map(([x1,x2], i) => (
+        <line key={i} x1={x1} y1={77} x2={x2} y2={77}
+          stroke={color} strokeWidth="1.5" strokeOpacity="0.55"
+          strokeDasharray="4 3"
+          markerEnd={`url(#${markerId})`}
+          style={{ animation: `archFlow 1.1s linear ${i * 0.22}s infinite` }}
+        />
+      ))}
+    </>
+  );
+}
+
+function ArthaArchDiagram() {
+  return (
+    <div style={{ padding: '14px 0 4px' }}>
+      <style>{ARCH_STYLE}</style>
+      <svg viewBox="0 0 630 134" width="100%" style={{ display: 'block', overflow: 'visible' }}>
+        <ArchArrows color="#6C63FF" markerId="artha-arr" />
+        <ArchNode x={10}  title="Ingestion"     color="#6C63FF" subs={['Polygon API','SEC EDGAR','FRED · OpenInsider']} />
+        <ArchNode x={138} title="Orchestrate"   color="#1DB88E" subs={['Airflow DAGs','LangGraph','10+ models']} />
+        <ArchNode x={266} title="Transform"     color="#F5A623" subs={['dbt Core','PostgreSQL','TimescaleDB']} />
+        <ArchNode x={394} title="Storage"       color="#8C84FF" subs={['Redis cache','pgvector','MLflow']} />
+        <ArchNode x={522} title="Serve"         color="#1DB88E" subs={['FastAPI','500+ equities/day','99%+ complete']} />
+      </svg>
+      <div style={{ display: 'flex', justifyContent: 'space-between', padding: '6px 2px 0', fontFamily: 'var(--font-mono)', fontSize: 9, color: 'var(--text-3)' }}>
+        {['Layer 1','Layer 2','Layer 3','Layer 4','Layer 5'].map(l => (
+          <span key={l} style={{ width: 108, textAlign: 'center' }}>{l}</span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function FinSentArchDiagram() {
+  return (
+    <div style={{ padding: '14px 0 4px' }}>
+      <style>{ARCH_STYLE}</style>
+      <svg viewBox="0 0 630 134" width="100%" style={{ display: 'block', overflow: 'visible' }}>
+        <ArchArrows color="#1DB88E" markerId="fins-arr" />
+        <ArchNode x={10}  title="Ingest"    color="#1DB88E" subs={['News APIs','Financial feeds','HTTP / RSS']} />
+        <ArchNode x={138} title="Stream"    color="#6C63FF" subs={['GCP Pub/Sub','Event queue','Low latency']} />
+        <ArchNode x={266} title="Process"   color="#F5A623" subs={['Dataflow','FinBERT NLP','Sentiment score']} />
+        <ArchNode x={394} title="Store"     color="#1DB88E" subs={['BigQuery','dbt Core','Evidently AI']} />
+        <ArchNode x={522} title="Serve"     color="#6C63FF" subs={['FastAPI','0.95 F1','Redis cache']} />
+      </svg>
+      <div style={{ display: 'flex', justifyContent: 'space-between', padding: '6px 2px 0', fontFamily: 'var(--font-mono)', fontSize: 9, color: 'var(--text-3)' }}>
+        {['Ingest','Stream','Process','Store','Serve'].map(l => (
+          <span key={l} style={{ width: 108, textAlign: 'center' }}>{l}</span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// ============== TERMINAL ==============
+const TERM_COMMANDS = {
+  whoami: () => [
+    { t: 'out', v: PERSON.name.toLowerCase() },
+    { t: 'out', v: `${PERSON.titleFull.toLowerCase()} · ${PERSON.location.toLowerCase()} · ${PERSON.relocate.toLowerCase()}` },
+    { t: 'out', v: `${PERSON.degree.toLowerCase()} · ${PERSON.universityShort.toLowerCase()} · gpa ${PERSON.gpa}` },
+  ],
+  'ls projects/': () => PROJECTS.map((p, i) => ({
+    t: 'out',
+    v: `${String(i + 1).padStart(2, '0')}  ${p.name.toLowerCase().replace(/\s+/g, '-').padEnd(34)} ${p.impact}`,
+  })),
+  'ls': () => [
+    { t: 'out', v: 'projects/   experience/   skills/   education/   certs/   contact/' },
+  ],
+  'cat experience.json': () => [
+    { t: 'out', v: '{' },
+    { t: 'out', v: `  "current": { "company": "${EXPERIENCE[0].company}", "role": "${EXPERIENCE[0].role}", "since": "${EXPERIENCE[0].time.split(' ')[0]} ${EXPERIENCE[0].time.split(' ')[1]}" },` },
+    { t: 'out', v: `  "previous": { "company": "${EXPERIENCE[1].company}", "role": "${EXPERIENCE[1].role}", "period": "${EXPERIENCE[1].time}" },` },
+    { t: 'out', v: `  "scale": "${PERSON.dataScale}", "reliability": "99%+", "years": ${PERSON.yearsExp}` },
+    { t: 'out', v: '}' },
+  ],
+  'mani --skills': () => [
+    { t: 'out', v: 'PYTHON    ████████████  expert    3+ yrs · daily use' },
+    { t: 'out', v: 'PYSPARK   ██████████    expert    2.5 yrs · production' },
+    { t: 'out', v: 'AIRFLOW   ████████      strong    2 yrs · production' },
+    { t: 'out', v: 'KAFKA     ███████       strong    1.5 yrs · streaming' },
+    { t: 'out', v: 'DBT CORE  ███████       strong    2 yrs · 3 analytics teams' },
+    { t: 'out', v: 'AWS       ██████        strong    certified · 2 yrs' },
+    { t: 'out', v: 'GCP       █████         solid     bigquery · dataflow · pub/sub' },
+    { t: 'out', v: 'LANGGRAPH ████          growing   artha ai · multi-agent' },
+  ],
+  'mani --contact': () => [
+    { t: 'out', v: `email    ${PERSON.email}` },
+    { t: 'out', v: `phone    ${PERSON.phone}` },
+    { t: 'out', v: `linkedin ${PERSON.linkedin}` },
+    { t: 'out', v: `github   ${PERSON.github}` },
+  ],
+  'ssh recruiter@mani.dev': () => [
+    { t: 'out', v: 'Connecting to mani.dev…' },
+    { t: 'out', v: 'Access granted. Opening Contact window…' },
+    { t: 'action', v: 'contact' },
+  ],
+  'help': () => [
+    { t: 'out', v: 'Available commands:' },
+    { t: 'out', v: '  whoami                  who is this person' },
+    { t: 'out', v: '  ls                      list sections' },
+    { t: 'out', v: '  ls projects/            all 8 projects with impact metrics' },
+    { t: 'out', v: '  cat experience.json     work history as JSON' },
+    { t: 'out', v: '  mani --skills           skills proficiency tree' },
+    { t: 'out', v: '  mani --contact          contact info' },
+    { t: 'out', v: '  ssh recruiter@mani.dev  open contact window' },
+    { t: 'out', v: '  clear                   clear terminal' },
+  ],
+  'clear': () => [{ t: 'clear', v: '' }],
+};
+
+function TerminalWindow({ onOpenWindow }) {
+  const [lines, setLines] = useS([
+    { t: 'out', v: 'ManiOS Terminal v1.0 — type `help` to see commands' },
+    { t: 'out', v: '' },
+  ]);
+  const [input, setInput] = useS('');
+  const [history, setHistory] = useS([]);
+  const [histIdx, setHistIdx] = useS(-1);
+  const endRef = React.useRef(null);
+  const inputRef = React.useRef(null);
+
+  useE(() => {
+    endRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [lines]);
+
+  const run = (cmd) => {
+    const trimmed = cmd.trim().toLowerCase();
+    if (!trimmed) return;
+    setHistory(h => [trimmed, ...h]);
+    setHistIdx(-1);
+
+    const promptLine = { t: 'prompt', v: cmd.trim() };
+    const handler = TERM_COMMANDS[trimmed];
+    if (!handler) {
+      setLines(l => [...l, promptLine, { t: 'err', v: `command not found: ${trimmed}. Try 'help'.` }, { t: 'out', v: '' }]);
+      return;
+    }
+    const results = handler();
+    const clearIdx = results.findIndex(r => r.t === 'clear');
+    if (clearIdx >= 0) {
+      setLines([{ t: 'out', v: '' }]);
+      return;
+    }
+    const actionItem = results.find(r => r.t === 'action');
+    const outputLines = results.filter(r => r.t !== 'action');
+    setLines(l => [...l, promptLine, ...outputLines, { t: 'out', v: '' }]);
+    if (actionItem) setTimeout(() => onOpenWindow(actionItem.v), 400);
+  };
+
+  const onKeyDown = (e) => {
+    if (e.key === 'Enter') { run(input); setInput(''); }
+    if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      const idx = Math.min(histIdx + 1, history.length - 1);
+      setHistIdx(idx);
+      setInput(history[idx] || '');
+    }
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      const idx = Math.max(histIdx - 1, -1);
+      setHistIdx(idx);
+      setInput(idx < 0 ? '' : history[idx] || '');
+    }
+  };
+
+  const lineColor = { out: 'var(--text-2)', err: 'var(--red)', prompt: 'var(--teal)' };
+
+  return (
+    <div
+      onClick={() => inputRef.current?.focus()}
+      style={{
+        height: '100%', display: 'flex', flexDirection: 'column',
+        background: '#0a0a0f', fontFamily: 'var(--font-mono)', fontSize: 13,
+        padding: '14px 18px', boxSizing: 'border-box', cursor: 'text',
+      }}
+    >
+      <div style={{ flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: 2 }}>
+        {lines.map((line, i) => (
+          <div key={i} style={{ color: lineColor[line.t] || 'var(--text-2)', whiteSpace: 'pre', lineHeight: 1.6 }}>
+            {line.t === 'prompt'
+              ? <><span style={{ color: 'var(--primary)' }}>mani@portfolio</span><span style={{ color: 'var(--text-3)' }}>:~$</span> {line.v}</>
+              : line.v
+            }
+          </div>
+        ))}
+        <div ref={endRef} />
+      </div>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginTop: 8, borderTop: '1px solid rgba(255,255,255,0.06)', paddingTop: 8 }}>
+        <span style={{ color: 'var(--primary)', flexShrink: 0 }}>mani@portfolio</span>
+        <span style={{ color: 'var(--text-3)', flexShrink: 0 }}>:~$</span>
+        <input
+          ref={inputRef}
+          value={input}
+          onChange={e => setInput(e.target.value)}
+          onKeyDown={onKeyDown}
+          autoFocus
+          data-no-drag
+          style={{
+            flex: 1, background: 'transparent', border: 'none', outline: 'none',
+            color: 'var(--text)', fontFamily: 'var(--font-mono)', fontSize: 13,
+            caretColor: 'var(--primary)',
+          }}
+        />
+      </div>
     </div>
   );
 }
@@ -1049,7 +1241,7 @@ function IconTerm()    { return <svg width="22" height="22" viewBox="0 0 24 24" 
 Object.assign(window, {
   HeroWindow, AboutWindow, ProjectsWindow, ExperienceWindow, SkillsWindow,
   CertsWindow, EducationWindow, FeedWindow, ContactWindow, ResumeWindow,
-  ArthaWindow, StockWindow, TestimonialsWindow,
+  ArthaWindow, StockWindow, TestimonialsWindow, TerminalWindow,
   IconHome, IconUser, IconBox, IconBriefcase, IconChip, IconAward, IconGrad,
   IconFeed, IconMail, IconDoc, IconSparkle, IconChart, IconQuote, IconGithub, IconLink, IconTerm,
 });
