@@ -5,4 +5,5 @@ httpx
 google-generativeai
 resend>=0.8,<1.0
 pydantic
+email-validator
 psycopg2-binary
