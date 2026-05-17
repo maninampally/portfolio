@@ -4,6 +4,5 @@ python-dotenv==1.0.0
 httpx==0.25.2
 google-generativeai==0.3.0
 resend==0.3.0
-pydantic==2.5.0
-pydantic-extra-types==2.3.0
+pydantic==2.5.2
 psycopg2-binary==2.9.9
