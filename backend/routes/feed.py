@@ -56,59 +56,76 @@ def _ensure_feed_metadata(payload):
     return out
 
 
+LINKEDIN_POSTS = [
+    {
+        "text": "Three things I learned shipping my first production RAG system — context windows, eval discipline, and never trusting cosine similarity blindly.",
+        "date": "3d ago"
+    },
+    {
+        "text": "Why I think dbt + Airflow still wins for mid-sized teams in 2026.",
+        "date": "1w ago"
+    },
+    {
+        "text": "A weekend rewrite of my Power BI dashboard taught me more about caching than any blog post ever did.",
+        "date": "2w ago"
+    },
+    {
+        "text": "Just passed AWS AI Practitioner. Notes + study plan in comments.",
+        "date": "3w ago"
+    },
+    {
+        "text": "On building portfolios that actually feel like the engineer who built them.",
+        "date": "1mo ago"
+    }
+]
+
+_feed_mem_cache: dict = {"data": None, "at": 0}
+_FEED_TTL = 3600
+
+
 @router.get("/feed")
 async def get_feed():
     """Fetch GitHub commits plus illustrative LinkedIn-style samples (not live LinkedIn)."""
+    global _feed_mem_cache
+    now = time.time()
+
+    # Try DB cache first
     try:
-        # Check cache
         cached = execute_single(
             "SELECT data, cached_at FROM feed_cache WHERE key = 'live_feed' AND expires_at > NOW()"
         )
-
         if cached:
             return _ensure_feed_metadata(cached["data"])
+    except Exception as e:
+        print(f"Feed DB cache read skipped: {e}")
 
-        # Fetch fresh data
+    # In-memory cache fallback
+    if _feed_mem_cache["data"] and (now - _feed_mem_cache["at"]) < _FEED_TTL:
+        return _feed_mem_cache["data"]
+
+    # Fetch fresh
+    try:
         github_commits = await get_github_commits()
+    except Exception as e:
+        print(f"GitHub fetch error: {e}")
+        github_commits = []
 
-        # LinkedIn-style lines — illustrative only (no LinkedIn API integration)
-        linkedin_posts = [
-            {
-                "text": "Three things I learned shipping my first production RAG system — context windows, eval discipline, and never trusting cosine similarity blindly.",
-                "date": "3d ago"
-            },
-            {
-                "text": "Why I think dbt + Airflow still wins for mid-sized teams in 2026.",
-                "date": "1w ago"
-            },
-            {
-                "text": "A weekend rewrite of my Power BI dashboard taught me more about caching than any blog post ever did.",
-                "date": "2w ago"
-            },
-            {
-                "text": "Just passed AWS AI Practitioner. Notes + study plan in comments.",
-                "date": "3w ago"
-            },
-            {
-                "text": "On building portfolios that actually feel like the engineer who built them.",
-                "date": "1mo ago"
-            }
-        ]
+    feed_data = {
+        "github": github_commits,
+        "linkedin": LINKEDIN_POSTS,
+        "linkedin_note": LINKEDIN_NOTE,
+        "timestamp": datetime.utcnow().isoformat(),
+    }
 
-        feed_data = {
-            "github": github_commits,
-            "linkedin": linkedin_posts,
-            "linkedin_note": LINKEDIN_NOTE,
-            "timestamp": datetime.utcnow().isoformat(),
-        }
+    _feed_mem_cache = {"data": feed_data, "at": now}
 
-        # Cache for 1 hour
+    # Try DB write (best-effort)
+    try:
         execute_insert(
             "INSERT INTO feed_cache (key, data, expires_at) VALUES (%s, %s, NOW() + INTERVAL '1 hour') ON CONFLICT (key) DO UPDATE SET data = %s, expires_at = NOW() + INTERVAL '1 hour'",
             ("live_feed", json.dumps(feed_data), json.dumps(feed_data))
         )
-
-        return feed_data
     except Exception as e:
-        print(f"Feed error: {e}")
-        raise HTTPException(status_code=500, detail="Failed to fetch feed")
+        print(f"Feed DB cache write skipped: {e}")
+
+    return feed_data
