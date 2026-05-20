@@ -337,89 +337,100 @@ function ExperienceWindow() {
 
 // ============== 5. SKILLS ==============
 
-const LEVEL_ORDER = ['Expert', 'Strong', 'Solid', 'Growing'];
-
+// Replace proficiency bars with a categorized, logo-only skills grid.
 function SkillsWindow() {
-  const [animated, setAnimated] = useS(false);
-  const [filter, setFilter] = useS('All');
+  // Categories and icon sources (SVGs from SimpleIcons CDN)
+  const SKILL_CATEGORIES = [
+    {
+      title: 'Languages',
+      items: [
+        { name: 'Python', icon: 'https://cdn.simpleicons.org/python' },
+        { name: 'SQL', icon: 'https://cdn.simpleicons.org/mysql' },
+        { name: 'PySpark', icon: 'https://img.icons8.com/?size=192&id=0cRqPqlItA0E&format=png' },
+        { name: 'Scala', icon: 'https://cdn.simpleicons.org/scala' },
+      ],
+    },
+    {
+      title: 'Backend & APIs',
+      items: [
+        { name: 'FastAPI', icon: 'https://cdn.simpleicons.org/fastapi' },
+        { name: 'PostgreSQL', icon: 'https://cdn.simpleicons.org/postgresql' },
+        { name: 'Kafka', icon: 'https://cdn.simpleicons.org/apachekafka' },
+        { name: 'Airflow', icon: 'https://img.icons8.com/?size=192&id=H1PUQ4T216d7&format=png' },
+      ],
+    },
+    {
+      title: 'Cloud & Platforms',
+      items: [
+        { name: 'AWS', icon: 'https://img.icons8.com/?size=192&id=33039&format=png' },
+        { name: 'GCP', icon: 'https://cdn.simpleicons.org/googlecloud' },
+        { name: 'Azure', icon: 'https://img.icons8.com/?size=192&id=VLKafOkk3sBX&format=png' },
+        { name: 'Databricks', icon: 'https://cdn.simpleicons.org/databricks' },
+      ],
+    },
+    {
+      title: 'Data & Analytics',
+      items: [
+        { name: 'dbt', icon: 'https://cdn.simpleicons.org/dbt' },
+        { name: 'Snowflake', icon: 'https://cdn.simpleicons.org/snowflake' },
+        { name: 'BigQuery', icon: 'https://cdn.simpleicons.org/googlebigquery' },
+        { name: 'Delta Lake', icon: 'https://cdn.simpleicons.org/delta' },
+      ],
+    },
+    {
+      title: 'Tools & DevOps',
+      items: [
+        { name: 'Docker', icon: 'https://cdn.simpleicons.org/docker' },
+        { name: 'Kubernetes', icon: 'https://cdn.simpleicons.org/kubernetes' },
+        { name: 'Terraform', icon: 'https://cdn.simpleicons.org/terraform' },
+        { name: 'GitHub', icon: 'https://cdn.simpleicons.org/github' },
+      ],
+    },
+  ];
 
-  useE(() => {
-    const t = setTimeout(() => setAnimated(true), 80);
-    return () => clearTimeout(t);
-  }, []);
-
-  const filters = ['All', ...LEVEL_ORDER];
-  const visible = filter === 'All' ? SKILL_ROWS : SKILL_ROWS.filter(s => s.level === filter);
+  // chunk helper
+  const chunk = (arr, n) => {
+    const out = [];
+    for (let i = 0; i < arr.length; i += n) out.push(arr.slice(i, i + n));
+    return out;
+  };
 
   return (
-    <div style={{ ...padX, paddingBottom: 28 }}>
-      {/* Filter tabs */}
-      <div style={{ display: 'flex', gap: 6, marginBottom: 18, flexWrap: 'wrap' }}>
-        {filters.map(f => (
-          <button key={f} onClick={() => setFilter(f)} style={{
-            padding: '5px 12px', borderRadius: 20,
-            fontFamily: 'var(--font-mono)', fontSize: 11, fontWeight: 500,
-            border: '1px solid',
-            borderColor: filter === f ? 'var(--primary)' : 'var(--border)',
-            background: filter === f ? 'color-mix(in oklab, var(--primary) 18%, transparent)' : 'transparent',
-            color: filter === f ? 'var(--primary-2)' : 'var(--text-3)',
-            cursor: 'pointer', transition: 'all 140ms',
-          }}>{f}</button>
-        ))}
-        <span style={{ marginLeft: 'auto', fontFamily: 'var(--font-mono)', fontSize: 10, color: 'var(--text-3)', alignSelf: 'center' }}>
-          {visible.length} skills
-        </span>
+    <div style={{ ...padX, overflow: 'auto', maxHeight: '100%' }}>
+      <div style={{ textAlign: 'center', marginBottom: 18 }}>
+        <h2 style={{ margin: 0, fontFamily: 'var(--font-display)', fontSize: 36, letterSpacing: '0.02em' }}>TECHNICAL SKILLS</h2>
       </div>
 
-      {/* Legend */}
-      <div style={{ display: 'flex', gap: 14, marginBottom: 16, flexWrap: 'wrap' }}>
-        {[['Expert','var(--teal)'],['Strong','var(--amber)'],['Solid','var(--primary)'],['Growing','var(--text-3)']].map(([l,c]) => (
-          <span key={l} style={{ display: 'flex', alignItems: 'center', gap: 5, fontFamily: 'var(--font-mono)', fontSize: 10, color: 'var(--text-3)' }}>
-            <span style={{ width: 8, height: 8, borderRadius: 2, background: c, flexShrink: 0 }} />{l}
-          </span>
-        ))}
-      </div>
-
-      {/* Heatmap rows */}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-        <style>{`
-          @keyframes barGrow { from { width: 0 } }
-        `}</style>
-        {visible.map((s, i) => (
-          <div key={s.name} style={{
-            display: 'grid', gridTemplateColumns: '148px 1fr 62px',
-            alignItems: 'center', gap: 12,
-            padding: '8px 12px', borderRadius: 10,
-            background: i % 2 === 0 ? 'var(--elev)' : 'transparent',
-            border: '1px solid',
-            borderColor: i % 2 === 0 ? 'var(--border)' : 'transparent',
-            transition: 'border-color 160ms',
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 18 }}>
+        {SKILL_CATEGORIES.map(cat => (
+          <div key={cat.title} style={{
+            padding: 20, background: 'var(--surface)', borderRadius: 14,
+            border: '1px solid var(--border)', boxShadow: '0 12px 30px -14px rgba(0,0,0,0.5)',
+            minHeight: 160,
           }}
-          onMouseEnter={e => e.currentTarget.style.borderColor = s.color}
-          onMouseLeave={e => e.currentTarget.style.borderColor = i % 2 === 0 ? 'var(--border)' : 'transparent'}
+            onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-4px)'; e.currentTarget.style.boxShadow = '0 22px 40px -18px rgba(0,0,0,0.55)'; }}
+            onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 12px 30px -14px rgba(0,0,0,0.5)'; }}
           >
-            {/* Name */}
-            <div>
-              <div style={{ fontFamily: 'var(--font-mono)', fontSize: 12, fontWeight: 600, color: 'var(--text)' }}>{s.name}</div>
-              <div style={{ fontSize: 10, color: 'var(--text-3)', marginTop: 2, lineHeight: 1.3 }}>{s.ctx}</div>
+            <div style={{ fontSize: 16, fontWeight: 700, color: 'var(--text)', marginBottom: 12 }}>{cat.title}</div>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
+              {chunk(cat.items, 4).map((group, idx) => (
+                <div key={idx} style={{
+                  padding: 0,
+                }}>
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
+                    {group.map(it => (
+                      <div key={it.name} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                        <img src={it.icon} alt={it.name} style={{ width: 28, height: 28, objectFit: 'contain' }} />
+                        <div style={{ fontSize: 14, color: 'var(--text-2)' }}>{it.name}</div>
+                      </div>
+                    ))}
+                    {group.length < 4 && Array.from({ length: 4 - group.length }).map((_, i) => (
+                      <div key={`empty-${i}`} />
+                    ))}
+                  </div>
+                </div>
+              ))}
             </div>
-
-            {/* Bar track */}
-            <div style={{ height: 8, background: 'var(--border)', borderRadius: 4, overflow: 'hidden' }}>
-              <div style={{
-                height: '100%', borderRadius: 4,
-                background: `linear-gradient(90deg, ${s.color}, color-mix(in oklab, ${s.color} 70%, transparent))`,
-                width: animated ? `${s.pct}%` : '0%',
-                transition: `width 700ms cubic-bezier(.4,0,.2,1) ${i * 35}ms`,
-                boxShadow: `0 0 8px color-mix(in oklab, ${s.color} 60%, transparent)`,
-              }} />
-            </div>
-
-            {/* Level badge */}
-            <span style={{
-              fontFamily: 'var(--font-mono)', fontSize: 10, fontWeight: 600,
-              color: s.color, textAlign: 'right', letterSpacing: '0.04em',
-            }}>{s.level}</span>
           </div>
         ))}
       </div>
