@@ -1,30 +1,66 @@
 // Main App — ManiOS desktop
-import React from 'react';
+import React, { Component, useCallback, useEffect, useRef, useState } from 'react';
 import { PERSON, PROJECTS } from './data.js';
-const { useState: useAS, useEffect: useAE, useCallback: useAC } = React;
+import { MenuBar, Window, Dock, DesktopIcons, Spotlight } from './chrome.jsx';
+import {
+  HeroWindow,
+  AboutWindow,
+  ProjectsWindow,
+  ExperienceWindow,
+  SkillsWindow,
+  CertsWindow,
+  EducationWindow,
+  FeedWindow,
+  ContactWindow,
+  ResumeWindow,
+  ArthaWindow,
+  StockWindow,
+  TestimonialsWindow,
+  TerminalWindow,
+  IconHome,
+  IconUser,
+  IconBox,
+  IconBriefcase,
+  IconChip,
+  IconAward,
+  IconGrad,
+  IconFeed,
+  IconMail,
+  IconDoc,
+  IconSparkle,
+  IconChart,
+  IconQuote,
+  IconTerm,
+} from './windows.jsx';
+import { ChatBubble, ChatPanel } from './chatbot.jsx';
+import { MobileApp } from './mobile.jsx';
+
+const createChatSessionId = () => (
+  globalThis.crypto?.randomUUID ? `session_${globalThis.crypto.randomUUID()}` : `session_${Math.random().toString(36).slice(2, 11)}`
+);
 
 // Initialize chat session
-if (!window.chatSessionId) {
-  window.chatSessionId = 'session_' + Math.random().toString(36).substr(2, 9);
+if (!globalThis.chatSessionId) {
+  globalThis.chatSessionId = createChatSessionId();
 }
 
 // ============== App registry ==============
 const APPS = [
-  { id: 'home',     slug: 'home',     title: 'home',          icon: '◈', label: 'Home',         desc: 'Profile & intro', w: 640, h: 700, IconC: 'IconHome',    bg: 'linear-gradient(135deg, #6C63FF, #4B45C9)' },
-  { id: 'about',    slug: 'about',    title: 'about_me',      icon: '◉', label: 'About',        desc: 'Who I am', w: 560, h: 600, IconC: 'IconUser',    bg: 'linear-gradient(135deg, #1DB88E, #178A6B)' },
-  { id: 'projects', slug: 'projects', title: 'projects',      icon: '▣', label: 'Projects',     desc: 'Work samples', w: 720, h: 580, IconC: 'IconBox',     bg: 'linear-gradient(135deg, #F5A623, #C67E12)' },
-  { id: 'exp',      slug: 'experience', title: 'experience',  icon: '▤', label: 'Experience',   desc: 'Background', w: 600, h: 540, IconC: 'IconBriefcase', bg: 'linear-gradient(135deg, #F97316, #EA580C)' },
-  { id: 'skills',   slug: 'skills',   title: 'skills',        icon: '◇', label: 'Skills',       desc: 'Expertise', w: 680, h: 580, IconC: 'IconChip',    bg: 'linear-gradient(135deg, #1DB88E, #F5A623)' },
-  { id: 'certs',    slug: 'certifications', title: 'certs',   icon: '✦', label: 'Certs',        desc: 'Credentials', w: 560, h: 380, IconC: 'IconAward',   bg: 'linear-gradient(135deg, #EAB308, #CA8A04)', fg: '#0a0a0f' },
-  { id: 'edu',      slug: 'education', title: 'education',    icon: '◐', label: 'Education',    desc: 'Degrees', w: 540, h: 480, IconC: 'IconGrad',    bg: 'linear-gradient(135deg, #0EA5E9, #0284C7)' },
-  { id: 'feed',     slug: 'impact',   title: 'impact',        icon: '⌁', label: 'Impact',       desc: 'Activity feed', w: 760, h: 560, IconC: 'IconFeed',    bg: 'linear-gradient(135deg, #9333EA, #6D28D9)' },
-  { id: 'contact',  slug: 'contact',  title: 'contact',       icon: '✉', label: 'Contact',      desc: 'Get in touch', w: 520, h: 620, IconC: 'IconMail',    bg: 'linear-gradient(135deg, #FF6B6B, #C9474B)' },
-  { id: 'resume',   slug: 'resume',   title: 'resume.pdf',    icon: '▾', label: 'Resume',       desc: 'Download PDF', w: 640, h: 620, IconC: 'IconDoc',     bg: 'linear-gradient(135deg, #F0F0FF, #8888AA)', fg: '#0a0a0f' },
+  { id: 'home',     slug: 'home',     title: 'home',          icon: '◈', label: 'Home',         desc: 'Profile & intro', w: 640, h: 700, IconC: IconHome,    bg: 'linear-gradient(135deg, #6C63FF, #4B45C9)' },
+  { id: 'about',    slug: 'about',    title: 'about_me',      icon: '◉', label: 'About',        desc: 'Who I am', w: 560, h: 600, IconC: IconUser,    bg: 'linear-gradient(135deg, #1DB88E, #178A6B)' },
+  { id: 'projects', slug: 'projects', title: 'projects',      icon: '▣', label: 'Projects',     desc: 'Work samples', w: 720, h: 580, IconC: IconBox,     bg: 'linear-gradient(135deg, #F5A623, #C67E12)' },
+  { id: 'exp',      slug: 'experience', title: 'experience',  icon: '▤', label: 'Experience',   desc: 'Background', w: 600, h: 540, IconC: IconBriefcase, bg: 'linear-gradient(135deg, #F97316, #EA580C)' },
+  { id: 'skills',   slug: 'skills',   title: 'skills',        icon: '◇', label: 'Skills',       desc: 'Expertise', w: 680, h: 580, IconC: IconChip,    bg: 'linear-gradient(135deg, #1DB88E, #F5A623)' },
+  { id: 'certs',    slug: 'certifications', title: 'certs',   icon: '✦', label: 'Certs',        desc: 'Credentials', w: 560, h: 380, IconC: IconAward,   bg: 'linear-gradient(135deg, #EAB308, #CA8A04)', fg: '#0a0a0f' },
+  { id: 'edu',      slug: 'education', title: 'education',    icon: '◐', label: 'Education',    desc: 'Degrees', w: 540, h: 480, IconC: IconGrad,    bg: 'linear-gradient(135deg, #0EA5E9, #0284C7)' },
+  { id: 'feed',     slug: 'impact',   title: 'impact',        icon: '⌁', label: 'Impact',       desc: 'Activity feed', w: 760, h: 560, IconC: IconFeed,    bg: 'linear-gradient(135deg, #9333EA, #6D28D9)' },
+  { id: 'contact',  slug: 'contact',  title: 'contact',       icon: '✉', label: 'Contact',      desc: 'Get in touch', w: 520, h: 620, IconC: IconMail,    bg: 'linear-gradient(135deg, #FF6B6B, #C9474B)' },
+  { id: 'resume',   slug: 'resume',   title: 'resume.pdf',    icon: '▾', label: 'Resume',       desc: 'Download PDF', w: 640, h: 620, IconC: IconDoc,     bg: 'linear-gradient(135deg, #F0F0FF, #8888AA)', fg: '#0a0a0f' },
   // Desktop-icon-only
-  { id: 'artha',    slug: 'artha-ai', title: 'artha_ai',      icon: 'α', label: 'Artha AI',     desc: 'AI project', w: 700, h: 620, IconC: 'IconSparkle', bg: 'linear-gradient(135deg, #6C63FF, #1DB88E)' },
-  { id: 'stock',    slug: 'finsentinel', title: 'finsentinel', icon: '▲', label: 'FinSentinel', desc: 'Finance app', w: 640, h: 540, IconC: 'IconChart', bg: 'linear-gradient(135deg, #1DB88E, #6C63FF)' },
-  { id: 'testimonials', slug: 'snapshot', title: 'snapshot', icon: '❝', label: 'Snapshot', desc: 'Testimonials', w: 600, h: 580, IconC: 'IconQuote', bg: 'linear-gradient(135deg, #F5A623, #FF6B6B)' },
-  { id: 'terminal', slug: 'terminal', title: 'terminal', icon: '$', label: 'Terminal', desc: 'Interactive shell', w: 660, h: 460, IconC: 'IconTerm', bg: 'linear-gradient(135deg, #10B981, #047857)' },
+  { id: 'artha',    slug: 'artha-ai', title: 'artha_ai',      icon: 'α', label: 'Artha AI',     desc: 'AI project', w: 700, h: 620, IconC: IconSparkle, bg: 'linear-gradient(135deg, #6C63FF, #1DB88E)' },
+  { id: 'stock',    slug: 'finsentinel', title: 'finsentinel', icon: '▲', label: 'FinSentinel', desc: 'Finance app', w: 640, h: 540, IconC: IconChart, bg: 'linear-gradient(135deg, #1DB88E, #6C63FF)' },
+  { id: 'testimonials', slug: 'snapshot', title: 'snapshot', icon: '❝', label: 'Snapshot', desc: 'Testimonials', w: 600, h: 580, IconC: IconQuote, bg: 'linear-gradient(135deg, #F5A623, #FF6B6B)' },
+  { id: 'terminal', slug: 'terminal', title: 'terminal', icon: '$', label: 'Terminal', desc: 'Interactive shell', w: 660, h: 460, IconC: IconTerm, bg: 'linear-gradient(135deg, #10B981, #047857)' },
 ];
 
 // Dock order: grouped by type (Profile → Work → Meta)
@@ -43,20 +79,20 @@ function getWallpaperFilter() {
 
 function renderContent(id, ctx) {
   switch (id) {
-    case 'home':    return <window.HeroWindow onOpenWindow={ctx.open} />;
-    case 'about':   return <window.AboutWindow />;
-    case 'projects':return <window.ProjectsWindow onOpenWindow={ctx.open} />;
-    case 'exp':     return <window.ExperienceWindow />;
-    case 'skills':  return <window.SkillsWindow />;
-    case 'certs':   return <window.CertsWindow />;
-    case 'edu':     return <window.EducationWindow />;
-    case 'feed':    return <window.FeedWindow />;
-    case 'contact': return <window.ContactWindow />;
-    case 'resume':  return <window.ResumeWindow />;
-    case 'artha':   return <window.ArthaWindow onOpenWindow={ctx.open} />;
-    case 'stock':   return <window.StockWindow />;
-    case 'testimonials': return <window.TestimonialsWindow />;
-    case 'terminal':   return <window.TerminalWindow onOpenWindow={ctx.open} />;
+    case 'home':    return <HeroWindow onOpenWindow={ctx.open} />;
+    case 'about':   return <AboutWindow />;
+    case 'projects':return <ProjectsWindow onOpenWindow={ctx.open} />;
+    case 'exp':     return <ExperienceWindow />;
+    case 'skills':  return <SkillsWindow />;
+    case 'certs':   return <CertsWindow />;
+    case 'edu':     return <EducationWindow />;
+    case 'feed':    return <FeedWindow />;
+    case 'contact': return <ContactWindow />;
+    case 'resume':  return <ResumeWindow />;
+    case 'artha':   return <ArthaWindow onOpenWindow={ctx.open} />;
+    case 'stock':   return <StockWindow />;
+    case 'testimonials': return <TestimonialsWindow />;
+    case 'terminal':   return <TerminalWindow onOpenWindow={ctx.open} />;
     default: return null;
   }
 }
@@ -81,25 +117,31 @@ function initialWindows() {
 }
 
 function App() {
-  const [theme, setTheme] = useAS('dark');
-  const [windows, setWindows] = useAS(() => initialWindows());
-  const [focusId, setFocusId] = useAS(null);
-  const [zCounter, setZCounter] = useAS(20);
-  const [spotlightOpen, setSpotlightOpen] = useAS(false);
-  const [chatOpen, setChatOpen] = useAS(false);
-  const [toast, setToast] = useAS(null);
-  const [tourStep, setTourStep] = useAS(null);
-  const [recruiterActive, setRecruiterActive] = useAS(false);
+  const [theme, setTheme] = useState('dark');
+  const [windows, setWindows] = useState(() => initialWindows());
+  const [focusId, setFocusId] = useState(null);
+  const [zCounter, setZCounter] = useState(20);
+  const zCounterRef = useRef(20);
+  const [spotlightOpen, setSpotlightOpen] = useState(false);
+  const [chatOpen, setChatOpen] = useState(false);
+  const [toast, setToast] = useState(null);
+  const [tourStep, setTourStep] = useState(null);
+  const [recruiterActive, setRecruiterActive] = useState(false);
 
-  useAE(() => {
+  useEffect(() => {
     document.body.classList.toggle('light', theme === 'light');
   }, [theme]);
 
+  useEffect(() => {
+    zCounterRef.current = zCounter;
+  }, [zCounter]);
+
   // Define window management functions first
-  const open = useAC((id) => {
+  const open = useCallback((id) => {
     setWindows(prev => {
       const existing = prev.find(w => w.id === id);
-      const nextZ = zCounter + 1;
+      const nextZ = zCounterRef.current + 1;
+      zCounterRef.current = nextZ;
       setZCounter(nextZ);
       if (existing) {
         return prev.map(w => w.id === id ? { ...w, minimized: false, z: nextZ } : w);
@@ -123,36 +165,37 @@ function App() {
       }];
     });
     setFocusId(id);
-  }, [zCounter]);
+  }, []);
 
-  const close = useAC((id) => {
+  const close = useCallback((id) => {
     setWindows(prev => prev.filter(w => w.id !== id));
   }, []);
 
-  const minimize = useAC((id) => {
+  const minimize = useCallback((id) => {
     setWindows(prev => prev.map(w => w.id === id ? { ...w, minimized: true } : w));
   }, []);
 
-  const maximize = useAC((id) => {
+  const maximize = useCallback((id) => {
     setWindows(prev => prev.map(w => w.id === id ? { ...w, maximized: !w.maximized } : w));
   }, []);
 
-  const focus = useAC((id) => {
-    const nextZ = zCounter + 1;
+  const focus = useCallback((id) => {
+    const nextZ = zCounterRef.current + 1;
+    zCounterRef.current = nextZ;
     setZCounter(nextZ);
     setWindows(prev => prev.map(w => w.id === id ? { ...w, z: nextZ } : w));
     setFocusId(id);
-  }, [zCounter]);
+  }, []);
 
-  const move = useAC((id, x, y) => {
+  const move = useCallback((id, x, y) => {
     setWindows(prev => prev.map(w => w.id === id ? { ...w, x, y } : w));
   }, []);
 
-  const resize = useAC((id, w, h) => {
+  const resize = useCallback((id, w, h) => {
     setWindows(prev => prev.map(win => win.id === id ? { ...win, w, h } : win));
   }, []);
 
-  const recruiterMode = useAC(() => {
+  const recruiterMode = useCallback(() => {
     const vw = window.innerWidth;
     const vh = window.innerHeight;
     const gap = 8;
@@ -167,8 +210,9 @@ function App() {
     ];
     setWindows(prev => {
       let next = [...prev];
+      let nextZ = zCounterRef.current;
       layout.forEach((cfg, i) => {
-        const z = zCounter + i + 1;
+        const z = nextZ + i + 1;
         const app = getApp(cfg.id);
         const idx = next.findIndex(w => w.id === cfg.id);
         if (idx >= 0) {
@@ -177,16 +221,18 @@ function App() {
           next.push({ ...app, ...cfg, z, minimized: false, maximized: false });
         }
       });
+      nextZ += 3;
+      zCounterRef.current = nextZ;
+      setZCounter(nextZ);
       return next;
     });
-    setZCounter(c => c + 3);
     setFocusId('projects');
     setRecruiterActive(true);
     setToast('Most-viewed sections loaded · ~90 seconds to learn everything');
     setTimeout(() => setToast(null), 4000);
-  }, [zCounter]);
+  }, []);
 
-  const exitRecruiterMode = useAC(() => {
+  const exitRecruiterMode = useCallback(() => {
     setWindows(prev => prev.filter(w => !['resume', 'exp', 'projects'].includes(w.id)));
     setRecruiterActive(false);
   }, []);
@@ -198,12 +244,12 @@ function App() {
     { id: 'contact', label: "Let's talk",             sub: 'Open to roles · replies in 24h' },
   ];
 
-  const startTour = useAC(() => {
+  const startTour = useCallback(() => {
     open('home');
     setTourStep(0);
   }, [open]);
 
-  const advanceTour = useAC(() => {
+  const advanceTour = useCallback(() => {
     setTourStep(prev => {
       const next = prev + 1;
       if (next >= TOUR_STEPS.length) return null;
@@ -213,7 +259,7 @@ function App() {
   }, [open]);
 
   // Keyboard: '/' opens spotlight, 1-9 launches dock apps
-  useAE(() => {
+  useEffect(() => {
     const onKey = (e) => {
       if (e.key === '/' && !['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement?.tagName)) {
         e.preventDefault();
@@ -237,23 +283,23 @@ function App() {
   // Dock apps
   const dockApps = DOCK_ORDER.map(id => {
     const app = getApp(id);
-    const IC = window[app.IconC];
-    return { ...app, icon: <IC /> };
+    const Icon = app.IconC;
+    return { ...app, icon: <Icon /> };
   });
 
   // Desktop icons
   const desktopIcons = DESKTOP_ICONS.map(id => {
     const app = getApp(id);
-    const IC = window[app.IconC];
-    return { ...app, icon: <IC /> };
+    const Icon = app.IconC;
+    return { ...app, icon: <Icon /> };
   });
 
   // Spotlight items
   const spotlightItems = APPS.map(a => {
-    const IC = window[a.IconC];
+    const Icon = a.IconC;
     return {
       id: a.id, label: a.label, hint: a.slug, desc: a.desc,
-      icon: <IC />,
+      icon: <Icon />,
     };
   });
 
@@ -279,7 +325,7 @@ function App() {
       />
 
       {/* Menu bar */}
-      <window.MenuBar
+      <MenuBar
         theme={theme}
         onToggleTheme={() => setTheme(t => t === 'dark' ? 'light' : 'dark')}
         onOpenSpotlight={() => setSpotlightOpen(true)}
@@ -295,11 +341,11 @@ function App() {
       <DesktopGreeting onOpen={open} onStartTour={startTour} />
 
       {/* Desktop icons */}
-      <window.DesktopIcons icons={desktopIcons} onOpen={open} />
+      <DesktopIcons icons={desktopIcons} onOpen={open} />
 
       {/* Windows */}
       {windows.map(w => (
-        <window.Window
+        <Window
           key={w.id}
           win={w}
           focused={focusId === w.id}
@@ -310,15 +356,17 @@ function App() {
           onMove={(x, y) => move(w.id, x, y)}
           onResize={(width, height) => resize(w.id, width, height)}
         >
-          {renderContent(w.id, { open })}
-        </window.Window>
+          <WindowErrorBoundary windowId={w.id}>
+            {renderContent(w.id, { open })}
+          </WindowErrorBoundary>
+        </Window>
       ))}
 
       {/* Dock */}
-      <window.Dock apps={dockApps} onLaunch={open} openIds={openIds} />
+      <Dock apps={dockApps} onLaunch={open} openIds={openIds} />
 
       {/* Spotlight */}
-      <window.Spotlight
+      <Spotlight
         open={spotlightOpen}
         onClose={() => setSpotlightOpen(false)}
         items={spotlightItems}
@@ -326,8 +374,8 @@ function App() {
       />
 
       {/* Chatbot */}
-      <window.ChatPanel open={chatOpen} onClose={() => setChatOpen(false)} />
-      <window.ChatBubble open={chatOpen} onToggle={() => setChatOpen(o => !o)} />
+      <ChatPanel open={chatOpen} onClose={() => setChatOpen(false)} />
+      <ChatBubble open={chatOpen} onToggle={() => setChatOpen(o => !o)} />
 
       {/* Toast */}
       <Toast message={toast} />
@@ -456,8 +504,8 @@ function DesktopGreeting({ onOpen, onStartTour }) {
 }
 
 function HintHud() {
-  const [hide, setHide] = useAS(false);
-  useAE(() => {
+  const [hide, setHide] = useState(false);
+  useEffect(() => {
     const t = setTimeout(() => setHide(true), 6000);
     return () => clearTimeout(t);
   }, []);
@@ -580,17 +628,39 @@ function Toast({ message }) {
 }
 
 export function Root() {
-  const [isMobile, setIsMobile] = useAS(() => window.innerWidth < 768);
-  useAE(() => {
+  const [isMobile, setIsMobile] = useState(() => window.innerWidth < 768);
+  useEffect(() => {
     const onResize = () => setIsMobile(window.innerWidth < 768);
     window.addEventListener('resize', onResize);
     return () => window.removeEventListener('resize', onResize);
   }, []);
-  useAE(() => {
+  useEffect(() => {
     document.body.classList.toggle('is-mobile', isMobile);
     document.body.classList.toggle('is-desktop', !isMobile);
     document.documentElement.classList.toggle('is-mobile', isMobile);
     document.documentElement.classList.toggle('is-desktop', !isMobile);
   }, [isMobile]);
-  return isMobile ? <window.MobileApp /> : <App />;
+  return isMobile ? <MobileApp /> : <App />;
+}
+
+class WindowErrorBoundary extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div style={{ padding: 16, color: 'var(--red)', fontFamily: 'var(--font-mono)', fontSize: 12 }}>
+          Window {this.props.windowId} failed to render.
+        </div>
+      );
+    }
+    return this.props.children;
+  }
 }

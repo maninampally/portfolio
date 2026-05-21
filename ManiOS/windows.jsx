@@ -1,7 +1,6 @@
 // Window content modules — all 13 sections
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { PERSON, RESUME_DRIVE_ID, PROJECTS, EXPERIENCE, SKILL_ROWS, CERTS } from './data.js';
-const { useState: useS, useEffect: useE } = React;
 
 // Resume URLs derived from RESUME_DRIVE_ID in data.js
 const RESUME_VIEW_URL     = `https://drive.google.com/file/d/${RESUME_DRIVE_ID}/view`;
@@ -58,18 +57,20 @@ function StatusDot({ label, color = 'var(--teal)' }) {
   );
 }
 
-function Btn({ children, onClick, variant = 'primary', icon }) {
+function Btn({ children, onClick, variant = 'primary', icon, disabled = false }) {
   const styles = {
     primary: { background: 'var(--primary)', color: '#fff', border: '1px solid var(--primary)' },
     ghost:   { background: 'transparent', color: 'var(--text)', border: '1px solid var(--border-2)' },
     teal:    { background: 'var(--teal)', color: '#0a0a0f', border: '1px solid var(--teal)' },
   }[variant];
   return (
-    <button onClick={onClick} style={{
+    <button onClick={onClick} disabled={disabled} style={{
       ...styles, padding: '8px 14px', borderRadius: 8,
       fontFamily: 'var(--font-mono)', fontSize: 12, fontWeight: 500,
       display: 'inline-flex', alignItems: 'center', gap: 8,
       transition: 'transform 100ms, filter 100ms',
+      opacity: disabled ? 0.6 : 1,
+      cursor: disabled ? 'not-allowed' : 'pointer',
     }}
     onMouseDown={e => e.currentTarget.style.transform = 'scale(0.97)'}
     onMouseUp={e => e.currentTarget.style.transform = 'scale(1)'}
@@ -371,7 +372,7 @@ function SkillsWindow() {
     {
       title: 'Data & Analytics',
       items: [
-        { name: 'dbt', icon: 'https://cdn.simpleicons.org/dbt' },
+        { name: 'dbt', icon: null },
         { name: 'Snowflake', icon: 'https://cdn.simpleicons.org/snowflake' },
         { name: 'BigQuery', icon: 'https://cdn.simpleicons.org/googlebigquery' },
         { name: 'Delta Lake', icon: 'https://cdn.simpleicons.org/delta' },
@@ -420,7 +421,21 @@ function SkillsWindow() {
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
                     {group.map(it => (
                       <div key={it.name} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                        <img src={it.icon} alt={it.name} style={{ width: 28, height: 28, objectFit: 'contain' }} />
+                        {it.icon ? (
+                          <img src={it.icon} alt={it.name} style={{ width: 28, height: 28, objectFit: 'contain' }} />
+                        ) : (
+                          <div style={{
+                            width: 28, height: 28, borderRadius: 8,
+                            display: 'flex', alignItems: 'center', justifyContent: 'center',
+                            background: 'color-mix(in oklab, var(--primary) 16%, transparent)',
+                            border: '1px solid color-mix(in oklab, var(--primary) 30%, transparent)',
+                            color: 'var(--primary-2)',
+                            fontFamily: 'var(--font-mono)',
+                            fontSize: 10,
+                            fontWeight: 700,
+                            letterSpacing: '0.08em',
+                          }}>dbt</div>
+                        )}
                         <div style={{ fontSize: 14, color: 'var(--text-2)' }}>{it.name}</div>
                       </div>
                     ))}
@@ -540,11 +555,11 @@ function Stat({ label, value }) {
 
 // ============== 8. IMPACT ==============
 function FeedWindow() {
-  const [feed, setFeed] = useS(null);
-  const [loading, setLoading] = useS(true);
-  const [fetchError, setFetchError] = useS(false);
+  const [feed, setFeed] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [fetchError, setFetchError] = useState(false);
 
-  useE(() => {
+  useEffect(() => {
     let cancelled = false;
     fetch(window.__API_BASE__ + '/api/feed')
       .then(r => r.json())
@@ -648,10 +663,10 @@ function FeedWindow() {
 
 // ============== 9. CONTACT ==============
 function ContactWindow() {
-  const [form, setForm] = useS({ name: '', email: '', subject: 'Job Opportunity', message: '' });
-  const [sent, setSent] = useS(false);
-  const [loading, setLoading] = useS(false);
-  const [error, setError] = useS(null);
+  const [form, setForm] = useState({ name: '', email: '', subject: 'Job Opportunity', message: '' });
+  const [sent, setSent] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   const submit = async (e) => {
     e.preventDefault();
@@ -690,11 +705,11 @@ function ContactWindow() {
       <form onSubmit={submit} data-no-drag style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
         <Field label="Name">
           <input value={form.name} onChange={e => setForm({ ...form, name: e.target.value })}
-            placeholder="Your name" style={inputStyle} />
+            placeholder="Your name" style={inputStyle} required />
         </Field>
         <Field label="Email">
           <input type="email" value={form.email} onChange={e => setForm({ ...form, email: e.target.value })}
-            placeholder="you@company.com" style={inputStyle} />
+            placeholder="you@company.com" style={inputStyle} required />
         </Field>
         <Field label="Subject">
           <select value={form.subject} onChange={e => setForm({ ...form, subject: e.target.value })} style={inputStyle}>
@@ -706,7 +721,7 @@ function ContactWindow() {
         <Field label="Message">
           <textarea value={form.message} onChange={e => setForm({ ...form, message: e.target.value })}
             placeholder="What's on your mind?" rows={5}
-            style={{ ...inputStyle, resize: 'vertical', minHeight: 90, lineHeight: 1.5 }} />
+            style={{ ...inputStyle, resize: 'vertical', minHeight: 90, lineHeight: 1.5 }} required />
         </Field>
         <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginTop: 4 }}>
           <Btn disabled={loading}>{loading ? '⏳ Sending...' : (sent ? '✓ Message Sent' : 'Send Message')}</Btn>
@@ -798,7 +813,7 @@ function ResumeWindow() {
 
 // ============== 11. ARTHA AI Spotlight ==============
 function ArthaWindow({ onOpenWindow }) {
-  const [showArch, setShowArch] = useS(false);
+  const [showArch, setShowArch] = useState(false);
   return (
     <div style={padX}>
       <div style={{
@@ -899,7 +914,7 @@ function ArthaWindow({ onOpenWindow }) {
 
 // ============== 12. STOCK DASHBOARD ==============
 function StockWindow() {
-  const [showArch, setShowArch] = useS(false);
+  const [showArch, setShowArch] = useState(false);
   return (
     <div style={padX}>
       <h2 style={{ margin: '0 0 6px', fontFamily: 'var(--font-display)', fontSize: 22 }}>FinSentinel</h2>
@@ -1133,17 +1148,18 @@ const TERM_COMMANDS = {
 };
 
 function TerminalWindow({ onOpenWindow }) {
-  const [lines, setLines] = useS([
-    { t: 'out', v: 'ManiOS Terminal v1.0 — type `help` to see commands' },
-    { t: 'out', v: '' },
+  const makeLine = (t, v) => ({ id: `${t}-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`, t, v });
+  const [lines, setLines] = useState([
+    makeLine('out', 'ManiOS Terminal v1.0 — type `help` to see commands'),
+    makeLine('out', ''),
   ]);
-  const [input, setInput] = useS('');
-  const [history, setHistory] = useS([]);
-  const [histIdx, setHistIdx] = useS(-1);
+  const [input, setInput] = useState('');
+  const [history, setHistory] = useState([]);
+  const [histIdx, setHistIdx] = useState(-1);
   const endRef = React.useRef(null);
   const inputRef = React.useRef(null);
 
-  useE(() => {
+  useEffect(() => {
     endRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [lines]);
 
@@ -1153,21 +1169,21 @@ function TerminalWindow({ onOpenWindow }) {
     setHistory(h => [trimmed, ...h]);
     setHistIdx(-1);
 
-    const promptLine = { t: 'prompt', v: cmd.trim() };
+    const promptLine = makeLine('prompt', cmd.trim());
     const handler = TERM_COMMANDS[trimmed];
     if (!handler) {
-      setLines(l => [...l, promptLine, { t: 'err', v: `command not found: ${trimmed}. Try 'help'.` }, { t: 'out', v: '' }]);
+      setLines(l => [...l, promptLine, makeLine('err', `command not found: ${trimmed}. Try 'help'.`), makeLine('out', '')]);
       return;
     }
     const results = handler();
     const clearIdx = results.findIndex(r => r.t === 'clear');
     if (clearIdx >= 0) {
-      setLines([{ t: 'out', v: '' }]);
+      setLines([makeLine('out', '')]);
       return;
     }
     const actionItem = results.find(r => r.t === 'action');
     const outputLines = results.filter(r => r.t !== 'action');
-    setLines(l => [...l, promptLine, ...outputLines, { t: 'out', v: '' }]);
+    setLines(l => [...l, promptLine, ...outputLines.map(line => makeLine(line.t, line.v)), makeLine('out', '')]);
     if (actionItem) setTimeout(() => onOpenWindow(actionItem.v), 400);
   };
 
@@ -1199,8 +1215,8 @@ function TerminalWindow({ onOpenWindow }) {
       }}
     >
       <div style={{ flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: 2 }}>
-        {lines.map((line, i) => (
-          <div key={i} style={{ color: lineColor[line.t] || 'var(--text-2)', whiteSpace: 'pre', lineHeight: 1.6 }}>
+        {lines.map((line) => (
+          <div key={line.id} style={{ color: lineColor[line.t] || 'var(--text-2)', whiteSpace: 'pre', lineHeight: 1.6 }}>
             {line.t === 'prompt'
               ? <><span style={{ color: 'var(--primary)' }}>mani@portfolio</span><span style={{ color: 'var(--text-3)' }}>:~$</span> {line.v}</>
               : line.v
@@ -1256,3 +1272,11 @@ Object.assign(window, {
   IconHome, IconUser, IconBox, IconBriefcase, IconChip, IconAward, IconGrad,
   IconFeed, IconMail, IconDoc, IconSparkle, IconChart, IconQuote, IconGithub, IconLink, IconTerm,
 });
+
+export {
+  HeroWindow, AboutWindow, ProjectsWindow, ExperienceWindow, SkillsWindow,
+  CertsWindow, EducationWindow, FeedWindow, ContactWindow, ResumeWindow,
+  ArthaWindow, StockWindow, TestimonialsWindow, TerminalWindow,
+  IconHome, IconUser, IconBox, IconBriefcase, IconChip, IconAward, IconGrad,
+  IconFeed, IconMail, IconDoc, IconSparkle, IconChart, IconQuote, IconGithub, IconLink, IconTerm,
+};

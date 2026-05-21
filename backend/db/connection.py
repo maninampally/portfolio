@@ -1,9 +1,13 @@
 import os
-import psycopg2
-from psycopg2.extras import RealDictCursor
 from contextlib import contextmanager
 
-DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://user:password@localhost/manios")
+import psycopg2
+from psycopg2.extras import RealDictCursor
+
+DATABASE_URL = os.getenv("DATABASE_URL")
+
+if not DATABASE_URL:
+    raise RuntimeError("DATABASE_URL is required")
 
 @contextmanager
 def get_db_connection():

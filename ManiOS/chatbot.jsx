@@ -1,8 +1,6 @@
 // Ask Mani — floating chatbot
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { PERSON, PROJECTS, EXPERIENCE, CERTS } from './data.js';
-
-const { useState: useChatS, useRef: useChatR, useEffect: useChatE } = React;
 
 // ============== Local knowledge base (runs with no backend) ==============
 const KB = [
@@ -112,14 +110,14 @@ function ChatBubble({ open, onToggle, unread, compact }) {
 }
 
 function ChatPanel({ open, onClose }) {
-  const [messages, setMessages] = useChatS([
+  const [messages, setMessages] = useState([
     { role: 'assistant', content: "Hey — I'm Mani's portfolio assistant. Ask me about his experience, projects, or skills." },
   ]);
-  const [input, setInput] = useChatS('');
-  const [thinking, setThinking] = useChatS(false);
-  const scrollRef = useChatR(null);
+  const [input, setInput] = useState('');
+  const [thinking, setThinking] = useState(false);
+  const scrollRef = useRef(null);
 
-  useChatE(() => {
+  useEffect(() => {
     if (scrollRef.current) scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
   }, [messages, thinking]);
 
@@ -143,12 +141,12 @@ function ChatPanel({ open, onClose }) {
       const res = await fetch(window.__API_BASE__ + '/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: q, session_id: window.chatSessionId }),
+        body: JSON.stringify({ message: q, session_id: globalThis.chatSessionId }),
         signal: AbortSignal.timeout(5000),
       });
       if (res.ok) {
         const data = await res.json();
-        window.chatSessionId = data.session_id;
+        globalThis.chatSessionId = data.session_id;
         reply = data.reply;
       }
     } catch (_) {}
@@ -286,3 +284,5 @@ function ChatPanel({ open, onClose }) {
 }
 
 Object.assign(window, { ChatBubble, ChatPanel, localAnswer });
+
+export { ChatBubble, ChatPanel, localAnswer };

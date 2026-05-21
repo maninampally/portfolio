@@ -1,6 +1,5 @@
 // OS chrome: MenuBar, Window, Dock, Desktop icons, Spotlight
-import React from 'react';
-const { useEffect, useRef, useState, useCallback } = React;
+import React, { useEffect, useRef, useState } from 'react';
 
 // ============================================================
 // MENU BAR — top
@@ -268,6 +267,8 @@ function Dock({ apps, onLaunch, openIds }) {
   const dockRef = useRef(null);
   const iconRefs = useRef([]);
   const [pointerX, setPointerX] = useState(null);
+  const frameRef = useRef(0);
+  const lastPointerRef = useRef(null);
 
   const handleClick = (appId) => {
     setClicked(appId);
@@ -307,25 +308,34 @@ function Dock({ apps, onLaunch, openIds }) {
       ref={dockRef}
       onMouseMove={(e) => {
         if (!dockRef.current) return;
-        const dockRect = dockRef.current.getBoundingClientRect();
-        const x = e.clientX - dockRect.left;
-        setPointerX(x);
+        lastPointerRef.current = e.clientX;
+        if (frameRef.current) return;
+        frameRef.current = requestAnimationFrame(() => {
+          frameRef.current = 0;
+          if (!dockRef.current || lastPointerRef.current === null) return;
+          const dockRect = dockRef.current.getBoundingClientRect();
+          const x = lastPointerRef.current - dockRect.left;
+          setPointerX(x);
 
-        let nearest = null;
-        let nearestDistance = Infinity;
-        iconRefs.current.forEach((el, idx) => {
-          if (!el) return;
-          const rect = el.getBoundingClientRect();
-          const centerX = rect.left - dockRect.left + rect.width / 2;
-          const distance = Math.abs(x - centerX);
-          if (distance < nearestDistance) {
-            nearestDistance = distance;
-            nearest = idx;
-          }
+          let nearest = null;
+          let nearestDistance = Infinity;
+          iconRefs.current.forEach((el, idx) => {
+            if (!el) return;
+            const rect = el.getBoundingClientRect();
+            const centerX = rect.left - dockRect.left + rect.width / 2;
+            const distance = Math.abs(x - centerX);
+            if (distance < nearestDistance) {
+              nearestDistance = distance;
+              nearest = idx;
+            }
+          });
+          setHover(nearest);
         });
-        setHover(nearest);
       }}
       onMouseLeave={() => {
+        if (frameRef.current) cancelAnimationFrame(frameRef.current);
+        frameRef.current = 0;
+        lastPointerRef.current = null;
         setPointerX(null);
         setHover(null);
       }}>
@@ -334,16 +344,15 @@ function Dock({ apps, onLaunch, openIds }) {
           const isOpen = openIds.includes(app.id);
           const isClickBouncing = clicked === app.id;
           const shortcutKey = i + 1;
-          const centerX = pointerX === null || !dockRef.current || !iconRefs.current[i]
+          const iconRect = pointerX === null || !dockRef.current || !iconRefs.current[i]
             ? null
-            : (iconRefs.current[i].getBoundingClientRect().left - dockRef.current.getBoundingClientRect().left)
-              + (iconRefs.current[i].getBoundingClientRect().width / 2);
-          const hoverDistance = pointerX === null || !dockRef.current || !iconRefs.current[i]
+            : iconRefs.current[i].getBoundingClientRect();
+          const centerX = iconRect
+            ? (iconRect.left - dockRef.current.getBoundingClientRect().left) + (iconRect.width / 2)
+            : null;
+          const hoverDistance = pointerX === null || centerX === null
             ? null
-            : Math.abs(pointerX - (
-                iconRefs.current[i].getBoundingClientRect().left - dockRef.current.getBoundingClientRect().left +
-                iconRefs.current[i].getBoundingClientRect().width / 2
-              ));
+            : Math.abs(pointerX - centerX);
           const shiftAmount = pointerX === null || centerX === null
             ? 0
             : Math.max(-18, Math.min(18, (pointerX - centerX) * 0.14));
@@ -667,3 +676,5 @@ function PipelineWidget() {
 }
 
 Object.assign(window, { MenuBar, Window, Dock, DesktopIcons, Spotlight, Logo });
+
+export { MenuBar, Window, Dock, DesktopIcons, Spotlight, Logo };

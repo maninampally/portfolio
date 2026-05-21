@@ -1,31 +1,55 @@
 // Mobile fallback — stacked scroll layout for < 768px
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { PERSON } from './data.js';
-const { useState: useMS, useEffect: useME, useRef: useMR } = React;
+import {
+  HeroWindow,
+  AboutWindow,
+  ProjectsWindow,
+  ArthaWindow,
+  ExperienceWindow,
+  SkillsWindow,
+  CertsWindow,
+  EducationWindow,
+  FeedWindow,
+  StockWindow,
+  TestimonialsWindow,
+  ContactWindow,
+  ResumeWindow,
+} from './windows.jsx';
+import { Logo } from './chrome.jsx';
+import { ChatBubble, localAnswer } from './chatbot.jsx';
+
+const createChatSessionId = () => (
+  globalThis.crypto?.randomUUID ? `session_${globalThis.crypto.randomUUID()}` : `session_${Math.random().toString(36).slice(2, 11)}`
+);
+
+if (!globalThis.chatSessionId) {
+  globalThis.chatSessionId = createChatSessionId();
+}
 
 function MobileApp() {
-  const [activeSection, setActiveSection] = useMS('home');
-  const [navOpen, setNavOpen] = useMS(false);
-  const [chatOpen, setChatOpen] = useMS(false);
+  const [activeSection, setActiveSection] = useState('home');
+  const [navOpen, setNavOpen] = useState(false);
+  const [chatOpen, setChatOpen] = useState(false);
 
   const sections = [
-    { id: 'home',     label: 'Home',         Component: window.HeroWindow },
-    { id: 'about',    label: 'About',        Component: window.AboutWindow },
-    { id: 'projects', label: 'Projects',     Component: window.ProjectsWindow },
-    { id: 'artha',    label: 'Artha AI',     Component: window.ArthaWindow },
-    { id: 'exp',      label: 'Experience',   Component: window.ExperienceWindow },
-    { id: 'skills',   label: 'Skills',       Component: window.SkillsWindow },
-    { id: 'certs',    label: 'Certs',        Component: window.CertsWindow },
-    { id: 'edu',      label: 'Education',    Component: window.EducationWindow },
-    { id: 'feed',     label: 'Impact',       Component: window.FeedWindow },
-    { id: 'stock',    label: 'FinSentinel',  Component: window.StockWindow },
-    { id: 'testimonials', label: 'Snapshot', Component: window.TestimonialsWindow },
-    { id: 'contact',  label: 'Contact',      Component: window.ContactWindow },
-    { id: 'resume',   label: 'Résumé',       Component: window.ResumeWindow },
+    { id: 'home',     label: 'Home',         Component: HeroWindow },
+    { id: 'about',    label: 'About',        Component: AboutWindow },
+    { id: 'projects', label: 'Projects',     Component: ProjectsWindow },
+    { id: 'artha',    label: 'Artha AI',     Component: ArthaWindow },
+    { id: 'exp',      label: 'Experience',   Component: ExperienceWindow },
+    { id: 'skills',   label: 'Skills',       Component: SkillsWindow },
+    { id: 'certs',    label: 'Certs',        Component: CertsWindow },
+    { id: 'edu',      label: 'Education',    Component: EducationWindow },
+    { id: 'feed',     label: 'Impact',       Component: FeedWindow },
+    { id: 'stock',    label: 'FinSentinel',  Component: StockWindow },
+    { id: 'testimonials', label: 'Snapshot', Component: TestimonialsWindow },
+    { id: 'contact',  label: 'Contact',      Component: ContactWindow },
+    { id: 'resume',   label: 'Résumé',       Component: ResumeWindow },
   ];
 
   // Track scroll → active section (intersection observer)
-  useME(() => {
+  useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         const visible = entries
@@ -71,7 +95,7 @@ function MobileApp() {
           padding: '12px 16px',
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-            <window.Logo size={18} />
+            <Logo size={18} />
             <span style={{
               fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--text)',
               fontWeight: 600, letterSpacing: '0.06em',
@@ -184,8 +208,8 @@ function MobileApp() {
       </div>
 
       {/* Chatbot */}
-      <window.ChatPanelMobile open={chatOpen} onClose={() => setChatOpen(false)} />
-      <window.ChatBubble compact open={chatOpen} onToggle={() => setChatOpen(o => !o)} />
+      <ChatPanelMobile open={chatOpen} onClose={() => setChatOpen(false)} />
+      <ChatBubble compact open={chatOpen} onToggle={() => setChatOpen(o => !o)} />
     </div>
   );
 }
@@ -216,14 +240,14 @@ function ChatPanelMobile({ open, onClose }) {
 }
 
 function MobileChatContent({ onClose }) {
-  const [messages, setMessages] = useMS([
+  const [messages, setMessages] = useState([
     { role: 'assistant', content: "Hey — I'm Mani's portfolio assistant. Ask me anything about his experience, projects, or skills." },
   ]);
-  const [input, setInput] = useMS('');
-  const [thinking, setThinking] = useMS(false);
-  const scrollRef = useMR(null);
+  const [input, setInput] = useState('');
+  const [thinking, setThinking] = useState(false);
+  const scrollRef = useRef(null);
 
-  useME(() => {
+  useEffect(() => {
     if (scrollRef.current) scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
   }, [messages, thinking]);
 
@@ -238,14 +262,14 @@ function MobileChatContent({ onClose }) {
       const res = await fetch(window.__API_BASE__ + '/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: q, session_id: window.chatSessionId }),
+        body: JSON.stringify({ message: q, session_id: globalThis.chatSessionId }),
       });
       const data = await res.json();
-      window.chatSessionId = data.session_id;
+      globalThis.chatSessionId = data.session_id;
       setMessages([...next, { role: 'assistant', content: data.reply }]);
     } catch {
-      const reply = (typeof window.localAnswer === 'function')
-        ? window.localAnswer(q)
+      const reply = (typeof localAnswer === 'function')
+        ? localAnswer(q)
         : "You can reach Mani directly via the Contact section.";
       setMessages([...next, { role: 'assistant', content: reply }]);
     }
@@ -327,3 +351,5 @@ function MobileChatContent({ onClose }) {
 }
 
 Object.assign(window, { MobileApp, ChatPanelMobile });
+
+export { MobileApp, ChatPanelMobile };
